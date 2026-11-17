@@ -24,11 +24,11 @@ export default defineConfig({
 			plugins: [starlightLlmsTxt()],
 			sidebar: [
 				{
-					label: '1. はじめに',
+					label: '1. この規約について',
 					items: [
-						'introduction/purpose-and-scope',
-						'introduction/compliance-levels',
-						'introduction/changelog',
+						'about/purpose-and-scope',
+						'about/compliance-levels',
+						'about/changelog',
 					],
 				},
 				{
@@ -46,33 +46,27 @@ export default defineConfig({
 						'common/directory-structure',
 						'common/comments-and-docs',
 						'common/format-and-lint',
+						'common/accessibility',
+						'common/images',
 					],
 				},
 				{
-					label: '4. 言語別ルール',
-					items: ['languages/html', 'languages/css', 'languages/typescript'],
+					label: '4. 技術別ルール',
+					items: ['tech/html', 'tech/css', 'tech/typescript', 'tech/react'],
 				},
 				{
-					label: '5. React',
-					items: [
-						'react/component-design',
-						'react/hooks',
-						'react/state-and-data-fetching',
-						'react/performance',
-					],
-				},
-				{
-					label: '6. 品質と運用',
+					label: '5. 品質と運用',
 					items: [
 						'quality/testing',
+						'quality/verification',
 						'quality/git',
 						'quality/security',
 						'quality/review-checklist',
 					],
 				},
 				{
-					label: '7. AIとの協働',
-					items: ['ai/instructing-claude', 'ai/reviewing-ai-code'],
+					label: '6. AIとの協働',
+					items: ['ai/agent-instructions', 'ai/reviewing-ai-code'],
 				},
 			],
 		}),

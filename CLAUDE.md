@@ -24,22 +24,36 @@
 3. 理由
 4. 良い例・悪い例（コード付き）
 
+1章（この規約について）と2章（基本方針）は説明ページなので、この書式を取らない。
+
+Reactのページは、H2を分類（コンポーネント設計 / Hooks / 状態管理とデータ取得 / パフォーマンス）、H3を各ルールにする。
+
 ## 構成
 
 章とディレクトリの対応。サイドバーは `astro.config.mjs` に明示しているため、ページを追加・改名したらサイドバーも更新する。
 
 | 章 | ディレクトリ |
 | :-- | :-- |
-| 1. はじめに | `src/content/docs/introduction/` |
+| 1. この規約について | `src/content/docs/about/` |
 | 2. 基本方針 | `src/content/docs/principles/` |
 | 3. 共通ルール | `src/content/docs/common/` |
-| 4. 言語別ルール | `src/content/docs/languages/` |
-| 5. React | `src/content/docs/react/` |
-| 6. 品質と運用 | `src/content/docs/quality/` |
-| 7. AIとの協働 | `src/content/docs/ai/` |
+| 4. 技術別ルール | `src/content/docs/tech/` |
+| 5. 品質と運用 | `src/content/docs/quality/` |
+| 6. AIとの協働 | `src/content/docs/ai/` |
 
+- 3章は言語やフレームワークに依らないルール、4章は技術ごとのルールを置く（1技術1ページ）
 - ファイル名（URL）は英語のケバブケース、`title` は日本語にする
 - `base` が `/coding-guidelines` のため、本文中の内部リンクは `/coding-guidelines/` から始める
+
+### 置き場所の線引き
+
+同じルールを複数のページに書かない。関係するページからはリンクする。
+
+- alt属性はアクセシビリティのページに書く。画像のページからはリンクする
+- 画像のページは、形式、サイズと圧縮、`srcset` / `picture`、`width` / `height`、遅延読み込み、SVGの扱い、ファイル名と置き場所を扱う
+- アクセシビリティに関わるルールはアクセシビリティのページに書き、HTML / CSS / Reactのページからはリンクする
+- 対応するブラウザとデバイスの範囲は「対応ブラウザとデバイス」で決め、それをどう確かめるか（実機確認、HTMLバリデータ、axe、Lighthouse、キーボード操作など）は「検証」に書く
+- 自動テスト（単体、E2E、ビジュアルリグレッション）は「テスト方針」に書く
 
 ## コマンド
 
