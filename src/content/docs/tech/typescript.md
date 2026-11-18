@@ -30,7 +30,7 @@ TypeScriptの書き方を決めます。JavaScriptで書く場面でも、この
   },
   "overrides": [
     {
-      "files": ["*.config.{js,mjs,ts}", "src/app/**/{page,layout}.tsx"],
+      "files": ["*.config.{js,mjs,ts}"],
       "rules": { "import/no-default-export": "off" }
     }
   ]
@@ -109,7 +109,7 @@ src/features/cart/
 
 **理由**
 
-ViteやNext.jsなどのビルドツールの多くは、速さのために型を取り除くだけで、型のチェックはしません。ビルドが通っても型のエラーが残っていることがあるため、型チェックを別に実行します。
+ViteやAstroなどのビルドツールの多くは、速さのために型を取り除くだけで、型のチェックはしません。ビルドが通っても型のエラーが残っていることがあるため、型チェックを別に実行します。
 
 **良い例**
 

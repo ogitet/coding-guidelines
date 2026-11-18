@@ -246,14 +246,14 @@ XSSの修正を確認しました。承認します。
 
 ### 技術別
 
-- [ ] HTMLの要素と属性の使い方が決まりに沿っているか（[HTML](/coding-guidelines/tech/html/)）
+- [ ] HTMLの要素と属性の使い方、ページのメタデータが決まりに沿っているか（[HTML](/coding-guidelines/tech/html/)）
 - [ ] CSSの書き方とクラス名の付け方が決まりに沿っているか（[CSS](/coding-guidelines/tech/css/)）
 - [ ] 型の書き方が決まりに沿っているか（[TypeScript](/coding-guidelines/tech/typescript/)）
 - [ ] コンポーネントの設計、Hooks、状態管理が決まりに沿っているか（[React](/coding-guidelines/tech/react/)）
 
 ### アクセシビリティ、画像、パフォーマンス
 
-- [ ] 要素の意味、代替テキスト、ラベル、キーボード操作、コントラスト比が決まりに沿っているか（[アクセシビリティ](/coding-guidelines/common/accessibility/)）
+- [ ] 要素の意味、代替テキスト、ラベルと `autocomplete`、キーボード操作、コントラスト比が決まりに沿っているか（[アクセシビリティ](/coding-guidelines/common/accessibility/)）
 - [ ] axeで違反がなく、キーボードだけで操作できることを確かめたか（[検証](/coding-guidelines/quality/verification/)）
 - [ ] 画像の形式、サイズ、`width` と `height`、読み込みの方法が決まりに沿っているか（[画像](/coding-guidelines/common/images/)）
 - [ ] フォント、依存パッケージ、外部のスクリプト、後から表示する要素の扱いが決まりに沿っているか（[パフォーマンス](/coding-guidelines/common/performance/)）

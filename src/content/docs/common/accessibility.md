@@ -285,6 +285,42 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 <span>お知らせメールを受け取る</span>
 ```
 
+## 個人の情報を入力する欄にはautocompleteを指定する
+
+氏名、メールアドレス、電話番号、住所、パスワードなど、使う人自身の情報を入力する欄には、内容に合った `autocomplete` 属性の値を指定します。
+
+準拠レベル：**必須**
+
+**理由**
+
+`autocomplete` を指定すると、ブラウザやパスワード管理ツールが、保存してある情報を正しい欄に入力できます。文字の入力に時間がかかる人や、何を入力する欄かを読み取りにくい人も、入力の手間と誤りを減らせます。WCAG 2.2の達成基準1.3.5（入力目的の特定）にも対応します。
+
+入力欄の `type` の選び方は、[HTML](/coding-guidelines/tech/html/#入力欄には内容に合ったtypeを指定する)のページを参照してください。
+
+**良い例**
+
+```html
+<label for="name">氏名</label>
+<input id="name" type="text" name="name" autocomplete="name" />
+
+<label for="postal-code">郵便番号</label>
+<input id="postal-code" type="text" name="postalCode" inputmode="numeric" autocomplete="postal-code" />
+
+<label for="new-password">新しいパスワード</label>
+<input id="new-password" type="password" name="newPassword" autocomplete="new-password" />
+```
+
+**悪い例**
+
+```html
+<label for="name">氏名</label>
+<input id="name" type="text" name="name" />
+
+<label for="new-password">新しいパスワード</label>
+<!-- 保存したパスワードの入力や、新しいパスワードの提案を止めている -->
+<input id="new-password" type="password" name="newPassword" autocomplete="off" />
+```
+
 ## 入力エラーはテキストで示し、入力欄と関連付ける
 
 入力内容にエラーがあるときは、何が誤りでどう直せばよいかをテキストで表示します。エラーの入力欄には `aria-invalid="true"` を付け、`aria-describedby` でエラーメッセージと関連付けます。
