@@ -14,7 +14,8 @@
 - 公開先：GitHub Pages（`https://ogitet.github.io/coding-guidelines/`）
 - 規約本文は `src/content/docs/` 以下のMarkdownを唯一の正とする
 - 1ページに複数ルールを並べる（1ルール1ファイルは採らない）
-- 機械的に判定できるルールはESLint / Biomeの設定に落とす
+- フォーマットとLint：Oxfmt（フォーマット）、Oxlint（JavaScript / TypeScript）、Markuplint（HTML / JSX）、Stylelint（CSS）
+- 機械的に判定できるルールはLintの設定に落とす
 - 主な対象技術：HTML / CSS / TypeScript / React
 
 ## 各ページの書式
@@ -62,6 +63,7 @@ Reactのページは、H2を分類（コンポーネント設計 / Hooks / 状�
 - アクセシビリティに関わるルールはアクセシビリティのページに書き、HTML / CSS / Reactのページからはリンクする
 - 対応するブラウザとデバイスの範囲は「対応ブラウザとデバイス」で決め、それをどう確かめるか（実機確認、HTMLバリデータ、axe、Lighthouse、キーボード操作など）は「検証」に書く
 - 自動テスト（単体、E2E、ビジュアルリグレッション）は「テスト方針」に書く
+- 識別子・ファイル・ディレクトリの名前の記法は「命名規則」に書く。CSSのクラス名の付け方はCSSのページ、画像のファイル名は画像のページに書く
 
 ## コマンド
 
