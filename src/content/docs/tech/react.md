@@ -243,7 +243,7 @@ Reactは、JSXに埋め込んだ文字列を自動的にエスケープし、ク
 
 描画中に起きたエラーは、Error Boundaryで受け止め、代わりの表示を出します。Error Boundaryは、アプリ全体を囲むものに加え、独立して失敗してよい単位（ページ、サイドバー、ウィジェットなど）にも置きます。
 
-Next.jsの `error.tsx` のように、フレームワークに同じ仕組みがある場合はそれを使います。ない場合は、[react-error-boundary](https://github.com/bvaughn/react-error-boundary)を使います。エラー処理全般のルールは[エラー処理](/coding-guidelines/common/error-handling/)のページを参照してください。
+Error Boundaryは自分でクラスコンポーネントとして書かず、[react-error-boundary](https://github.com/bvaughn/react-error-boundary)を使います。エラー処理全般のルールは[エラー処理](/coding-guidelines/common/error-handling/)のページを参照してください。
 
 準拠レベル：**推奨**
 
@@ -632,8 +632,8 @@ stateに持った状態は、ページを再読み込みしたり、URLを共有
 **良い例**
 
 ```tsx
-// /orders/?status=shipped&page=2（Next.jsの場合）
-const searchParams = useSearchParams();
+// /orders/?status=shipped&page=2（React Routerの場合）
+const [searchParams] = useSearchParams();
 const status = searchParams.get("status") ?? "all";
 const page = Number(searchParams.get("page") ?? "1");
 ```
@@ -647,7 +647,7 @@ const [page, setPage] = useState(1);
 
 ### サーバーのデータはuseEffectで取得しない
 
-サーバーから取得するデータは、Server Componentsなどフレームワークのデータ取得の機能か、[TanStack Query](https://tanstack.com/query/latest)などのデータ取得ライブラリで扱います。`useEffect` の中で `fetch` してstateに入れる書き方はしません。
+サーバーから取得するデータは、[TanStack Query](https://tanstack.com/query/latest)などのデータ取得ライブラリで扱います。`useEffect` の中で `fetch` してstateに入れる書き方はしません。
 
 準拠レベル：**推奨**
 
@@ -758,7 +758,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 **理由**
 
-すべてのコンポーネントを最初に読み込むと、JavaScriptが大きくなり、ページが操作できるようになるまでの時間が延びます。使われるか分からない大きなコンポーネントを後から読み込めば、最初の表示を速くできます。Next.jsなどのフレームワークでは、フレームワークが用意する方法を使います。
+すべてのコンポーネントを最初に読み込むと、JavaScriptが大きくなり、ページが操作できるようになるまでの時間が延びます。使われるか分からない大きなコンポーネントを後から読み込めば、最初の表示を速くできます。
 
 **良い例**
 

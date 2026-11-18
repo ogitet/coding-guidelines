@@ -1,6 +1,6 @@
 ---
 title: HTML
-description: HTMLの書き方。文書の基本構造、仕様に沿った要素と属性の使い方、フォームとスクリプトの読み込み方を決めます。
+description: HTMLの書き方。文書の基本構造とメタデータ、仕様に沿った要素と属性の使い方、フォームとスクリプトの読み込み方を決めます。
 ---
 
 HTMLの書き方を決めます。JSXでマークアップを書く場合も、このページのルールに従います。
@@ -110,6 +110,138 @@ HTMLファイルの1行目に `<!doctype html>` を書きます。
   <meta charset="utf-8" />
   <title>注文履歴 | Order Manager</title>
 </head>
+```
+
+## ページごとに内容を表すdescriptionを書く
+
+公開するページには、`<meta name="description" />` で、そのページの内容を1〜2文で説明する文を書きます。すべてのページに同じ文を使いません。
+
+準拠レベル：**推奨**
+
+**理由**
+
+`description` は、検索結果やSNSでの共有のときに、ページの説明として表示されることがあります。ページごとに内容を表す文にしておけば、検索した人が、開く前にそのページが目的に合うかを判断できます。全ページで同じ文を使うと、どのページも同じに見え、説明の役に立ちません。
+
+ページのタイトルの付け方は、[アクセシビリティ](/coding-guidelines/common/accessibility/#ページごとに内容を表すタイトルを付ける)のページを参照してください。
+
+**良い例**
+
+```html
+<title>送料と配送日数 | Example Store</title>
+<meta name="description" content="地域ごとの送料と、注文から届くまでの日数の目安をまとめています。" />
+```
+
+**悪い例**
+
+```html
+<title>送料と配送日数 | Example Store</title>
+<!-- サイト全体の紹介文を、すべてのページで使い回している -->
+<meta name="description" content="Example Storeは、暮らしの道具を扱うオンラインストアです。" />
+```
+
+## 検索エンジンに載せないページにはnoindexを指定する
+
+検証用の環境、ログイン後の画面、検索結果のページなど、検索エンジンに載せないページには、`<meta name="robots" content="noindex" />` を指定します。
+
+準拠レベル：**必須**
+
+**理由**
+
+指定しないと、公開前の検証用の環境や、利用者ごとの画面が検索結果に出ることがあります。一度検索結果に出ると、消えるまでに時間がかかります。`robots.txt` でクロールを禁止するだけでは、ほかのページからリンクされたURLが検索結果に載ることがあるため、`noindex` で指定します。
+
+**良い例**
+
+```html
+<!-- 検証用の環境では、すべてのページに出力する -->
+<meta name="robots" content="noindex" />
+```
+
+**悪い例**
+
+```text
+# robots.txt でクロールを禁止しただけで、noindex を指定していない
+User-agent: *
+Disallow: /
+```
+
+## 同じ内容を複数のURLで表示するときはcanonicalを指定する
+
+クエリパラメーターの違いなどで、同じ内容のページを複数のURLで表示するときは、`<link rel="canonical" />` で正とするURLを指定します。URLは絶対URLで書きます。
+
+準拠レベル：**推奨**
+
+**理由**
+
+同じ内容のURLが複数あると、検索エンジンはどれを検索結果に出すかを判断できず、評価が分散したり、意図しないURLが表示されたりします。`canonical` で正のURLを示せば、評価がそのURLにまとまります。
+
+**良い例**
+
+```html
+<!-- /products/123?ref=newsletter で開いた場合も、正のURLを示す -->
+<link rel="canonical" href="https://example.com/products/123" />
+```
+
+**悪い例**
+
+```html
+<!-- 相対URLで書いている -->
+<link rel="canonical" href="/products/123" />
+```
+
+## SNSで共有されるページにはOGPを指定する
+
+SNSで共有されることがあるページには、OGP（`og:title`、`og:description`、`og:image`、`og:url`、`og:type`）と、`twitter:card` を指定します。`og:image` は絶対URLで指定し、画像は1200×630pxで用意します。
+
+準拠レベル：**推奨**
+
+**理由**
+
+OGPがないと、共有したときに、タイトルや画像がSNSの側で推測して表示され、意図しない画像が出たり、何も表示されなかったりします。`og:image` を相対URLで書くと、SNSが画像を取得できません。1200×630pxは、主なSNSで切れずに表示される大きさです。
+
+**良い例**
+
+```html
+<meta property="og:title" content="送料と配送日数 | Example Store" />
+<meta property="og:description" content="地域ごとの送料と、注文から届くまでの日数の目安をまとめています。" />
+<meta property="og:image" content="https://example.com/images/ogp-shipping.png" />
+<meta property="og:url" content="https://example.com/shipping/" />
+<meta property="og:type" content="article" />
+<meta name="twitter:card" content="summary_large_image" />
+```
+
+**悪い例**
+
+```html
+<meta property="og:title" content="送料と配送日数 | Example Store" />
+<!-- 画像を相対URLで指定し、og:url などが足りない -->
+<meta property="og:image" content="/images/ogp-shipping.png" />
+```
+
+## faviconはSVGと、Apple端末向けのPNGで用意する
+
+faviconは、SVG形式のファイルと、ホーム画面のアイコンに使う180×180pxのPNG（`apple-touch-icon`）を用意します。
+
+準拠レベル：**任意**
+
+**理由**
+
+SVGなら、1つのファイルでどの解像度でもぼやけずに表示でき、`prefers-color-scheme` でダークモードに合わせた色にもできます。ただし、iPhoneなどのホーム画面に追加したときのアイコンはSVGに対応していないため、PNGも用意します。
+
+**良い例**
+
+```html
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+```
+
+**悪い例**
+
+```html
+<!-- 大きさの違う画像を何枚も並べている -->
+<link rel="icon" href="/favicon-16.png" sizes="16x16" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" />
+<link rel="icon" href="/favicon-48.png" sizes="48x48" />
+<link rel="icon" href="/favicon-96.png" sizes="96x96" />
 ```
 
 ## 仕様で許された入れ子と属性だけを使う

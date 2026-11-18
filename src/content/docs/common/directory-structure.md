@@ -5,11 +5,11 @@ description: ソースコードを置くディレクトリの分け方。機能�
 
 ソースコードを置くディレクトリの分け方を決めます。ファイル名とディレクトリ名の記法は[命名規則](/coding-guidelines/common/naming/)、画像の置き場所は[画像](/coding-guidelines/common/images/)のページで扱います。
 
-全体の形は次のとおりです。`app/` の部分は、使うフレームワークの規約に合わせて名前や形が変わります。なお、このページのコード例の `@/` は、`src/` を指すパスの別名です。
+全体の形は次のとおりです。`pages/` の部分は、使うフレームワークの規約に合わせて名前や形が変わります。なお、このページのコード例の `@/` は、`src/` を指すパスの別名です。
 
 ```text
 src/
-├── app/                  # ページとルーティング（フレームワークの規約に従う）
+├── pages/                # ページ（フレームワークの規約がある場合は従う）
 ├── features/             # 機能ごとのディレクトリ
 │   ├── cart/
 │   │   ├── CartSummary.tsx
@@ -30,17 +30,15 @@ src/
 
 **理由**
 
-Next.jsの `app/` やAstroの `src/pages/` のように、置き場所でルーティングや動作が決まるディレクトリがあります。独自の構成に変えると、フレームワークの機能が使えなくなったり、公式ドキュメントと対応が取れなくなったりします。
+Astroの `src/pages/` のように、置き場所でルーティングや動作が決まるディレクトリがあります。独自の構成に変えると、フレームワークの機能が使えなくなったり、公式ドキュメントと対応が取れなくなったりします。
 
 **良い例**
 
 ```text
 src/
-├── app/
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── cart/
-│       └── page.tsx
+├── pages/
+│   ├── index.astro
+│   └── cart.astro
 └── features/
     └── cart/
         └── CartSummary.tsx
@@ -50,8 +48,8 @@ src/
 
 ```text
 src/
-├── routes/               # フレームワークは app/ を前提にしている
-│   └── cart.tsx
+├── routes/               # フレームワークは pages/ を前提にしている
+│   └── cart.astro
 └── features/
     └── cart/
         └── CartSummary.tsx
@@ -139,11 +137,11 @@ src/
 **良い例**
 
 ```tsx
-// src/app/cart/page.tsx
+// src/pages/CartPage.tsx
 import { CartSummary } from "@/features/cart/CartSummary";
 import { RecommendedItems } from "@/features/recommendation/RecommendedItems";
 
-export default function CartPage() {
+export function CartPage() {
   return (
     <>
       <CartSummary />
