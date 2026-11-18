@@ -14,7 +14,7 @@
 - 公開先：GitHub Pages（`https://ogitet.github.io/coding-guidelines/`）
 - 規約本文は `src/content/docs/` 以下のMarkdownを唯一の正とする
 - 1ページに複数ルールを並べる（1ルール1ファイルは採らない）
-- 機械的に判定できるルールはESLint / Biomeの設定に落とす
+- 機械的に判定できるルールは、Oxlint / Oxfmt / Markuplint / Stylelint の設定に落とす（各ツールの選定理由は `principles/tech-stack.md`）
 - 主な対象技術：HTML / CSS / TypeScript / React
 
 ## 各ページの書式
