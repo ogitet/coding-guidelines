@@ -28,6 +28,7 @@ export default defineConfig({
 					items: [
 						'about/purpose-and-scope',
 						'about/compliance-levels',
+						'about/license',
 						'about/changelog',
 					],
 				},
@@ -46,8 +47,10 @@ export default defineConfig({
 						'common/directory-structure',
 						'common/comments-and-docs',
 						'common/format-and-lint',
+						'common/error-handling',
 						'common/accessibility',
 						'common/images',
+						'common/performance',
 					],
 				},
 				{

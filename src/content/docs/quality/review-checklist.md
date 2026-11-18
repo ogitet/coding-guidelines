@@ -236,6 +236,7 @@ XSSの修正を確認しました。承認します。
 
 - [ ] ファイルの置き場所と依存の向きが決まりに沿っているか（[ディレクトリ構成](/coding-guidelines/common/directory-structure/)）
 - [ ] 同じ処理を重複して書いていないか
+- [ ] 失敗を握りつぶさず、対処できる場所で扱っているか。使う人に見せるエラーの文言が決まりに沿っているか（[エラー処理](/coding-guidelines/common/error-handling/)）
 
 ### 命名とコメント
 
@@ -250,11 +251,12 @@ XSSの修正を確認しました。承認します。
 - [ ] 型の書き方が決まりに沿っているか（[TypeScript](/coding-guidelines/tech/typescript/)）
 - [ ] コンポーネントの設計、Hooks、状態管理が決まりに沿っているか（[React](/coding-guidelines/tech/react/)）
 
-### アクセシビリティと画像
+### アクセシビリティ、画像、パフォーマンス
 
 - [ ] 要素の意味、代替テキスト、ラベル、キーボード操作、コントラスト比が決まりに沿っているか（[アクセシビリティ](/coding-guidelines/common/accessibility/)）
 - [ ] axeで違反がなく、キーボードだけで操作できることを確かめたか（[検証](/coding-guidelines/quality/verification/)）
 - [ ] 画像の形式、サイズ、`width` と `height`、読み込みの方法が決まりに沿っているか（[画像](/coding-guidelines/common/images/)）
+- [ ] フォント、依存パッケージ、外部のスクリプト、後から表示する要素の扱いが決まりに沿っているか（[パフォーマンス](/coding-guidelines/common/performance/)）
 
 ### テストと検証
 
