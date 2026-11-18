@@ -239,6 +239,53 @@ Reactは、JSXに埋め込んだ文字列を自動的にエスケープし、ク
 <p className={styles.message} dangerouslySetInnerHTML={{ __html: review.comment }} />
 ```
 
+### 画面の一部で起きたエラーはError Boundaryで受け止める
+
+描画中に起きたエラーは、Error Boundaryで受け止め、代わりの表示を出します。Error Boundaryは、アプリ全体を囲むものに加え、独立して失敗してよい単位（ページ、サイドバー、ウィジェットなど）にも置きます。
+
+Next.jsの `error.tsx` のように、フレームワークに同じ仕組みがある場合はそれを使います。ない場合は、[react-error-boundary](https://github.com/bvaughn/react-error-boundary)を使います。エラー処理全般のルールは[エラー処理](/coding-guidelines/common/error-handling/)のページを参照してください。
+
+準拠レベル：**推奨**
+
+**理由**
+
+Reactでは、描画中にエラーが起きて、どこでも受け止められないと、アプリ全体の表示が消えて真っ白になります。Error Boundaryを置けば、エラーが起きた部分だけを代わりの表示に置き換え、ほかの部分は使い続けられます。
+
+イベントハンドラーや非同期の処理の中で起きたエラーは、Error Boundaryでは受け止められません。それらは、その処理の中で扱います。
+
+**良い例**
+
+```tsx
+import { ErrorBoundary } from "react-error-boundary";
+
+export function DashboardPage() {
+  return (
+    <>
+      <ErrorBoundary fallback={<WidgetError title="売上" />} onError={reportError}>
+        <SalesWidget />
+      </ErrorBoundary>
+      <ErrorBoundary fallback={<WidgetError title="在庫" />} onError={reportError}>
+        <StockWidget />
+      </ErrorBoundary>
+    </>
+  );
+}
+```
+
+**悪い例**
+
+```tsx
+// どちらかのウィジェットでエラーが起きると、ページ全体が表示されなくなる
+export function DashboardPage() {
+  return (
+    <>
+      <SalesWidget />
+      <StockWidget />
+    </>
+  );
+}
+```
+
 ## Hooks
 
 ### Hooksはコンポーネントとカスタムフックの最上位で呼ぶ
