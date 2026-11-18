@@ -201,9 +201,6 @@ dist/
 coverage/
 test-results/
 playwright-report/
-.env
-.env.*
-!.env.example
 .DS_Store
 ```
 
