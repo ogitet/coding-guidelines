@@ -17,6 +17,7 @@
 - フォーマットとLint：Oxfmt（フォーマット）、Oxlint（JavaScript / TypeScript）、Markuplint（HTML / JSX）、Stylelint（CSS）
 - 機械的に判定できるルールはLintの設定に落とす
 - テスト：Vitest（単体）、Testing Library（コンポーネント）、Playwright（E2E、ビジュアルリグレッション）
+- Git：GitHub Flow、マージはマージコミット、コミットメッセージはConventional Commits（要約は日本語）
 - 主な対象技術：HTML / CSS / TypeScript / React
 
 ## 各ページの書式
