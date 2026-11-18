@@ -15,7 +15,7 @@
 - 規約本文は `src/content/docs/` 以下のMarkdownを唯一の正とする
 - 1ページに複数ルールを並べる（1ルール1ファイルは採らない）
 - フォーマットとLint：Oxfmt（フォーマット）、Oxlint（JavaScript / TypeScript）、Markuplint（HTML / JSX）、Stylelint（CSS）
-- 機械的に判定できるルールはLintの設定に落とす
+- 機械的に判定できるルールはLintの設定に落とす（各ツールの選定理由は `principles/tech-stack.md`）
 - テスト：Vitest（単体）、Testing Library（コンポーネント）、Playwright（E2E、ビジュアルリグレッション）
 - Git：GitHub Flow、マージはマージコミット、コミットメッセージはConventional Commits（要約は日本語）
 - 主な対象技術：HTML / CSS / TypeScript / React
