@@ -1,0 +1,75 @@
+---
+title: コーディング規約
+description: HTML / CSS / TypeScript / React を対象とした個人用コーディング規約。
+template: splash
+hero:
+  tagline: HTML / CSS / TypeScript / React を対象とした個人用コーディング規約
+  actions:
+    - text: この規約について
+      link: /coding-guidelines/about/purpose-and-scope/
+      icon: right-arrow
+    - text: AIに読ませる
+      link: '#aiに読ませる場合'
+      variant: minimal
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+私がWebのフロントエンドを実装するときに守るルールと、その理由をまとめています。各ルールには、どの程度守るかを示す[準拠レベル](/coding-guidelines/about/compliance-levels/)（必須・推奨・任意）を付けています。
+
+## 章の一覧
+
+<CardGrid>
+	<LinkCard
+		title="1. この規約について"
+		description="目的と対象範囲、準拠レベルの定義、ライセンス、改訂履歴"
+		href="/coding-guidelines/about/purpose-and-scope/"
+	/>
+	<LinkCard
+		title="2. 基本方針"
+		description="設計で大事にすること、対応ブラウザとデバイス、技術スタックと選定理由"
+		href="/coding-guidelines/principles/design-values/"
+	/>
+	<LinkCard
+		title="3. 共通ルール"
+		description="命名、ディレクトリ構成、コメント、フォーマットとLint、エラー処理、アクセシビリティ、画像、パフォーマンス"
+		href="/coding-guidelines/common/naming/"
+	/>
+	<LinkCard
+		title="4. 技術別ルール"
+		description="HTML、CSS、TypeScript、React"
+		href="/coding-guidelines/tech/html/"
+	/>
+	<LinkCard
+		title="5. 品質と運用"
+		description="テスト方針、検証、Git、セキュリティ、レビューのチェックリスト"
+		href="/coding-guidelines/quality/testing/"
+	/>
+	<LinkCard
+		title="6. AIとの協働"
+		description="AIエージェントへの指示方法、AIが書いたコードのレビュー基準"
+		href="/coding-guidelines/ai/agent-instructions/"
+	/>
+</CardGrid>
+
+## AIに読ませる場合
+
+規約の全文を、AIが読みやすいテキスト形式でも公開しています。AIにコードを書かせるときは、プロジェクトの `AGENTS.md` などでこれらのURLを参照させます。指示の書き方は[AIエージェントへの指示方法](/coding-guidelines/ai/agent-instructions/)を参照してください。
+
+<CardGrid>
+	<LinkCard
+		title="llms.txt"
+		description="規約の案内と、各ファイルへのリンク"
+		href="/coding-guidelines/llms.txt"
+	/>
+	<LinkCard
+		title="llms-full.txt"
+		description="規約の全文"
+		href="/coding-guidelines/llms-full.txt"
+	/>
+	<LinkCard
+		title="llms-small.txt"
+		description="規約の全文から補足を省いた短縮版"
+		href="/coding-guidelines/llms-small.txt"
+	/>
+</CardGrid>
