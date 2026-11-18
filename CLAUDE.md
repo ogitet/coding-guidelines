@@ -16,6 +16,7 @@
 - 1ページに複数ルールを並べる（1ルール1ファイルは採らない）
 - フォーマットとLint：Oxfmt（フォーマット）、Oxlint（JavaScript / TypeScript）、Markuplint（HTML / JSX）、Stylelint（CSS）
 - 機械的に判定できるルールはLintの設定に落とす
+- テスト：Vitest（単体）、Testing Library（コンポーネント）、Playwright（E2E、ビジュアルリグレッション）
 - 主な対象技術：HTML / CSS / TypeScript / React
 
 ## 各ページの書式
