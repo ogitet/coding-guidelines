@@ -14,37 +14,33 @@ description: コードの書式をそろえるフォーマッタと、問題を�
 
 このページでは、ツールの使い方と、どのページのルールにも共通する設定を扱います。各技術に固有のルールの設定は、[技術別ルール](/coding-guidelines/tech/html/)の各ページに書きます。
 
-## 書式はOxfmtの既定値に任せる
+## 書式はOxfmtに任せる
 
-インデント、改行、引用符、セミコロンなどの書式は、Oxfmtで自動的に整えます。手で整えたり、レビューで指摘したりしません。Oxfmtの設定は既定値のまま使い、変えるのはimportの並べ替え（`sortImports`）を有効にすることだけです。
+インデント、改行、引用符、セミコロンなどの書式は、Oxfmtで自動的に整えます。手で整えたり、レビューで指摘したりしません。Oxfmtの設定は、プロジェクトのテンプレートに合わせます。
 
 準拠レベル：**必須**
 
 **理由**
 
-フォーマッタに任せれば、誰が書いても、AIが書いても同じ書式になり、差分には意味のある変更だけが残ります。既定値を使えば、設定について考える必要がなく、ほかのプロジェクトとも書式がそろいます。importの並び順は、人が決めるとばらつくため、並べ替えだけは有効にします。
-
-エディタでは保存時にOxfmtが動くように設定します。
+フォーマッタに任せれば、誰が書いても、AIが書いても同じ書式になり、差分には意味のある変更だけが残ります。
 
 **良い例**
 
-```json title=".oxfmtrc.json"
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "sortImports": true
-}
+```ts
+const config = {
+  name: 'order-app',
+  version: '1.0.0',
+};
 ```
 
 **悪い例**
 
-```json title=".oxfmtrc.json"
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "printWidth": 120,
-  "useTabs": true,
-  "singleQuote": true,
-  "semi": false
-}
+```ts
+// 手でそろえた空白は、フォーマッタを通すと崩れる
+const config = {
+  name    : 'order-app',
+  version : '1.0.0',
+};
 ```
 
 ## 対象ごとに決めたLintツールで検査する
@@ -127,31 +123,16 @@ Oxlintは、Reactとアクセシビリティのルールをプラグインで有
 
 **良い例**
 
-```json title="package.json（一部）"
-{
-  "scripts": {
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
-    "lint": "npm run lint:script && npm run lint:markup && npm run lint:style",
-    "lint:script": "oxlint --deny-warnings --report-unused-disable-directives",
-    "lint:markup": "markuplint \"src/**/*.{html,tsx}\"",
-    "lint:style": "stylelint \"src/**/*.css\" --max-warnings 0",
-    "check": "npm run format:check && npm run lint"
-  }
-}
-```
-
-```yaml title=".github/workflows/check.yml（一部）"
-- run: npm ci
+```yaml title=".github/workflows/ci.yml（一部）"
+# フォーマットとLintをまとめて実行し、失敗したらCIを止める
 - run: npm run check
 ```
 
 **悪い例**
 
-```yaml title=".github/workflows/check.yml（一部）"
+```yaml title=".github/workflows/ci.yml（一部）"
 # 失敗してもCIが通ってしまう
-- run: npm ci
-- run: npm run lint
+- run: npm run check
   continue-on-error: true
 ```
 
