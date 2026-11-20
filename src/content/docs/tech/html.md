@@ -5,7 +5,7 @@ description: HTMLの書き方。ページのメタデータ、仕様に沿った
 
 HTMLの書き方を決めます。JSXでマークアップを書く場合も、このページのルールに従います。
 
-要素の選び方、ARIA、`lang` 属性、ページのタイトル、見出し、フォームのラベルなど、アクセシビリティに関わるルールは[アクセシビリティ](/coding-guidelines/quality/accessibility/)のページで扱います。画像の扱いは[画像](/coding-guidelines/common/images/)のページを参照してください。
+要素の選び方、ARIA、ページのタイトル、見出し、フォームのラベルなど、アクセシビリティに関わるルールは[アクセシビリティ](/coding-guidelines/quality/accessibility/)のページで扱います。画像の扱いは[画像](/coding-guidelines/common/images/)のページを参照してください。
 
 多くのルールは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)で決めたMarkuplintの設定で検出します。
 
