@@ -51,9 +51,11 @@ Reactのページは、H2を分類（コンポーネント設計 / Hooks / 状�
 | 1. はじめに | `src/content/docs/about/` |
 | 2. 共通ルール | `src/content/docs/common/` |
 | 3. 技術別ルール | `src/content/docs/tech/` |
-| 4. 品質と開発フロー | `src/content/docs/quality/`（AIエージェントへの指示方法を含む） |
+| 4. 品質 | `src/content/docs/quality/` |
+| 5. 開発フロー | `src/content/docs/workflow/` |
 
 - 2章は言語やフレームワークに依らないルール、3章は技術ごとのルールを置く（1技術1ページ）
+- 4章は成果物が満たす基準とその確かめ方、5章は変更を進めて取り込む手順を置く
 - ファイル名（URL）は英語のケバブケース、`title` は日本語にする
 - `base` が `/coding-guidelines` のため、本文中の内部リンクは `/coding-guidelines/` から始める
 

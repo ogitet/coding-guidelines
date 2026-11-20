@@ -51,7 +51,7 @@ HTML、CSS、JavaScriptの機能は、[Baseline](https://web.dev/baseline)を基
 - キーボード
 - スクリーンリーダーなどの支援技術
 
-ホバーしないと表示されない情報や、キーボードで操作できない部品を作りません。詳しくは[アクセシビリティ](/coding-guidelines/common/accessibility/)に書きます。
+ホバーしないと表示されない情報や、キーボードで操作できない部品を作りません。詳しくは[アクセシビリティ](/coding-guidelines/quality/accessibility/)に書きます。
 
 ## ユーザーの設定
 

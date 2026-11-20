@@ -5,7 +5,7 @@ description: HTMLの書き方。文書の基本構造とメタデータ、仕様
 
 HTMLの書き方を決めます。JSXでマークアップを書く場合も、このページのルールに従います。
 
-要素の選び方、ARIA、`lang` 属性、ページのタイトル、見出し、フォームのラベルなど、アクセシビリティに関わるルールは[アクセシビリティ](/coding-guidelines/common/accessibility/)のページで扱います。画像の扱いは[画像](/coding-guidelines/common/images/)のページを参照してください。
+要素の選び方、ARIA、`lang` 属性、ページのタイトル、見出し、フォームのラベルなど、アクセシビリティに関わるルールは[アクセシビリティ](/coding-guidelines/quality/accessibility/)のページで扱います。画像の扱いは[画像](/coding-guidelines/common/images/)のページを参照してください。
 
 このページのルールのうち、Markuplintで検出できるものは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)で決めた設定に次の内容を加えて有効にします。
 
@@ -91,7 +91,7 @@ HTMLファイルの1行目に `<!doctype html>` を書きます。
 
 `viewport` の指定がないと、スマートフォンのブラウザは、パソコン向けの幅でページを描いてから縮小して表示します。文字が小さくなり、メディアクエリも意図した幅で切り替わりません。
 
-拡大を禁止する指定（`user-scalable=no` など）を加えないことは、[アクセシビリティ](/coding-guidelines/common/accessibility/#ブラウザの拡大と文字サイズの設定を妨げない)のページで決めています。
+拡大を禁止する指定（`user-scalable=no` など）を加えないことは、[アクセシビリティ](/coding-guidelines/quality/accessibility/#ブラウザの拡大と文字サイズの設定を妨げない)のページで決めています。
 
 **良い例**
 
@@ -119,7 +119,7 @@ HTMLファイルの1行目に `<!doctype html>` を書きます。
 
 `description` は、検索結果やSNSでの共有のときに、ページの説明として表示されることがあります。ページごとに内容を表す文にしておけば、検索した人が、開く前にそのページが目的に合うかを判断できます。全ページで同じ文を使うと、どのページも同じに見え、説明の役に立ちません。
 
-ページのタイトルの付け方は、[アクセシビリティ](/coding-guidelines/common/accessibility/#ページごとに内容を表すタイトルを付ける)のページを参照してください。
+ページのタイトルの付け方は、[アクセシビリティ](/coding-guidelines/quality/accessibility/#ページごとに内容を表すタイトルを付ける)のページを参照してください。
 
 **良い例**
 

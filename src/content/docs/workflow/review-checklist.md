@@ -5,7 +5,7 @@ description: プルリクエストのレビューの進め方と、レビュー�
 
 プルリクエストのレビューの進め方と、レビューで確かめる観点を決めます。前半はレビューの進め方のルール、後半の「[チェック項目](#チェック項目)」は、レビューで確かめる観点の一覧です。
 
-チェック項目は観点だけを並べ、ルールの中身は書きません。各ルールの内容と理由は、リンク先のページを参照してください。プルリクエストの作り方とマージの条件は[Git](/coding-guidelines/quality/git/)で扱います。
+チェック項目は観点だけを並べ、ルールの中身は書きません。各ルールの内容と理由は、リンク先のページを参照してください。プルリクエストの作り方とマージの条件は[Git](/coding-guidelines/workflow/git/)で扱います。
 
 ## レビューを依頼する前に、自分で差分を見直す
 
@@ -194,7 +194,7 @@ dangerouslySetInnerHTML はやめてください。
 ```md
 [必須] 閉じるボタンがアイコンだけで、名前がありません。
 スクリーンリーダーでは「ボタン」としか読み上げられず、何のボタンか分かりません。
-https://ogitet.github.io/coding-guidelines/common/accessibility/#アイコンだけのボタンやリンクに名前を付ける
+https://ogitet.github.io/coding-guidelines/quality/accessibility/#アイコンだけのボタンやリンクに名前を付ける
 ```
 
 **悪い例**
@@ -281,7 +281,7 @@ XSSの修正を確認しました。承認します。
 
 ### 目的と仕様
 
-- [ ] プルリクエストの説明に、目的、変更内容、確認したことが書かれているか（[Git](/coding-guidelines/quality/git/)）
+- [ ] プルリクエストの説明に、目的、変更内容、確認したことが書かれているか（[Git](/coding-guidelines/workflow/git/)）
 - [ ] 変更が目的を満たしているか。目的と関係のない変更が混ざっていないか
 - [ ] 何をしているかを説明できない箇所が残っていないか（[説明できないコードは承認しない](#説明できないコードは承認しない)）
 - [ ] データが0件、文字列が長い、読み込み中、エラーといった状態を扱っているか（[検証](/coding-guidelines/quality/verification/)）
@@ -305,10 +305,10 @@ XSSの修正を確認しました。承認します。
 
 ### アクセシビリティ、画像、パフォーマンス
 
-- [ ] 要素の意味、代替テキスト、ラベルと `autocomplete`、キーボード操作、コントラスト比が決まりに沿っているか（[アクセシビリティ](/coding-guidelines/common/accessibility/)）
+- [ ] 要素の意味、代替テキスト、ラベルと `autocomplete`、キーボード操作、コントラスト比が決まりに沿っているか（[アクセシビリティ](/coding-guidelines/quality/accessibility/)）
 - [ ] axeで違反がなく、キーボードだけで操作できることを確かめたか（[検証](/coding-guidelines/quality/verification/)）
 - [ ] 画像の形式、サイズ、`width` と `height`、読み込みの方法が決まりに沿っているか（[画像](/coding-guidelines/common/images/)）
-- [ ] フォント、依存パッケージ、外部のスクリプト、後から表示する要素の扱いが決まりに沿っているか（[パフォーマンス](/coding-guidelines/common/performance/)）
+- [ ] フォント、依存パッケージ、外部のスクリプト、後から表示する要素の扱いが決まりに沿っているか（[パフォーマンス](/coding-guidelines/quality/performance/)）
 
 ### テストと検証
 
@@ -318,5 +318,5 @@ XSSの修正を確認しました。承認します。
 
 ### Git
 
-- [ ] コミットメッセージが決まった形式で、1つのコミットに1つの変更だけが入っているか（[Git](/coding-guidelines/quality/git/)）
-- [ ] 作業途中のコミットが、マージの前に整えられているか（[Git](/coding-guidelines/quality/git/)）
+- [ ] コミットメッセージが決まった形式で、1つのコミットに1つの変更だけが入っているか（[Git](/coding-guidelines/workflow/git/)）
+- [ ] 作業途中のコミットが、マージの前に整えられているか（[Git](/coding-guidelines/workflow/git/)）

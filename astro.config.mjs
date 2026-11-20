@@ -39,9 +39,7 @@ export default defineConfig({
 						'common/naming',
 						'common/comments-and-docs',
 						'common/format-and-lint',
-						'common/accessibility',
 						'common/images',
-						'common/performance',
 					],
 				},
 				{
@@ -49,14 +47,17 @@ export default defineConfig({
 					items: ['tech/html', 'tech/css', 'tech/typescript', 'tech/react'],
 				},
 				{
-					label: '4. 品質と開発フロー',
+					label: '4. 品質',
 					items: [
+						'quality/accessibility',
+						'quality/performance',
 						'quality/testing',
 						'quality/verification',
-						'quality/git',
-						'quality/review-checklist',
-						'quality/agent-instructions',
 					],
+				},
+				{
+					label: '5. 開発フロー',
+					items: ['workflow/git', 'workflow/review-checklist', 'workflow/agent-instructions'],
 				},
 			],
 		}),
