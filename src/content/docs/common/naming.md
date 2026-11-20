@@ -42,7 +42,7 @@ function FetchUserProfile(user_id: string) {}
 
 ## ファイル名とディレクトリ名はケバブケースにする
 
-ファイル名とディレクトリ名は、英小文字とハイフンだけのケバブケースにします。Reactコンポーネントを定義するファイルだけは、コンポーネント名と同じパスカルケースにします。
+ファイル名とディレクトリ名は、英小文字とハイフンだけのケバブケースにします。Reactコンポーネントを定義するファイルはコンポーネント名と同じパスカルケースに、カスタムフックを定義するファイルはフック名と同じキャメルケースにします。
 
 準拠レベル：**必須**
 
@@ -50,9 +50,7 @@ function FetchUserProfile(user_id: string) {}
 
 macOSやWindowsは、標準ではファイル名の大文字と小文字を区別しません。大文字と小文字を混ぜると、ある環境では動き、別の環境では動かないimportが生まれます。記法をケバブケースにそろえておけば、この事故が起きません。
 
-Reactコンポーネントのファイルは、ファイル名とコンポーネント名が一致しているほうが探しやすいため、例外としてパスカルケースにします。
-
-このルールはOxlintの `unicorn/filename-case` で検出します。設定は[フォーマットとLint](/coding-guidelines/common/format-and-lint/)を参照してください。
+Reactコンポーネントとカスタムフックのファイルは、ファイル名と中身の名前が一致しているほうが探しやすいため、例外とします。
 
 **良い例**
 
@@ -61,7 +59,7 @@ src/
 ├── features/
 │   └── order-history/
 │       ├── OrderHistoryList.tsx
-│       ├── use-order-history.ts
+│       ├── useOrderHistory.ts
 │       └── format-order-date.ts
 └── utils/
     └── parse-query-string.ts
@@ -74,7 +72,7 @@ src/
 ├── features/
 │   └── OrderHistory/
 │       ├── orderHistoryList.tsx
-│       ├── useOrderHistory.ts
+│       ├── use_order_history.ts
 │       └── format_order_date.ts
 └── Utils/
     └── parseQueryString.ts
