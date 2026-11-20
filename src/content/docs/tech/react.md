@@ -5,7 +5,7 @@ description: Reactの書き方。コンポーネント設計、Hooks、状態管
 
 Reactの書き方を、コンポーネント設計、Hooks、状態管理とデータ取得、パフォーマンスに分けて決めます。
 
-JSXで書くマークアップは[HTML](/coding-guidelines/tech/html/)、スタイルは[CSS](/coding-guidelines/tech/css/)、型の書き方は[TypeScript](/coding-guidelines/tech/typescript/)のページに従います。アクセシビリティに関わるルールは[アクセシビリティ](/coding-guidelines/common/accessibility/)のページで扱います。コンポーネントのファイル名とディレクトリの分け方は、[命名規則](/coding-guidelines/common/naming/)と[ディレクトリ構成](/coding-guidelines/common/directory-structure/)を参照してください。
+JSXで書くマークアップは[HTML](/coding-guidelines/tech/html/)、スタイルは[CSS](/coding-guidelines/tech/css/)、型の書き方は[TypeScript](/coding-guidelines/tech/typescript/)のページに従います。アクセシビリティに関わるルールは[アクセシビリティ](/coding-guidelines/common/accessibility/)のページで扱います。コンポーネントのファイル名は、[命名規則](/coding-guidelines/common/naming/)を参照してください。
 
 このページのルールのうち、Oxlintで検出できるものは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)で決めた設定に次の内容を加えて有効にします。Hooksのルール（`react/rules-of-hooks` と `react/exhaustive-deps`）は、フォーマットとLintのページの設定で有効にしています。
 

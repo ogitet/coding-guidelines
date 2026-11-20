@@ -37,7 +37,6 @@ export default defineConfig({
 					label: '2. 共通ルール',
 					items: [
 						'common/naming',
-						'common/directory-structure',
 						'common/comments-and-docs',
 						'common/format-and-lint',
 						'common/accessibility',
