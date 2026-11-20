@@ -5,7 +5,7 @@ description: 表示と操作の速さを保つためのルール。Webフォン�
 
 表示と操作の速さを保つためのルールを決めます。
 
-速さに関わるルールのうち、画像の形式と読み込み方は[画像](/coding-guidelines/common/images/)、Reactの描画の最適化と遅延読み込みは[React](/coding-guidelines/tech/react/#パフォーマンス)、スクリプトの読み込み方（`defer` / `type="module"`）は[HTML](/coding-guidelines/tech/html/)、速さの計測の方法と目標は[検証](/coding-guidelines/quality/verification/#表示の速さはlighthouseで計測しcore-web-vitalsの良好を目指す)のページで扱います。
+速さに関わるルールのうち、画像の形式と読み込み方は[画像](/coding-guidelines/common/images/)、Reactの描画の最適化と遅延読み込みは[React](/coding-guidelines/tech/react/#パフォーマンス)、速さの計測の方法と目標は[検証](/coding-guidelines/quality/verification/#表示の速さはlighthouseで計測しcore-web-vitalsの良好を目指す)のページで扱います。
 
 ## 速さのための変更は、計測してから行う
 
