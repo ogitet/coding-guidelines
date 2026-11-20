@@ -5,7 +5,7 @@ template: splash
 hero:
   tagline: HTML / CSS / TypeScript / React を対象とした個人用コーディング規約
   actions:
-    - text: この規約について
+    - text: はじめに
       link: /coding-guidelines/about/purpose-and-scope/
       icon: right-arrow
     - text: AIに読ませる
@@ -21,27 +21,22 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 <CardGrid>
 	<LinkCard
-		title="1. この規約について"
-		description="目的と対象範囲、準拠レベルの定義、改訂履歴"
+		title="1. はじめに"
+		description="目的と対象範囲、準拠レベル、設計で大事にすること、対応ブラウザとデバイス、改訂履歴"
 		href="/coding-guidelines/about/purpose-and-scope/"
 	/>
 	<LinkCard
-		title="2. 基本方針"
-		description="設計で大事にすること、対応ブラウザとデバイス"
-		href="/coding-guidelines/principles/design-values/"
-	/>
-	<LinkCard
-		title="3. 共通ルール"
+		title="2. 共通ルール"
 		description="命名、ディレクトリ構成、コメント、フォーマットとLint、アクセシビリティ、画像、パフォーマンス"
 		href="/coding-guidelines/common/naming/"
 	/>
 	<LinkCard
-		title="4. 技術別ルール"
+		title="3. 技術別ルール"
 		description="HTML、CSS、TypeScript、React"
 		href="/coding-guidelines/tech/html/"
 	/>
 	<LinkCard
-		title="5. 品質と運用"
+		title="4. 品質と開発フロー"
 		description="テスト方針、検証、Git、レビューのチェックリスト、AIエージェントへの指示方法"
 		href="/coding-guidelines/quality/testing/"
 	/>

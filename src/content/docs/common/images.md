@@ -22,7 +22,7 @@ Webページに使う画像の形式、サイズ、読み込み方、SVGの扱�
 
 AVIFは、JPEGやPNGと同じ画質でもファイルサイズを大きく減らせ、透過も扱えます。ロゴやアイコンのような図形はSVGにすれば、どれだけ拡大してもぼやけず、ファイルも小さく済みます。アニメーションGIFは、同じ内容の動画に比べてファイルサイズが何倍にもなるため使いません。
 
-[対応ブラウザ](/coding-guidelines/principles/browser-support/)にAVIFを表示できない環境が含まれる場合は、`picture` 要素でWebPかJPEGも合わせて出します。
+[対応ブラウザ](/coding-guidelines/about/browser-support/)にAVIFを表示できない環境が含まれる場合は、`picture` 要素でWebPかJPEGも合わせて出します。
 
 **良い例**
 

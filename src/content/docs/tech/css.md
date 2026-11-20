@@ -509,7 +509,7 @@ body {
 
 ## ベンダープレフィックスを手で書かない
 
-`-webkit-` などのベンダープレフィックスは手で書きません。必要なプレフィックスは、ビルドツール（Lightning CSSやAutoprefixerなど）で、[対応ブラウザ](/coding-guidelines/principles/browser-support/)に合わせて自動的に付けます。
+`-webkit-` などのベンダープレフィックスは手で書きません。必要なプレフィックスは、ビルドツール（Lightning CSSやAutoprefixerなど）で、[対応ブラウザ](/coding-guidelines/about/browser-support/)に合わせて自動的に付けます。
 
 準拠レベル：**推奨**
 

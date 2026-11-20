@@ -24,22 +24,17 @@ export default defineConfig({
 			plugins: [starlightLlmsTxt()],
 			sidebar: [
 				{
-					label: '1. この規約について',
+					label: '1. はじめに',
 					items: [
 						'about/purpose-and-scope',
 						'about/compliance-levels',
+						'about/design-values',
+						'about/browser-support',
 						'about/changelog',
 					],
 				},
 				{
-					label: '2. 基本方針',
-					items: [
-						'principles/design-values',
-						'principles/browser-support',
-					],
-				},
-				{
-					label: '3. 共通ルール',
+					label: '2. 共通ルール',
 					items: [
 						'common/naming',
 						'common/directory-structure',
@@ -51,11 +46,11 @@ export default defineConfig({
 					],
 				},
 				{
-					label: '4. 技術別ルール',
+					label: '3. 技術別ルール',
 					items: ['tech/html', 'tech/css', 'tech/typescript', 'tech/react'],
 				},
 				{
-					label: '5. 品質と運用',
+					label: '4. 品質と開発フロー',
 					items: [
 						'quality/testing',
 						'quality/verification',
