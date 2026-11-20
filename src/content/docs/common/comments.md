@@ -3,7 +3,7 @@ title: コメント
 description: コードに書くコメントとJSDocの書き方。
 ---
 
-コードに書くコメントとJSDocの書き方を決めます。規約から外れる箇所に書くコメントは[準拠レベルの定義](/coding-guidelines/about/compliance-levels/)、Lintのルールを無効にするコメントは[フォーマットとLint](/coding-guidelines/common/format-and-lint/)のページで扱います。
+コードに書くコメントとJSDocの書き方を決めます。規約から外れる箇所に書くコメントは[準拠レベル](/coding-guidelines/about/compliance/)、Lintのルールを無効にするコメントは[フォーマットとLint](/coding-guidelines/common/format-and-lint/)のページで扱います。
 
 ## コメントは日本語で書く
 

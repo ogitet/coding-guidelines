@@ -27,9 +27,9 @@ export default defineConfig({
 					label: '1. はじめに',
 					items: [
 						'about/purpose-and-scope',
-						'about/compliance-levels',
-						'about/design-values',
-						'about/browser-support',
+						'about/compliance',
+						'about/principles',
+						'about/environment',
 						'about/changelog',
 					],
 				},
