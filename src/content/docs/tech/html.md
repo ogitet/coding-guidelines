@@ -11,13 +11,10 @@ HTMLの書き方を決めます。JSXでマークアップを書く場合も、�
 
 ```json title=".markuplintrc（追加分）"
 {
-  "rules": {
-    "end-tag": true
-  },
   "nodeRules": [
     {
       "selector": "button",
-      "rules": { "required-attr": "type" }
+      "rules": { "require-attr": "type" }
     }
   ]
 }
@@ -344,7 +341,7 @@ SVGなら、1つのファイルでどの解像度でもぼやけずに表示で�
 
 終了タグを省略すると、要素がどこで終わるかを、仕様の細かな規則から読み取る必要があります。書き換えたときに意図せず入れ子が変わる原因にもなります。終了タグをすべて書いておけば、構造が目で見て分かります。
 
-このルールは、Markuplintの `end-tag` で検出します。
+このルールは、Markuplintで検出します。
 
 **良い例**
 
