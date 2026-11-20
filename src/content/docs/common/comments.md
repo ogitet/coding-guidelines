@@ -13,9 +13,7 @@ description: コードに書くコメントとJSDocの書き方。
 
 **理由**
 
-コメントは、コードだけでは伝わらない意図を正確に伝えるためのものです。書く人と読む人が日本語を使うなら、日本語のほうが細かいニュアンスまで誤解なく書けます。コミットメッセージやプルリクエストとも言語がそろいます。
-
-参加するプロジェクトのコメントが英語で書かれている場合は、そちらに合わせます。
+書く人と読む人が日本語を使うなら、日本語のほうが意図を誤解なく伝えられ、コミットメッセージやプルリクエストとも言語がそろいます。参加するプロジェクトのコメントが英語で書かれている場合は、そちらに合わせます。
 
 **良い例**
 
@@ -27,44 +25,13 @@ const amount = Math.round(subtotal * (1 + TAX_RATE));
 **悪い例**
 
 ```ts
-// zeikomi no seisu de okuru
+// The payment gateway requires a tax-included integer amount
 const amount = Math.round(subtotal * (1 + TAX_RATE));
-```
-
-## コードを読めば分かることは書かない
-
-コメントには「何をしているか」ではなく、「なぜそうしているか」を書きます。コードを読めば分かる処理の説明は書きません。
-
-準拠レベル：**推奨**
-
-**理由**
-
-処理を言い換えただけのコメントは、読む量を増やすだけで情報を足しません。コードを変えたときに直し忘れると、コードと食い違って誤解のもとになります。コードから読み取れないのは、その書き方を選んだ理由、外部の仕様による制約、あえて避けた別の方法です。
-
-「何をしているか」を説明したくなったら、まず変数名や関数名で表せないかを考えます。
-
-**良い例**
-
-```ts
-// 一覧APIは最大100件しか返さないため、100件ずつ分けて取得する
-for (const chunk of splitIntoChunks(ids, 100)) {
-  results.push(...(await fetchItems(chunk)));
-}
-```
-
-**悪い例**
-
-```ts
-// idsを100件ずつに分ける
-for (const chunk of splitIntoChunks(ids, 100)) {
-  // fetchItemsを呼んでresultsに追加する
-  results.push(...(await fetchItems(chunk)));
-}
 ```
 
 ## exportする関数、コンポーネント、型にはJSDocを書く
 
-ほかのファイルから使う関数、コンポーネント、型には、JSDoc（`/** */`）で役割を書きます。名前と型だけでは伝わらない引数や戻り値は、`@param` と `@returns` で説明します。
+ほかのファイルから使う関数、コンポーネント、型には、JSDoc（`/** */`）で役割を書きます。名前と型だけでは伝わらない引数や戻り値は、`@param` と `@returns` で説明します。`{string}` のような型は書きません。
 
 準拠レベル：**推奨**
 
@@ -72,7 +39,7 @@ for (const chunk of splitIntoChunks(ids, 100)) {
 
 JSDocはエディタで使う側に表示されるため、定義を開かなくても使い方が分かります。特に、名前と型からは分からない前提（単位、範囲、空のときの扱い、例外を投げる条件など）は、JSDocに書いておかないと使う側が誤ります。
 
-内容が名前から明らかな引数まで `@param` を書く必要はありません。
+JSDocに型を書くと、型注釈と2か所に書くことになり、片方だけを変えたときに食い違います。
 
 **良い例**
 
@@ -90,64 +57,14 @@ export function calculateTaxIncludedPrice(price: number, taxRate: number) {
 **悪い例**
 
 ```ts
-// 計算する
+/**
+ * 計算する
+ * @param {number} price
+ * @param {number} taxRate
+ */
 export function calculateTaxIncludedPrice(price: number, taxRate: number) {
   return Math.floor(price * (1 + taxRate));
 }
-```
-
-## JSDocに型を書かない
-
-TypeScriptでは、JSDocの `@param` や `@returns` に `{string}` のような型を書きません。型はTypeScriptの型注釈だけに書きます。
-
-準拠レベル：**必須**
-
-**理由**
-
-型を2か所に書くと、片方だけを変えたときに食い違います。TypeScriptが参照するのは型注釈のほうなので、JSDocの型は読む人を誤解させるだけです。
-
-**良い例**
-
-```ts
-/**
- * @param userId 取得するユーザーのID
- * @returns ユーザーが存在しない場合は null
- */
-export async function fetchUser(userId: string): Promise<User | null> {}
-```
-
-**悪い例**
-
-```ts
-/**
- * @param {number} userId 取得するユーザーのID
- * @returns {User} ユーザー
- */
-export async function fetchUser(userId: string): Promise<User | null> {}
-```
-
-## コードを変えたらコメントも直す
-
-コードを変えたときは、そのコードに関係するコメントとJSDocも同じコミットで直します。
-
-準拠レベル：**必須**
-
-**理由**
-
-コードと食い違ったコメントは、コメントがない場合より害があります。読む人はコメントを信じて誤った前提でコードを書いてしまいます。レビューでも、変更した行の近くのコメントが正しいままかを確かめます。
-
-**良い例**
-
-```ts
-// 送料無料の基準額。キャンペーン期間中は3,000円に下げている
-const FREE_SHIPPING_THRESHOLD = 3000;
-```
-
-**悪い例**
-
-```ts
-// 送料無料の基準額は5,000円
-const FREE_SHIPPING_THRESHOLD = 3000;
 ```
 
 ## コメントアウトしたコードを残さない
