@@ -215,7 +215,7 @@ await retry(() => createPayment(order), { times: 3 });
 
 READMEは、リポジトリを初めて開いた人とAIが最初に読むファイルです。ここに手順がそろっていれば、口頭の説明なしで開発を始められます。手順が変わったら、変更と同じプルリクエストでREADMEも直します。
 
-AIに向けた作業上の指示は、READMEではなく `AGENTS.md` に書きます。書き方は[AIエージェントへの指示方法](/coding-guidelines/ai/agent-instructions/)を参照してください。
+AIに向けた作業上の指示は、READMEではなく `AGENTS.md` に書きます。書き方は[AIエージェントへの指示方法](/coding-guidelines/quality/agent-instructions/)を参照してください。
 
 **良い例**
 

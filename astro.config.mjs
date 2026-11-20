@@ -61,11 +61,8 @@ export default defineConfig({
 						'quality/verification',
 						'quality/git',
 						'quality/review-checklist',
+						'quality/agent-instructions',
 					],
-				},
-				{
-					label: '6. AIとの協働',
-					items: ['ai/agent-instructions'],
 				},
 			],
 		}),
