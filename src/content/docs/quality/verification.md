@@ -12,7 +12,7 @@ description: 実装した画面を、ブラウザと実機、HTMLバリデータ
 | アクセシビリティ | axe、キーボード操作、スクリーンリーダー、拡大表示 |
 | 表示の速さ | Lighthouse |
 
-自動テスト（単体、E2E、ビジュアルリグレッション）は[テスト](/coding-guidelines/quality/testing/)、守るべきアクセシビリティのルールは[アクセシビリティ](/coding-guidelines/quality/accessibility/)のページで扱います。確かめた内容をプルリクエストにどう書くかは[Git](/coding-guidelines/workflow/git/)を参照してください。
+自動テスト（単体、E2E）は[テスト](/coding-guidelines/quality/testing/)、守るべきアクセシビリティのルールは[アクセシビリティ](/coding-guidelines/quality/accessibility/)のページで扱います。確かめた内容をプルリクエストにどう書くかは[Git](/coding-guidelines/workflow/git/)を参照してください。
 
 ## 対応するすべてのブラウザで表示と操作を確かめる
 

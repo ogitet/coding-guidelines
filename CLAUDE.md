@@ -17,7 +17,7 @@
 - フォーマットとLint：Oxfmt（フォーマット）、Oxlint（JavaScript / TypeScript）、Markuplint（HTML / JSX）、Stylelint（CSS）
 - 機械的に判定できるルールはLintの設定に落とす
 - 技術スタックは app-template リポジトリ（https://github.com/ogitet/app-template）を正とし、規約には書かない
-- テスト：Vitest（単体）、Testing Library（コンポーネント）、Playwright（E2E、ビジュアルリグレッション）
+- テスト：Vitest（単体）、Playwright（E2E）
 - Git：GitHub Flow、マージはマージコミット、コミットメッセージはConventional Commits（要約は日本語）
 - 主な対象技術：HTML / CSS / TypeScript / React
 
@@ -67,7 +67,7 @@ Reactのページは、H2を分類（コンポーネント設計 / Hooks / 状�
 - 画像のページは、形式、サイズと圧縮、`srcset` / `picture`、`width` / `height`、遅延読み込み、SVGの扱いを扱う
 - アクセシビリティに関わるルールはアクセシビリティのページに書き、HTML / CSS / Reactのページからはリンクする
 - 対応するブラウザとデバイスの範囲は「対応環境」で決め、それをどう確かめるか（実機確認、HTMLバリデータ、axe、Lighthouse、キーボード操作など）は「検証」に書く
-- 自動テスト（単体、E2E、ビジュアルリグレッション）は「テスト」に書く
+- 自動テスト（単体、E2E）は「テスト」に書く
 - 識別子・ファイル・ディレクトリの名前の記法は「命名規則」に書く。CSSのクラス名の付け方はCSSのページに書く
 - 速さに関わるルールは「パフォーマンス」に書く。ただし画像は画像のページ、Reactの描画の最適化はReactのページ、計測の方法と目標は「検証」に書く
 
