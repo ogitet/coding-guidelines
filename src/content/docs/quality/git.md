@@ -5,7 +5,7 @@ description: ブランチの運用、コミットメッセージ、プルリク�
 
 Gitのブランチの運用、コミットの単位とメッセージ、プルリクエストの作り方、マージの方法を決めます。ブランチの運用は[GitHub Flow](https://docs.github.com/ja/get-started/using-github/github-flow)、コミットメッセージは[Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/)に従います。
 
-プルリクエストをレビューするときの進め方は[レビューのチェックリスト](/coding-guidelines/quality/review-checklist/)、秘密情報の扱いは[セキュリティ](/coding-guidelines/quality/security/)のページで扱います。
+プルリクエストをレビューするときの進め方は[レビューのチェックリスト](/coding-guidelines/quality/review-checklist/)のページで扱います。
 
 ## mainブランチから作業ブランチを切って作業する
 
@@ -191,7 +191,7 @@ feat: 離島の送料を追加、送料の計算を整理、ついでにイン�
 
 **理由**
 
-生成物はソースコードから作り直せるため、コミットしても差分が大きくなるだけです。手で編集されて、ソースコードと食い違う原因にもなります。lockfileは生成物ではなく、どのバージョンの依存パッケージを使うかの記録なので、コミットします（理由は[セキュリティ](/coding-guidelines/quality/security/)を参照）。
+生成物はソースコードから作り直せるため、コミットしても差分が大きくなるだけです。手で編集されて、ソースコードと食い違う原因にもなります。lockfileは生成物ではなく、どのバージョンの依存パッケージを使うかの記録なので、コミットします。
 
 **良い例**
 

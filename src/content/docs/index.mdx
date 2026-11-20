@@ -22,17 +22,17 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 <CardGrid>
 	<LinkCard
 		title="1. この規約について"
-		description="目的と対象範囲、準拠レベルの定義、ライセンス、改訂履歴"
+		description="目的と対象範囲、準拠レベルの定義、改訂履歴"
 		href="/coding-guidelines/about/purpose-and-scope/"
 	/>
 	<LinkCard
 		title="2. 基本方針"
-		description="設計で大事にすること、対応ブラウザとデバイス、技術スタックと選定理由"
+		description="設計で大事にすること、対応ブラウザとデバイス"
 		href="/coding-guidelines/principles/design-values/"
 	/>
 	<LinkCard
 		title="3. 共通ルール"
-		description="命名、ディレクトリ構成、コメント、フォーマットとLint、エラー処理、アクセシビリティ、画像、パフォーマンス"
+		description="命名、ディレクトリ構成、コメント、フォーマットとLint、アクセシビリティ、画像、パフォーマンス"
 		href="/coding-guidelines/common/naming/"
 	/>
 	<LinkCard
@@ -42,19 +42,14 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 	/>
 	<LinkCard
 		title="5. 品質と運用"
-		description="テスト方針、検証、Git、セキュリティ、レビューのチェックリスト"
+		description="テスト方針、検証、Git、レビューのチェックリスト、AIエージェントへの指示方法"
 		href="/coding-guidelines/quality/testing/"
-	/>
-	<LinkCard
-		title="6. AIとの協働"
-		description="AIエージェントへの指示方法、AIが書いたコードのレビュー基準"
-		href="/coding-guidelines/ai/agent-instructions/"
 	/>
 </CardGrid>
 
 ## AIに読ませる場合
 
-規約の全文を、AIが読みやすいテキスト形式でも公開しています。AIにコードを書かせるときは、プロジェクトの `AGENTS.md` などでこれらのURLを参照させます。指示の書き方は[AIエージェントへの指示方法](/coding-guidelines/ai/agent-instructions/)を参照してください。
+規約の全文を、AIが読みやすいテキスト形式でも公開しています。AIにコードを書かせるときは、プロジェクトの `AGENTS.md` などでこれらのURLを参照させます。指示の書き方は[AIエージェントへの指示方法](/coding-guidelines/quality/agent-instructions/)を参照してください。
 
 <CardGrid>
 	<LinkCard
