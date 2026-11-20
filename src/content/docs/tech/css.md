@@ -1,51 +1,17 @@
 ---
 title: CSS
-description: CSSの書き方。クラス名の付け方（CSS ModulesとBEM）、セレクタと詳細度、値の管理、レイアウトとレスポンシブの書き方を決めます。
+description: CSSの書き方。スタイルの置き方とクラス名の付け方、カスケードレイヤー、セレクタと詳細度、値の管理、レスポンシブの書き方を決めます。
 ---
 
 CSSの書き方を決めます。クラス名の付け方もこのページで扱います。
 
 フォーカスの表示、コントラスト比、文字サイズの単位、動きを減らす設定など、アクセシビリティに関わるルールは[アクセシビリティ](/coding-guidelines/quality/accessibility/)のページで扱います。
 
-クラス名の付け方は、Reactで作る場合と、それ以外の場合とで分けます。
-
-| 場合 | 方法 | クラス名の例 |
-| :-- | :-- | :-- |
-| Reactで作る | CSS Modules | `.title`、`.itemList` |
-| Reactを使わない | BEM | `.order-card__title--highlighted` |
-
-このページのルールのうち、Stylelintで検出できるものは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)で決めた設定に次の内容を加えて有効にします。
-
-```json title=".stylelintrc.json（追加分）"
-{
-  "rules": {
-    "selector-max-id": 0,
-    "declaration-no-important": true,
-    "selector-no-qualifying-type": [true, { "ignore": ["attribute"] }],
-    "selector-max-compound-selectors": 3,
-    "max-nesting-depth": 2,
-    "selector-class-pattern": [
-      "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$",
-      { "message": "クラス名はBEM（block__element--modifier）の形にしてください" }
-    ]
-  },
-  "overrides": [
-    {
-      "files": ["**/*.module.css"],
-      "rules": {
-        "selector-class-pattern": [
-          "^[a-z][a-zA-Z0-9]*$",
-          { "message": "CSS Modulesのクラス名はキャメルケースにしてください" }
-        ]
-      }
-    }
-  ]
-}
-```
+多くのルールは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)で決めたStylelintの設定で検出します。
 
 ## Reactではスタイルをコンポーネントごとに閉じ込める
 
-Reactで作る場合は、CSS Modulesを使い、コンポーネントごとにCSSファイルを分けます。CSSファイルはコンポーネントと同じディレクトリに置き、名前はコンポーネントと同じにして `.module.css` を付けます。
+Reactで作る場合は、CSS Modulesを使い、コンポーネントごとにCSSファイルを分けます。CSSファイルはコンポーネントと同じディレクトリに置き、名前はコンポーネントと同じにして `.module.css` を付けます。変数や要素そのものの見た目など、全体にかかるスタイルだけを `global.css` に書きます。
 
 準拠レベル：**推奨**
 
@@ -62,7 +28,7 @@ features/order-history/
 ```
 
 ```tsx title="OrderCard.tsx"
-import styles from "./OrderCard.module.css";
+import styles from './OrderCard.module.css';
 
 export function OrderCard({ order }: OrderCardProps) {
   return (
@@ -81,7 +47,7 @@ src/styles/
 ```
 
 ```tsx title="OrderCard.tsx"
-import "../../styles/global.css";
+import '../../styles/global.css';
 
 export function OrderCard({ order }: OrderCardProps) {
   return (
@@ -92,17 +58,15 @@ export function OrderCard({ order }: OrderCardProps) {
 }
 ```
 
-## CSS Modulesのクラス名はキャメルケースにする
+## クラス名はキャメルケースのBEMで付ける
 
-CSS Modulesのクラス名は、キャメルケースで付けます。コンポーネントの一番外側の要素は `root` とします。BEMのような接頭辞や区切りは付けません。
+クラス名は、キャメルケースのBEM（`blockName__elementName--modifierName`）の形で付けます。CSS Modulesでは、クラス名がファイルの中で閉じているため、Blockを省いて `root`、`title`、`itemList` のように付けます。コンポーネントの一番外側の要素は `root` とします。
 
 準拠レベル：**必須**
 
 **理由**
 
-キャメルケースにすると、`styles.itemList` のように、JavaScriptのプロパティとしてそのまま書けます。ケバブケースでは `styles["item-list"]` と書く必要があり、エディタの補完も効きにくくなります。CSS Modulesではクラス名がファイルの中で閉じているため、ブロック名を付けて区別する必要はありません。
-
-このルールは、Stylelintの `selector-class-pattern` で検出します。
+キャメルケースにすると、`styles.itemList` のように、JavaScriptのプロパティとしてそのまま書けます。`global.css` のようにクラス名がページ全体で共有される場所では、Blockの名前を先頭に付けておけば、別の部品のスタイルと衝突せず、クラス名を見るだけでどの部品のスタイルかが分かります。
 
 **良い例**
 
@@ -111,12 +75,13 @@ CSS Modulesのクラス名は、キャメルケースで付けます。コンポ
   padding: var(--space-md);
 }
 
-.title {
-  font-size: var(--font-size-lg);
-}
-
 .itemList {
   display: grid;
+}
+```
+
+```css title="global.css"
+.siteHeader__nav--compact {
   gap: var(--space-sm);
 }
 ```
@@ -128,70 +93,69 @@ CSS Modulesのクラス名は、キャメルケースで付けます。コンポ
   padding: var(--space-md);
 }
 
-.order-card__title {
-  font-size: var(--font-size-lg);
-}
-
 .item_list {
   display: grid;
+}
+```
+
+```css title="global.css"
+.site-header__nav--compact {
   gap: var(--space-sm);
 }
 ```
 
-## Reactを使わない場合はBEMでクラス名を付ける
+## スタイルはカスケードレイヤーに入れる
 
-Reactを使わない場合は、BEMの形でクラス名を付けます。部品の名前（Block）、部品の中の要素（Element）、変化形（Modifier）を `block__element--modifier` の形でつなぎ、それぞれの名前はケバブケースにします。
+すべてのスタイルを、`reset`、`base`、`components`、`utilities` のいずれかのカスケードレイヤーに入れます。レイヤーの順は `global.css` の冒頭で宣言し、コンポーネントのスタイルは `components` に入れます。
 
 準拠レベル：**必須**
 
 **理由**
 
-CSS Modulesを使わない場合、クラス名はページ全体で共有されます。BEMで部品の名前を必ず先頭に付けておけば、別の部品のスタイルと衝突せず、クラス名を見るだけでどの部品のスタイルかが分かります。
-
-Elementの中のElementは作らず、`block__element__child` のようにつなげません。部品の構造が変わるたびにクラス名を変えることになるためです。
-
-このルールは、Stylelintの `selector-class-pattern` で検出します。
+カスケードレイヤーは、詳細度より先にレイヤーの順で優先が決まります。後ろのレイヤーのスタイルが必ず勝つため、上書きのために詳細度を上げる必要がなくなります。レイヤーの外に書いたスタイルはどのレイヤーにも勝ってしまうため、必ずどれかに入れます。
 
 **良い例**
 
-```html
-<article class="order-card order-card--highlighted">
-  <h3 class="order-card__title">注文番号 1024</h3>
-  <ul class="order-card__items">
-    <li class="order-card__item">…</li>
-  </ul>
-</article>
+```css title="global.css"
+@layer reset, base, components, utilities;
+```
+
+```css title="OrderCard.module.css"
+@layer components {
+  .root {
+    padding: var(--space-md);
+  }
+}
 ```
 
 **悪い例**
 
-```html
-<article class="orderCard highlighted">
-  <h3 class="title">注文番号 1024</h3>
-  <ul class="order-card__items">
-    <li class="order-card__items__item">…</li>
-  </ul>
-</article>
+```css title="OrderCard.module.css"
+/* レイヤーの外に書いている */
+.root {
+  padding: var(--space-md);
+}
 ```
 
-## IDセレクタを使わない
+## IDセレクタと!importantを使わない
 
-スタイルを当てる要素は、クラスで選びます。IDセレクタは使いません。
+スタイルを当てる要素は、クラスで選びます。IDセレクタと `!important` は使いません。上書きできないときは、レイヤーやセレクタの詳細度を見直します。
 
 準拠レベル：**必須**
 
 **理由**
 
-IDセレクタは詳細度が非常に高く、クラスで書いたスタイルでは上書きできません。上書きのためにさらに詳細度を上げることになり、スタイルの管理が難しくなります。`id` 属性は、ラベルやARIAとの関連付け、ページ内リンクのために使います。
-
-このルールは、Stylelintの `selector-max-id` で検出します。
+IDセレクタは詳細度が非常に高く、`!important` を付けたスタイルは通常のスタイルで上書きできません。上書きするためにさらに詳細度を上げたり、別の場所にも `!important` を付けたりすることになり、どのスタイルが効いているのかを追えなくなります。`id` 属性は、ラベルやARIAとの関連付け、ページ内リンクのために使います。
 
 **良い例**
 
 ```css
-.site-header {
+.siteHeader {
   position: sticky;
-  inset-block-start: 0;
+}
+
+.button--danger {
+  background-color: var(--color-danger);
 }
 ```
 
@@ -200,7 +164,10 @@ IDセレクタは詳細度が非常に高く、クラスで書いたスタイル
 ```css
 #header {
   position: sticky;
-  inset-block-start: 0;
+}
+
+.button--danger {
+  background-color: var(--color-danger) !important;
 }
 ```
 
@@ -212,38 +179,32 @@ IDセレクタは詳細度が非常に高く、クラスで書いたスタイル
 
 **理由**
 
-セレクタが長くなるほど、HTMLの構造に依存し、構造を少し変えただけでスタイルが外れます。詳細度も上がるため、変化形のスタイルで上書きしにくくなります。リセットや基本のスタイルのように、後から必ず上書きされるものは `:where()` で詳細度を0にします。
-
-このルールは、Stylelintの `selector-no-qualifying-type`、`selector-max-compound-selectors`、`max-nesting-depth` で検出します。
+セレクタが長くなるほど、HTMLの構造に依存し、構造を少し変えただけでスタイルが外れます。詳細度も上がるため、変化形のスタイルで上書きしにくくなります。
 
 **良い例**
 
 ```css
-.order-card__title {
+.orderCard__title {
   font-weight: bold;
 }
 
-.order-card__link {
+.orderCard__link {
   color: var(--color-link);
 
   &:hover {
     text-decoration: none;
   }
 }
-
-:where(ul, ol) {
-  padding-inline-start: 0;
-}
 ```
 
 **悪い例**
 
 ```css
-.order-history .order-list article.order-card div h3 {
+.orderHistory .orderList article.orderCard div h3 {
   font-weight: bold;
 }
 
-ul.order-card__links {
+ul.orderCard__links {
   & li {
     & a {
       &:hover {
@@ -251,42 +212,6 @@ ul.order-card__links {
       }
     }
   }
-}
-```
-
-## !importantを使わない
-
-`!important` は使いません。上書きできないときは、セレクタの詳細度や記述の順番を見直します。
-
-準拠レベル：**必須**
-
-**理由**
-
-`!important` を付けたスタイルは、通常のスタイルでは上書きできなくなります。上書きするために別の場所にも `!important` を付けることになり、どのスタイルが効いているのかを追えなくなります。
-
-このルールは、Stylelintの `declaration-no-important` で検出します。
-
-**良い例**
-
-```css
-.button {
-  background-color: var(--color-primary);
-}
-
-.button--danger {
-  background-color: var(--color-danger);
-}
-```
-
-**悪い例**
-
-```css
-.button {
-  background-color: var(--color-primary) !important;
-}
-
-.button--danger {
-  background-color: var(--color-danger) !important;
 }
 ```
 
@@ -303,7 +228,7 @@ ul.order-card__links {
 **良い例**
 
 ```css
-.menu-button[aria-expanded="true"] {
+.menuButton[aria-expanded="true"] {
   background-color: var(--color-selected);
 }
 
@@ -319,7 +244,7 @@ ul.order-card__links {
 **悪い例**
 
 ```css
-.menu-button.is-open {
+.menuButton.is-open {
   background-color: var(--color-selected);
 }
 
@@ -354,7 +279,7 @@ ul.order-card__links {
   --z-index-dialog: 200;
 }
 
-.order-card {
+.orderCard {
   padding: var(--space-md);
   color: var(--color-text);
 }
@@ -363,12 +288,12 @@ ul.order-card__links {
 **悪い例**
 
 ```css
-.order-card {
+.orderCard {
   padding: 16px;
   color: #1a1a1a;
 }
 
-.site-header {
+.siteHeader {
   z-index: 9999;
 }
 ```
@@ -386,7 +311,7 @@ ul.order-card__links {
 **良い例**
 
 ```css
-.order-card {
+.orderCard {
   margin-block-end: var(--space-md);
   padding-inline: var(--space-md);
   max-inline-size: 40rem;
@@ -396,45 +321,11 @@ ul.order-card__links {
 **悪い例**
 
 ```css
-.order-card {
+.orderCard {
   margin-bottom: var(--space-md);
   padding-left: var(--space-md);
   padding-right: var(--space-md);
   max-width: 40rem;
-}
-```
-
-## レイアウトはFlexboxとGridで組む
-
-要素を並べるレイアウトは、FlexboxかGridで組みます。`float` や、`position: absolute` での配置で並べません。要素の間隔は `gap` で作ります。
-
-準拠レベル：**推奨**
-
-**理由**
-
-`float` は本来、文章の中に画像を回り込ませるためのものです。レイアウトに使うと、回り込みの解除などの余計な記述が必要になります。`position: absolute` で配置した要素は、内容の量が変わると重なります。Flexbox、Gridと `gap` を使えば、内容の量や画面の幅が変わっても崩れにくいレイアウトを、短い記述で作れます。
-
-**良い例**
-
-```css
-.product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: var(--space-md);
-}
-```
-
-**悪い例**
-
-```css
-.product-list__item {
-  float: left;
-  width: 33.333%;
-  margin-right: 16px;
-}
-
-.product-list__item:nth-child(3n) {
-  margin-right: 0;
 }
 ```
 
@@ -448,18 +339,16 @@ ul.order-card__links {
 
 狭い画面では要素を縦に並べるだけのことが多く、基準にしたほうが記述が少なく済みます。範囲の構文は、`min-width` と `max-width` の境目の値がどちらに含まれるかを、不等号で読み取れます。コンテナクエリを使えば、同じ部品を広い本文にも狭いサイドバーにも置けます。
 
-範囲の構文で書くことは、Stylelintの `media-feature-range-notation` で検出します。このルールは `stylelint-config-standard` に含まれています。
-
 **良い例**
 
 ```css
-.order-history {
+.orderHistory {
   display: grid;
   gap: var(--space-md);
 }
 
 @media (width >= 48rem) {
-  .order-history {
+  .orderHistory {
     grid-template-columns: 16rem 1fr;
   }
 }
@@ -468,113 +357,14 @@ ul.order-card__links {
 **悪い例**
 
 ```css
-.order-history {
+.orderHistory {
   display: grid;
   grid-template-columns: 16rem 1fr;
 }
 
 @media (max-width: 767px) {
-  .order-history {
+  .orderHistory {
     grid-template-columns: 1fr;
   }
-}
-```
-
-## line-heightには単位を付けない
-
-`line-height` は、`1.6` のように単位を付けない数値で指定します。
-
-準拠レベル：**推奨**
-
-**理由**
-
-単位を付けた `line-height` は、親要素で計算した値がそのまま子要素に引き継がれます。子要素の文字サイズが大きいと、行の高さが足りずに行が重なります。単位を付けない数値なら、それぞれの要素の文字サイズに対する倍率として計算されます。
-
-**良い例**
-
-```css
-body {
-  line-height: 1.6;
-}
-```
-
-**悪い例**
-
-```css
-body {
-  font-size: 1rem;
-  line-height: 1.6rem;
-}
-```
-
-## ベンダープレフィックスを手で書かない
-
-`-webkit-` などのベンダープレフィックスは手で書きません。必要なプレフィックスは、ビルドツール（Lightning CSSやAutoprefixerなど）で、[対応ブラウザ](/coding-guidelines/about/environment/)に合わせて自動的に付けます。
-
-準拠レベル：**推奨**
-
-**理由**
-
-どのプロパティにプレフィックスが必要かは、対応ブラウザによって変わり、ブラウザの更新とともに不要になっていきます。手で書くと、不要になったプレフィックスが残り続けたり、必要なものが漏れたりします。
-
-このルールは、Stylelintの `property-no-vendor-prefix` などで検出します。これらのルールは `stylelint-config-standard` に含まれています。
-
-**良い例**
-
-```css
-.title {
-  user-select: none;
-}
-```
-
-**悪い例**
-
-```css
-.title {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-```
-
-## プロパティの並び順をそろえる
-
-1つのルールの中のプロパティを、決まった順番で並べます。採用する場合は、`stylelint-config-recess-order` の順番（位置、ボックス、文字、見た目の順）を使い、並べ替えはStylelintの自動修正に任せます。
-
-準拠レベル：**任意**
-
-**理由**
-
-並び順がそろっていると、あるプロパティが指定されているかを、決まった場所を見るだけで確かめられます。ただし、並び順がばらばらでも表示は変わらないため、採用するかはプロジェクトごとに決めます。
-
-**良い例**
-
-```json title=".stylelintrc.json"
-{
-  "extends": ["stylelint-config-standard", "stylelint-config-recess-order"]
-}
-```
-
-```css
-.order-card {
-  position: relative;
-  display: grid;
-  padding: var(--space-md);
-  font-size: var(--font-size-md);
-  color: var(--color-text);
-  background-color: var(--color-surface);
-}
-```
-
-**悪い例**
-
-```css
-.order-card {
-  color: var(--color-text);
-  padding: var(--space-md);
-  position: relative;
-  background-color: var(--color-surface);
-  display: grid;
-  font-size: var(--font-size-md);
 }
 ```
