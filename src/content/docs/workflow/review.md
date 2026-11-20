@@ -1,11 +1,11 @@
 ---
-title: レビューのチェックリスト
+title: レビュー
 description: プルリクエストのレビューの進め方と、レビューで確かめる観点の一覧。
 ---
 
 プルリクエストのレビューの進め方と、レビューで確かめる観点を決めます。前半はレビューの進め方のルール、後半の「[チェック項目](#チェック項目)」は、レビューで確かめる観点の一覧です。
 
-チェック項目は観点だけを並べ、ルールの中身は書きません。各ルールの内容と理由は、リンク先のページを参照してください。プルリクエストの作り方とマージの条件は[Git](/coding-guidelines/quality/git/)で扱います。
+チェック項目は観点だけを並べ、ルールの中身は書きません。各ルールの内容と理由は、リンク先のページを参照してください。プルリクエストの作り方とマージの条件は[Git](/coding-guidelines/workflow/git/)で扱います。
 
 ## レビューを依頼する前に、自分で差分を見直す
 
@@ -106,7 +106,7 @@ calculate-shipping-fee.ts のような関数に切り出して、両方から使
 ```md title="プルリクエストの説明（一部）"
 ## 確認したこと
 
-- レビューのチェックリストの項目をすべて確認した
+- レビューのページのチェック項目をすべて確認した
 ```
 
 **悪い例**
@@ -161,7 +161,7 @@ const isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w!@#$%^&*]{8,64}$/.tes
 
 ラベルがないと、書いた人は、すべての指摘を直さなければならないのか、どれが重要なのかを判断できません。重要度が分かれば、`[必須]` から優先して対応でき、`[軽微]` の指摘をめぐって議論が長引くことも防げます。
 
-`[必須]` と `[推奨]` は、[準拠レベル](/coding-guidelines/about/compliance-levels/)の必須と推奨にそろえています。
+`[必須]` と `[推奨]` は、[準拠レベル](/coding-guidelines/about/compliance/)の必須と推奨にそろえています。
 
 **良い例**
 
@@ -194,7 +194,7 @@ dangerouslySetInnerHTML はやめてください。
 ```md
 [必須] 閉じるボタンがアイコンだけで、名前がありません。
 スクリーンリーダーでは「ボタン」としか読み上げられず、何のボタンか分かりません。
-https://ogitet.github.io/coding-guidelines/common/accessibility/#アイコンだけのボタンやリンクに名前を付ける
+https://ogitet.github.io/coding-guidelines/quality/accessibility/#アイコンだけのボタンやリンクに名前を付ける
 ```
 
 **悪い例**
@@ -281,20 +281,19 @@ XSSの修正を確認しました。承認します。
 
 ### 目的と仕様
 
-- [ ] プルリクエストの説明に、目的、変更内容、確認したことが書かれているか（[Git](/coding-guidelines/quality/git/)）
+- [ ] プルリクエストの説明に、目的、変更内容、確認したことが書かれているか（[Git](/coding-guidelines/workflow/git/)）
 - [ ] 変更が目的を満たしているか。目的と関係のない変更が混ざっていないか
 - [ ] 何をしているかを説明できない箇所が残っていないか（[説明できないコードは承認しない](#説明できないコードは承認しない)）
 - [ ] データが0件、文字列が長い、読み込み中、エラーといった状態を扱っているか（[検証](/coding-guidelines/quality/verification/)）
 
 ### 設計と構成
 
-- [ ] ファイルの置き場所と依存の向きが決まりに沿っているか（[ディレクトリ構成](/coding-guidelines/common/directory-structure/)）
 - [ ] 同じ処理を重複して書いていないか
 
 ### 命名とコメント
 
 - [ ] 名前の記法と、語の選び方が決まりに沿っているか（[命名規則](/coding-guidelines/common/naming/)）
-- [ ] コメントに「なぜ」が書かれているか。コードとコメントが食い違っていないか（[コメントとドキュメント](/coding-guidelines/common/comments-and-docs/)）
+- [ ] コメントに「なぜ」が書かれているか。コードとコメントが食い違っていないか（[コメント](/coding-guidelines/common/comments/)）
 - [ ] Lintのルールを無効にしている箇所に、範囲の指定と理由があるか（[フォーマットとLint](/coding-guidelines/common/format-and-lint/)）
 
 ### 技術別
@@ -306,18 +305,18 @@ XSSの修正を確認しました。承認します。
 
 ### アクセシビリティ、画像、パフォーマンス
 
-- [ ] 要素の意味、代替テキスト、ラベルと `autocomplete`、キーボード操作、コントラスト比が決まりに沿っているか（[アクセシビリティ](/coding-guidelines/common/accessibility/)）
+- [ ] 要素の意味、代替テキスト、ラベルと `autocomplete`、キーボード操作、コントラスト比が決まりに沿っているか（[アクセシビリティ](/coding-guidelines/quality/accessibility/)）
 - [ ] axeで違反がなく、キーボードだけで操作できることを確かめたか（[検証](/coding-guidelines/quality/verification/)）
 - [ ] 画像の形式、サイズ、`width` と `height`、読み込みの方法が決まりに沿っているか（[画像](/coding-guidelines/common/images/)）
-- [ ] フォント、依存パッケージ、外部のスクリプト、後から表示する要素の扱いが決まりに沿っているか（[パフォーマンス](/coding-guidelines/common/performance/)）
+- [ ] フォント、依存パッケージ、外部のスクリプト、後から表示する要素の扱いが決まりに沿っているか（[パフォーマンス](/coding-guidelines/quality/performance/)）
 
 ### テストと検証
 
-- [ ] 追加・変更したロジックにテストがあるか。不具合の修正に、再現するテストがあるか（[テスト方針](/coding-guidelines/quality/testing/)）
-- [ ] テストが実装の詳細ではなく、振る舞いを確かめているか（[テスト方針](/coding-guidelines/quality/testing/)）
+- [ ] 追加・変更したロジックにテストがあるか。不具合の修正に、再現するテストがあるか（[テスト](/coding-guidelines/quality/testing/)）
+- [ ] テストが実装の詳細ではなく、振る舞いを確かめているか（[テスト](/coding-guidelines/quality/testing/)）
 - [ ] 対応するブラウザとデバイスで表示と操作を確かめたか（[検証](/coding-guidelines/quality/verification/)）
 
 ### Git
 
-- [ ] コミットメッセージが決まった形式で、1つのコミットに1つの変更だけが入っているか（[Git](/coding-guidelines/quality/git/)）
-- [ ] 作業途中のコミットが、マージの前に整えられているか（[Git](/coding-guidelines/quality/git/)）
+- [ ] コミットメッセージが決まった形式で、1つのコミットに1つの変更だけが入っているか（[Git](/coding-guidelines/workflow/git/)）
+- [ ] 作業途中のコミットが、マージの前に整えられているか（[Git](/coding-guidelines/workflow/git/)）

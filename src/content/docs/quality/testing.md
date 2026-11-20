@@ -1,5 +1,5 @@
 ---
-title: テスト方針
+title: テスト
 description: 自動テスト（単体、コンポーネント、E2E、ビジュアルリグレッション）の範囲と書き方。Vitest、Testing Library、Playwrightを使います。
 ---
 
@@ -12,7 +12,7 @@ description: 自動テスト（単体、コンポーネント、E2E、ビジュ�
 | E2Eテスト | [Playwright](https://playwright.dev/) | ログインや購入など、主要な利用の流れ |
 | ビジュアルリグレッションテスト | Playwright | 見た目の崩れ |
 
-ブラウザやデバイスでの表示の確認、HTMLバリデータやaxeによる検査など、人が確かめる作業は[検証](/coding-guidelines/quality/verification/)のページで扱います。テストファイルの置き場所は[ディレクトリ構成](/coding-guidelines/common/directory-structure/)を参照してください。
+ブラウザやデバイスでの表示の確認、HTMLバリデータやaxeによる検査など、人が確かめる作業は[検証](/coding-guidelines/quality/verification/)のページで扱います。
 
 ## テストの種類は確かめたいことで選ぶ
 
