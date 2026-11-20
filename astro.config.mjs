@@ -57,7 +57,7 @@ export default defineConfig({
 				},
 				{
 					label: '5. 開発フロー',
-					items: ['workflow/git', 'workflow/review-checklist', 'workflow/agent-instructions'],
+					items: ['workflow/git', 'workflow/review', 'workflow/ai-instructions'],
 				},
 			],
 		}),

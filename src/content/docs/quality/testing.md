@@ -1,5 +1,5 @@
 ---
-title: テスト方針
+title: テスト
 description: 自動テスト（単体、コンポーネント、E2E、ビジュアルリグレッション）の範囲と書き方。Vitest、Testing Library、Playwrightを使います。
 ---
 

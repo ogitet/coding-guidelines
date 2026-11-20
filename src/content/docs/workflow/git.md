@@ -5,7 +5,7 @@ description: ブランチの運用、コミットメッセージ、プルリク�
 
 Gitのブランチの運用、コミットの単位とメッセージ、プルリクエストの作り方、マージの方法を決めます。ブランチの運用は[GitHub Flow](https://docs.github.com/ja/get-started/using-github/github-flow)、コミットメッセージは[Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/)に従います。
 
-プルリクエストをレビューするときの進め方は[レビューのチェックリスト](/coding-guidelines/workflow/review-checklist/)のページで扱います。
+プルリクエストをレビューするときの進め方は[レビュー](/coding-guidelines/workflow/review/)のページで扱います。
 
 ## mainブランチから作業ブランチを切って作業する
 
@@ -278,7 +278,7 @@ package-lock.json
 
 ## CIが通り、レビューで承認されてからマージする
 
-プルリクエストは、CIのすべてのジョブが成功し、レビューで承認されてからマージします。1人で開発している場合も、プルリクエストを作り、[レビューのチェックリスト](/coding-guidelines/workflow/review-checklist/)に沿って自分でレビューしてからマージします。
+プルリクエストは、CIのすべてのジョブが成功し、レビューで承認されてからマージします。1人で開発している場合も、プルリクエストを作り、[レビュー](/coding-guidelines/workflow/review/)のページのチェック項目に沿って自分でレビューしてからマージします。
 
 準拠レベル：**必須**
 

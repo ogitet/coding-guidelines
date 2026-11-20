@@ -1,5 +1,5 @@
 ---
-title: レビューのチェックリスト
+title: レビュー
 description: プルリクエストのレビューの進め方と、レビューで確かめる観点の一覧。
 ---
 
@@ -106,7 +106,7 @@ calculate-shipping-fee.ts のような関数に切り出して、両方から使
 ```md title="プルリクエストの説明（一部）"
 ## 確認したこと
 
-- レビューのチェックリストの項目をすべて確認した
+- レビューのページのチェック項目をすべて確認した
 ```
 
 **悪い例**
@@ -312,8 +312,8 @@ XSSの修正を確認しました。承認します。
 
 ### テストと検証
 
-- [ ] 追加・変更したロジックにテストがあるか。不具合の修正に、再現するテストがあるか（[テスト方針](/coding-guidelines/quality/testing/)）
-- [ ] テストが実装の詳細ではなく、振る舞いを確かめているか（[テスト方針](/coding-guidelines/quality/testing/)）
+- [ ] 追加・変更したロジックにテストがあるか。不具合の修正に、再現するテストがあるか（[テスト](/coding-guidelines/quality/testing/)）
+- [ ] テストが実装の詳細ではなく、振る舞いを確かめているか（[テスト](/coding-guidelines/quality/testing/)）
 - [ ] 対応するブラウザとデバイスで表示と操作を確かめたか（[検証](/coding-guidelines/quality/verification/)）
 
 ### Git
