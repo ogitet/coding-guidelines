@@ -1,9 +1,9 @@
 ---
-title: コメントとドキュメント
-description: コードに書くコメントとJSDoc、リポジトリに置くREADMEの書き方。
+title: コメント
+description: コードに書くコメントとJSDocの書き方。
 ---
 
-コードに書くコメントとJSDoc、リポジトリに置くREADMEの書き方を決めます。規約から外れる箇所に書くコメントは[準拠レベルの定義](/coding-guidelines/about/compliance-levels/)、Lintのルールを無効にするコメントは[フォーマットとLint](/coding-guidelines/common/format-and-lint/)のページで扱います。
+コードに書くコメントとJSDocの書き方を決めます。規約から外れる箇所に書くコメントは[準拠レベルの定義](/coding-guidelines/about/compliance-levels/)、Lintのルールを無効にするコメントは[フォーマットとLint](/coding-guidelines/common/format-and-lint/)のページで扱います。
 
 ## コメントは日本語で書く
 
@@ -198,57 +198,4 @@ await retry(() => createPayment(order), { times: 3 });
 ```ts
 // TODO: あとで直す
 await retry(() => createPayment(order), { times: 3 });
-```
-
-## READMEにセットアップと主なコマンドを書く
-
-リポジトリのルートの `README.md` には、少なくとも次の内容を書きます。
-
-- そのリポジトリが何か（1〜2文）
-- 必要な環境（Node.jsのバージョンなど）
-- セットアップの手順
-- 主なコマンド（開発サーバーの起動、ビルド、テスト、Lint）
-
-準拠レベル：**推奨**
-
-**理由**
-
-READMEは、リポジトリを初めて開いた人とAIが最初に読むファイルです。ここに手順がそろっていれば、口頭の説明なしで開発を始められます。手順が変わったら、変更と同じプルリクエストでREADMEも直します。
-
-AIに向けた作業上の指示は、READMEではなく `AGENTS.md` に書きます。書き方は[AIへの指示](/coding-guidelines/workflow/ai-instructions/)を参照してください。
-
-**良い例**
-
-````md
-# order-app
-
-注文管理画面のフロントエンドです。
-
-## 必要な環境
-
-- Node.js 24 以上
-
-## セットアップ
-
-```sh
-npm install
-cp .env.example .env.local
-```
-
-## コマンド
-
-| コマンド | 内容 |
-| :-- | :-- |
-| `npm run dev` | 開発サーバーを起動する |
-| `npm run build` | 本番用にビルドする |
-| `npm test` | テストを実行する |
-| `npm run lint` | Lintを実行する |
-````
-
-**悪い例**
-
-```md
-# order-app
-
-開発については担当者に聞いてください。
 ```

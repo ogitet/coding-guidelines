@@ -293,7 +293,7 @@ XSSの修正を確認しました。承認します。
 ### 命名とコメント
 
 - [ ] 名前の記法と、語の選び方が決まりに沿っているか（[命名規則](/coding-guidelines/common/naming/)）
-- [ ] コメントに「なぜ」が書かれているか。コードとコメントが食い違っていないか（[コメントとドキュメント](/coding-guidelines/common/comments-and-docs/)）
+- [ ] コメントに「なぜ」が書かれているか。コードとコメントが食い違っていないか（[コメント](/coding-guidelines/common/comments/)）
 - [ ] Lintのルールを無効にしている箇所に、範囲の指定と理由があるか（[フォーマットとLint](/coding-guidelines/common/format-and-lint/)）
 
 ### 技術別

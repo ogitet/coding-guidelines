@@ -5,7 +5,7 @@ description: TypeScriptの書き方。コンパイラの設定、型の書き方
 
 TypeScriptの書き方を決めます。JavaScriptで書く場面でも、このページのルールのうち型に関わらないものに従います。
 
-名前の付け方は[命名規則](/coding-guidelines/common/naming/)、JSDocの書き方は[コメントとドキュメント](/coding-guidelines/common/comments-and-docs/)、Reactに固有の書き方は[React](/coding-guidelines/tech/react/)のページで扱います。
+名前の付け方は[命名規則](/coding-guidelines/common/naming/)、JSDocの書き方は[コメント](/coding-guidelines/common/comments/)、Reactに固有の書き方は[React](/coding-guidelines/tech/react/)のページで扱います。
 
 このページのルールのうち、Oxlintで検出できるものは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)で決めた設定に次の内容を加えて有効にします。
 
