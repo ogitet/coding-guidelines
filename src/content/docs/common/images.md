@@ -1,9 +1,9 @@
 ---
 title: 画像
-description: Webページに使う画像の形式、サイズ、読み込み方、SVGの扱い、ファイル名と置き場所。
+description: Webページに使う画像の形式、サイズ、読み込み方、SVGの扱い。
 ---
 
-Webページに使う画像の形式、サイズ、読み込み方、SVGの扱い、ファイル名と置き場所を決めます。代替テキスト（`alt` 属性）は[アクセシビリティ](/coding-guidelines/quality/accessibility/#画像には内容を伝える代替テキストを付ける)のページで扱います。
+Webページに使う画像の形式、サイズ、読み込み方、SVGの扱いを決めます。代替テキスト（`alt` 属性）は[アクセシビリティ](/coding-guidelines/quality/accessibility/#画像には内容を伝える代替テキストを付ける)のページで扱います。
 
 ## 画像の形式は内容に合わせて選ぶ
 
@@ -11,9 +11,8 @@ Webページに使う画像の形式、サイズ、読み込み方、SVGの扱�
 
 | 内容 | 形式 |
 | :-- | :-- |
-| 写真、グラデーションの多いイラスト | AVIF |
+| 写真、グラデーションの多いイラスト、SVGにできない透過のある画像 | AVIF |
 | ロゴ、アイコン、図、単純なイラスト | SVG |
-| 写真などで、SVGにできない透過のある画像 | AVIF |
 | 動きのある画像 | 動画（MP4、WebM） |
 
 準拠レベル：**推奨**
@@ -41,9 +40,9 @@ logo.jpg         # ロゴをJPEGで書き出している
 product-demo.gif # 動きのある画像をGIFにしている
 ```
 
-## 表示サイズに合わせて縮小し、圧縮してから置く
+## 書き出したままの画像を置かない
 
-ラスター画像は、表示する最大の幅の2倍を上限に縮小し、圧縮してから置きます。撮影したままの画像や、デザインツールから原寸で書き出した画像をそのまま置きません。
+ラスター画像は、表示する最大の幅の2倍を上限に縮小し、圧縮してから置きます。SVGは、[SVGO](https://svgo.dev/)などで不要な情報を取り除いてから置き、`viewBox` 属性は残します。
 
 準拠レベル：**推奨**
 
@@ -51,11 +50,19 @@ product-demo.gif # 動きのある画像をGIFにしている
 
 表示サイズより大きな画像は、見た目は変わらないのに通信量と表示までの時間だけを増やします。高精細なディスプレイでもぼやけないように、表示幅の2倍までは用意します。圧縮率は、劣化が気にならない範囲を目で確かめながら決めます。
 
+デザインツールから書き出したSVGには、編集用のメタデータや必要以上に細かい座標の値が含まれ、ファイルが大きくなります。`viewBox` を消すと、CSSで大きさを変えたときに図形が切れてしまうため、残します。
+
 **良い例**
 
 ```text
 # 最大 800px 幅で表示する画像
 product-main.avif   1600×1200  120KB
+```
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path d="M3 12h18M12 3v18" stroke="currentColor" stroke-width="2" />
+</svg>
 ```
 
 **悪い例**
@@ -65,17 +72,26 @@ product-main.avif   1600×1200  120KB
 product-main.jpg    6000×4500  8.4MB
 ```
 
-## 表示幅が変わる画像はsrcsetとsizesで出し分ける
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: Design Tool 28.0 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px">
+  <title>アートボード 1</title>
+  <g id="レイヤー_1" data-name="レイヤー 1">
+    <path d="M3.000000 12.000000h18.000000M12.000000 3.000000v18.000000" stroke="#000000" stroke-width="2" />
+  </g>
+</svg>
+```
 
-画面の幅によって表示幅が変わる画像は、幅の異なる画像を複数用意し、`srcset` と `sizes` 属性で出し分けます。
+## 画面に合わせて画像を出し分ける
+
+画面の幅によって表示幅だけが変わる画像は、幅の異なる画像を複数用意し、`srcset` と `sizes` 属性で出し分けます。トリミングや縦横比を変えるとき、または形式の代わりを用意するときは、`picture` 要素を使います。CSSで複数の画像を表示・非表示にして切り替えません。
 
 準拠レベル：**推奨**
 
 **理由**
 
-1つの大きな画像だけを用意すると、スマートフォンでもパソコン向けの大きな画像を読み込むことになります。`srcset` と `sizes` を書けば、ブラウザが画面の幅と解像度に合った画像を選んで読み込みます。
-
-使っているフレームワークに画像の最適化の機能（Astroの `<Image />` など）がある場合は、それを使って複数サイズの書き出しと `srcset` の出力を自動化します。
+1つの大きな画像だけを用意すると、スマートフォンでもパソコン向けの大きな画像を読み込むことになります。`srcset` と `sizes`、`picture` 要素を使えば、ブラウザが条件に合う1枚だけを選んで読み込みます。`img` を複数置いてCSSの `display: none` で隠すと、表示しない画像まで読み込まれることがあり、代替テキストも重複します。
 
 **良い例**
 
@@ -90,25 +106,6 @@ product-main.jpg    6000×4500  8.4MB
 />
 ```
 
-**悪い例**
-
-```html
-<!-- どの画面幅でも 2400px 幅の画像を読み込む -->
-<img src="/images/hero-2400w.avif" alt="…" width="2400" height="1350" />
-```
-
-## 形式やトリミングを切り替えるときはpicture要素を使う
-
-画面の幅によって画像のトリミングや縦横比を変えるとき、または形式の代わりを用意するときは、`picture` 要素を使います。CSSで複数の画像を表示・非表示にして切り替えません。
-
-準拠レベル：**推奨**
-
-**理由**
-
-`picture` 要素を使えば、ブラウザは条件に合う1枚だけを読み込みます。`img` を複数置いてCSSの `display: none` で隠すと、表示しない画像まで読み込まれることがあり、代替テキストも重複します。
-
-**良い例**
-
 ```html
 <picture>
   <source media="(min-width: 768px)" srcset="/images/campaign-wide.avif" width="1600" height="600" />
@@ -117,6 +114,11 @@ product-main.jpg    6000×4500  8.4MB
 ```
 
 **悪い例**
+
+```html
+<!-- どの画面幅でも 2400px 幅の画像を読み込む -->
+<img src="/images/hero-2400w.avif" alt="…" width="2400" height="1350" />
+```
 
 ```html
 <img class="pc-only" src="/images/campaign-wide.avif" alt="…" width="1600" height="600" />
@@ -156,48 +158,29 @@ img {
 <img src="/images/product-main.avif" alt="…" />
 ```
 
-## ファーストビューより下の画像は遅延読み込みする
+## 位置に合わせて読み込みの優先度を変える
 
-ページを開いた時点で画面に入らない画像には、`loading="lazy"` を付けます。
+ページを開いた時点で画面に入らない画像には、`loading="lazy"` を付けます。ファーストビューの主な画像（ヒーロー画像など）には、`loading="lazy"` を付けず、`fetchpriority="high"` を付けます。
 
 準拠レベル：**推奨**
 
 **理由**
 
-遅延読み込みにすると、画面に近づくまで画像を読み込まないため、最初の表示が速くなり、最後までスクロールしない人の通信量も減らせます。`loading` 属性はブラウザの標準の機能なので、JavaScriptのライブラリは使いません。
+遅延読み込みにすると、画面に近づくまで画像を読み込まないため、最初の表示が速くなり、通信量も減らせます。`loading` 属性はブラウザの標準の機能なので、JavaScriptのライブラリは使いません。
+
+一方、ファーストビューの大きな画像は、ページが表示されたと感じるまでの時間（LCP）を左右します。遅延読み込みにすると表示が遅れるため、`fetchpriority="high"` を付けて、ほかの画像より先に読み込ませます。
 
 **良い例**
 
 ```html
+<img src="/images/hero-1600w.avif" alt="…" width="1600" height="900" fetchpriority="high" />
 <img src="/images/review-1.avif" alt="…" width="800" height="600" loading="lazy" />
 ```
 
 **悪い例**
 
 ```html
-<!-- JavaScriptのライブラリで遅延読み込みしている -->
-<img data-src="/images/review-1.avif" class="lazyload" alt="…" width="800" height="600" />
-```
-
-## ファーストビューの主な画像は優先して読み込む
-
-ページを開いたときに最初に目に入る大きな画像（ヒーロー画像など）には、`loading="lazy"` を付けず、`fetchpriority="high"` を付けます。
-
-準拠レベル：**推奨**
-
-**理由**
-
-ファーストビューの大きな画像は、ページが表示されたと感じるまでの時間（LCP）を左右します。遅延読み込みにすると、レイアウトが決まるまで読み込みが始まらず、表示が遅れます。`fetchpriority="high"` を付けると、ほかの画像より先に読み込まれます。
-
-**良い例**
-
-```html
-<img src="/images/hero-1600w.avif" alt="…" width="1600" height="900" fetchpriority="high" />
-```
-
-**悪い例**
-
-```html
+<!-- ファーストビューのヒーロー画像を遅延読み込みしている -->
 <img src="/images/hero-1600w.avif" alt="…" width="1600" height="900" loading="lazy" />
 ```
 
@@ -230,101 +213,4 @@ img {
 <button type="button" class="icon-button" aria-label="お気に入りに追加">
   <img src="/images/icon-heart-gray.svg" alt="" width="24" height="24" />
 </button>
-```
-
-## SVGは最適化してから置く
-
-デザインツールから書き出したSVGは、[SVGO](https://svgo.dev/)などで不要な情報を取り除いてから置きます。`viewBox` 属性は残します。
-
-準拠レベル：**推奨**
-
-**理由**
-
-デザインツールから書き出したSVGには、編集用のメタデータ、使っていない定義、必要以上に細かい座標の値が含まれ、ファイルが大きくなります。`viewBox` を消すと、CSSで大きさを変えたときに図形が縮小されずに切れてしまうため、残します。
-
-**良い例**
-
-```html
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <path d="M3 12h18M12 3v18" stroke="currentColor" stroke-width="2" />
-</svg>
-```
-
-**悪い例**
-
-```html
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generator: Design Tool 28.0 -->
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px">
-  <title>アートボード 1</title>
-  <defs><style>.cls-1{fill:none;}</style></defs>
-  <g id="レイヤー_1" data-name="レイヤー 1">
-    <path class="cls-1" d="M3.000000 12.000000h18.000000M12.000000 3.000000v18.000000" stroke="#000000" stroke-width="2" />
-  </g>
-</svg>
-```
-
-## 画像のファイル名は内容を表す英語にする
-
-画像のファイル名は、内容を表す英語のケバブケースにします。種類を表す語（`icon-`、`bg-` など）は先頭に、`srcset` 用の幅は末尾に付けます。
-
-準拠レベル：**推奨**
-
-**理由**
-
-`img01.jpg` や撮影時の連番のままでは、ファイル名から中身が分からず、使われなくなっても気づけません。種類を先頭にそろえると、一覧で並べたときにまとまります。幅を末尾に付けると、`srcset` に書くときに取り違えません。記法の考え方は[命名規則](/coding-guidelines/common/naming/)と同じです。
-
-**良い例**
-
-```text
-icon-cart.svg
-bg-campaign.avif
-product-main-800w.avif
-product-main-1600w.avif
-```
-
-**悪い例**
-
-```text
-img01.jpg
-IMG_2048.JPG
-カート.svg
-ProductMain@2x.png
-```
-
-## 画像は使う場所に近いディレクトリに置く
-
-1つの機能でしか使わない画像は、その機能のディレクトリに置きます。複数の機能で使う画像は `src/assets/images/` に置きます。ファビコンやOGP画像のように、URLを固定する必要がある画像だけを `public/` に置きます。
-
-準拠レベル：**推奨**
-
-**理由**
-
-`src/` の下の画像は、ビルドツールが最適化やファイル名へのハッシュの付与を行い、使われていない画像を見つけることもできます。使う場所の近くに置けば、機能を削除するときに画像も一緒に消せます。`public/` の画像はそのままの名前で公開されるため、外部から決まったURLで参照される画像だけに使います。
-
-**良い例**
-
-```text
-public/
-├── favicon.ico
-└── ogp.png
-src/
-├── assets/
-│   └── images/
-│       └── logo.svg              # 複数の機能で使う
-└── features/
-    └── campaign/
-        ├── CampaignBanner.tsx
-        └── bg-campaign.avif      # campaign でしか使わない
-```
-
-**悪い例**
-
-```text
-public/
-└── images/
-    ├── logo.svg
-    ├── bg-campaign.avif
-    ├── bg-campaign-old.avif      # 使われているか分からない
-    └── img01.jpg
 ```

@@ -3,7 +3,7 @@ title: 命名規則
 description: 変数、関数、型、ファイル、ディレクトリの名前の付け方。記法と、名前に使う語の選び方を決めます。
 ---
 
-変数、関数、型、ファイル、ディレクトリの名前の付け方を決めます。CSSのクラス名の付け方は[CSS](/coding-guidelines/tech/css/)、画像のファイル名は[画像](/coding-guidelines/common/images/)のページで扱います。
+変数、関数、型、ファイル、ディレクトリの名前の付け方を決めます。CSSのクラス名の付け方は[CSS](/coding-guidelines/tech/css/)のページで扱います。
 
 ## 識別子の種類ごとに決まった記法を使う
 
