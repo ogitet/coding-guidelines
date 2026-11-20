@@ -243,7 +243,7 @@ Reactは、JSXに埋め込んだ文字列を自動的にエスケープし、ク
 
 描画中に起きたエラーは、Error Boundaryで受け止め、代わりの表示を出します。Error Boundaryは、アプリ全体を囲むものに加え、独立して失敗してよい単位（ページ、サイドバー、ウィジェットなど）にも置きます。
 
-Error Boundaryは自分でクラスコンポーネントとして書かず、[react-error-boundary](https://github.com/bvaughn/react-error-boundary)を使います。エラー処理全般のルールは[エラー処理](/coding-guidelines/common/error-handling/)のページを参照してください。
+Error Boundaryは自分でクラスコンポーネントとして書かず、[react-error-boundary](https://github.com/bvaughn/react-error-boundary)を使います。
 
 準拠レベル：**推奨**
 

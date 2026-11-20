@@ -15,7 +15,8 @@
 - 規約本文は `src/content/docs/` 以下のMarkdownを唯一の正とする
 - 1ページに複数ルールを並べる（1ルール1ファイルは採らない）
 - フォーマットとLint：Oxfmt（フォーマット）、Oxlint（JavaScript / TypeScript）、Markuplint（HTML / JSX）、Stylelint（CSS）
-- 機械的に判定できるルールはLintの設定に落とす（各ツールの選定理由は `principles/tech-stack.md`）
+- 機械的に判定できるルールはLintの設定に落とす
+- 技術スタックは app-template リポジトリ（https://github.com/ogitet/app-template）を正とし、規約には書かない
 - テスト：Vitest（単体）、Testing Library（コンポーネント）、Playwright（E2E、ビジュアルリグレッション）
 - Git：GitHub Flow、マージはマージコミット、コミットメッセージはConventional Commits（要約は日本語）
 - 主な対象技術：HTML / CSS / TypeScript / React
@@ -69,7 +70,6 @@ Reactのページは、H2を分類（コンポーネント設計 / Hooks / 状�
 - 自動テスト（単体、E2E、ビジュアルリグレッション）は「テスト方針」に書く
 - 識別子・ファイル・ディレクトリの名前の記法は「命名規則」に書く。CSSのクラス名の付け方はCSSのページ、画像のファイル名は画像のページに書く
 - 速さに関わるルールは「パフォーマンス」に書く。ただし画像は画像のページ、Reactの描画の最適化はReactのページ、スクリプトの読み込み方はHTMLのページ、計測の方法と目標は「検証」に書く
-- エラーの伝え方と受け止め方は「エラー処理」に書く。`throw` する値の種類はTypeScriptのページ、Error BoundaryはReactのページ、ログに出さない情報は「セキュリティ」、入力エラーの示し方はアクセシビリティのページに書く
 
 ## コマンド
 
@@ -91,6 +91,6 @@ Astro自体の作業上の注意は `AGENTS.md` を参照する。
 
 - ディーゼロ：https://guidelines.d-zero.co.jp/ （章立て、Git・命名まで含む範囲の決め方）
 - デパート：https://depart-develop.github.io/coding-guidelines/pdf/depart-coding-guidelines.pdf （必須／推奨ラベル、改訂履歴）
-- バーンワークス：https://burnworks.com/docs/guidelines/ （ライセンス表記、運用ルール）
+- バーンワークス：https://burnworks.com/docs/guidelines/ （運用ルール）
 - フューチャー：https://future-architect.github.io/coding-standards （トップページの見せ方）
 - SmartHR：eslint-plugin-smarthr （規約をLintで守らせる構成）

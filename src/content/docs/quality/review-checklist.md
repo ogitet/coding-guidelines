@@ -5,7 +5,7 @@ description: プルリクエストのレビューの進め方と、レビュー�
 
 プルリクエストのレビューの進め方と、レビューで確かめる観点を決めます。前半はレビューの進め方のルール、後半の「[チェック項目](#チェック項目)」は、レビューで確かめる観点の一覧です。
 
-チェック項目は観点だけを並べ、ルールの中身は書きません。各ルールの内容と理由は、リンク先のページを参照してください。プルリクエストの作り方とマージの条件は[Git](/coding-guidelines/quality/git/)、AIが書いたコードで、このページに加えて確かめることは[AIが書いたコードのレビュー基準](/coding-guidelines/ai/reviewing-ai-code/)で扱います。
+チェック項目は観点だけを並べ、ルールの中身は書きません。各ルールの内容と理由は、リンク先のページを参照してください。プルリクエストの作り方とマージの条件は[Git](/coding-guidelines/quality/git/)で扱います。
 
 ## レビューを依頼する前に、自分で差分を見直す
 
@@ -107,7 +107,6 @@ calculate-shipping-fee.ts のような関数に切り出して、両方から使
 ## 確認したこと
 
 - レビューのチェックリストの項目をすべて確認した
-- AIが書いた部分は、AIが書いたコードのレビュー基準の項目も確認した
 ```
 
 **悪い例**
@@ -193,9 +192,9 @@ dangerouslySetInnerHTML はやめてください。
 **良い例**
 
 ```md
-[必須] 外部から受け取ったURLを、スキームを確かめずに href に入れています。
-javascript: で始まるURLが入ると、クリックしたときにスクリプトが実行されます。
-https://ogitet.github.io/coding-guidelines/quality/security/
+[必須] 閉じるボタンがアイコンだけで、名前がありません。
+スクリーンリーダーでは「ボタン」としか読み上げられず、何のボタンか分かりません。
+https://ogitet.github.io/coding-guidelines/common/accessibility/#アイコンだけのボタンやリンクに名前を付ける
 ```
 
 **悪い例**
@@ -291,7 +290,6 @@ XSSの修正を確認しました。承認します。
 
 - [ ] ファイルの置き場所と依存の向きが決まりに沿っているか（[ディレクトリ構成](/coding-guidelines/common/directory-structure/)）
 - [ ] 同じ処理を重複して書いていないか
-- [ ] 失敗を握りつぶさず、対処できる場所で扱っているか。使う人に見せるエラーの文言が決まりに沿っているか（[エラー処理](/coding-guidelines/common/error-handling/)）
 
 ### 命名とコメント
 
@@ -318,16 +316,6 @@ XSSの修正を確認しました。承認します。
 - [ ] 追加・変更したロジックにテストがあるか。不具合の修正に、再現するテストがあるか（[テスト方針](/coding-guidelines/quality/testing/)）
 - [ ] テストが実装の詳細ではなく、振る舞いを確かめているか（[テスト方針](/coding-guidelines/quality/testing/)）
 - [ ] 対応するブラウザとデバイスで表示と操作を確かめたか（[検証](/coding-guidelines/quality/verification/)）
-
-### セキュリティ
-
-- [ ] 秘密情報が、リポジトリやブラウザに送るコードに含まれていないか（[セキュリティ](/coding-guidelines/quality/security/)）
-- [ ] HTMLを文字列から組み立てていないか。外部から受け取ったURLを確かめずに使っていないか（[セキュリティ](/coding-guidelines/quality/security/)）
-- [ ] 依存パッケージを追加した場合、必要性と信頼性を確かめたか（[セキュリティ](/coding-guidelines/quality/security/)）
-
-### AIが書いたコード
-
-- [ ] AIの報告をうのみにせず、範囲外の変更、APIと依存パッケージの実在、検査の回避などを確かめたか（[AIが書いたコードのレビュー基準](/coding-guidelines/ai/reviewing-ai-code/)）
 
 ### Git
 

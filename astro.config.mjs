@@ -28,7 +28,6 @@ export default defineConfig({
 					items: [
 						'about/purpose-and-scope',
 						'about/compliance-levels',
-						'about/license',
 						'about/changelog',
 					],
 				},
@@ -37,7 +36,6 @@ export default defineConfig({
 					items: [
 						'principles/design-values',
 						'principles/browser-support',
-						'principles/tech-stack',
 					],
 				},
 				{
@@ -47,7 +45,6 @@ export default defineConfig({
 						'common/directory-structure',
 						'common/comments-and-docs',
 						'common/format-and-lint',
-						'common/error-handling',
 						'common/accessibility',
 						'common/images',
 						'common/performance',
@@ -63,13 +60,12 @@ export default defineConfig({
 						'quality/testing',
 						'quality/verification',
 						'quality/git',
-						'quality/security',
 						'quality/review-checklist',
 					],
 				},
 				{
 					label: '6. AIとの協働',
-					items: ['ai/agent-instructions', 'ai/reviewing-ai-code'],
+					items: ['ai/agent-instructions'],
 				},
 			],
 		}),
