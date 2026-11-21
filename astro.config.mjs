@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightLlmsTxt from 'starlight-llms-txt';
+import starlightThemeRapide from 'starlight-theme-rapide';
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,7 +22,7 @@ export default defineConfig({
 					href: 'https://github.com/ogitet/coding-guidelines',
 				},
 			],
-			plugins: [starlightLlmsTxt()],
+			plugins: [starlightLlmsTxt(), starlightThemeRapide()],
 			sidebar: [
 				{
 					label: '1. はじめに',
