@@ -298,6 +298,54 @@ ul.orderCard__links {
 }
 ```
 
+## 計算で決まる値は計算式のまま書く
+
+ほかの値から計算して決まる値は、計算した結果ではなく、`calc()` で計算式のまま書きます。計算に使う値のうち、数字だけでは意味が分からないものは、そのセレクタの中でカスタムプロパティにして名前を付けます。
+
+準拠レベル：**推奨**
+
+**理由**
+
+計算した結果だけを書くと、後から読んだ人には、その数字がどこから来たのかが分かりません。元になった値を変えたときも、計算し直すのを忘れて、ずれたまま残ります。計算式とその中の値の名前を残しておけば、値の意図が読み取れ、元の値を1か所変えるだけで済みます。
+
+**良い例**
+
+```css
+.card {
+  --card-padding: 0.5rem;
+  --card-radius: 1.5rem;
+
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+}
+
+.cardImage {
+  border-radius: calc(var(--card-radius) - var(--card-padding));
+}
+
+.column {
+  inline-size: calc(100% / 3);
+}
+```
+
+**悪い例**
+
+```css
+.card {
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+}
+
+/* 1remがどこから来たのか分からない */
+.cardImage {
+  border-radius: 1rem;
+}
+
+.column {
+  inline-size: 33.3333%;
+}
+```
+
 ## 方向を表すプロパティには論理プロパティを使う
 
 余白、位置、大きさを指定するときは、`margin-inline`、`padding-block`、`inset-inline-start`、`inline-size` などの論理プロパティを使います。
