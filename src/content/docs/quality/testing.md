@@ -10,7 +10,7 @@ description: 自動テスト（単体テストとE2Eテスト）の範囲と書�
 | 単体テスト | [Vitest](https://vitest.dev/) | 計算や変換などのロジック |
 | E2Eテスト | [Playwright](https://playwright.dev/) | 画面の表示と操作 |
 
-ブラウザやデバイスでの表示の確認、HTMLバリデータやaxeによる検査など、人が確かめる作業は[検証](/coding-guidelines/quality/verification/)のページで扱います。
+ブラウザやデバイスでの表示の確認、axeによる検査など、人が確かめる作業は[検証](/coding-guidelines/quality/verification/)のページで扱います。
 
 ## テストの種類は確かめたいことで選ぶ
 
