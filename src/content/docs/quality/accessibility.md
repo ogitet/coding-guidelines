@@ -37,7 +37,7 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 
 ```html
 <div class="nav">
-  <div class="nav-item" onclick="location.href = '/products/'">商品一覧</div>
+  <div class="navItem" onclick="location.href = '/products/'">商品一覧</div>
 </div>
 <div class="button" onclick="addToCart()">カートに入れる</div>
 <nav role="navigation">…</nav>
@@ -168,13 +168,13 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 
 <a href="/cart/">
   <svg aria-hidden="true" width="24" height="24">…</svg>
-  <span class="visually-hidden">カート</span>
+  <span class="visuallyHidden">カート</span>
 </a>
 ```
 
 ```css
 /* 見た目だけ隠し、支援技術には読ませる */
-.visually-hidden {
+.visuallyHidden {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -285,8 +285,8 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 
 ```html
 <label for="email">メールアドレス</label>
-<input id="email" type="email" class="is-error" />
-<p class="error-text">入力内容が正しくありません</p>
+<input id="email" type="email" class="isError" />
+<p class="errorText">入力内容が正しくありません</p>
 ```
 
 ## すべての操作をキーボードでできるようにする
@@ -315,7 +315,7 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 <!-- マウスを乗せたときだけ開き、キーボードでは開けない -->
 <div class="account" onmouseenter="openMenu()" onmouseleave="closeMenu()">
   アカウント
-  <ul class="account-menu">…</ul>
+  <ul class="accountMenu">…</ul>
 </div>
 ```
 
@@ -374,7 +374,7 @@ button:focus {
 
 ```html
 <div class="modal" style="display: block">
-  <div class="modal-title">注文を削除しますか？</div>
+  <div class="modalTitle">注文を削除しますか？</div>
   <div class="button" onclick="closeModal()">キャンセル</div>
   <div class="button" onclick="deleteOrder()">削除する</div>
 </div>
@@ -408,7 +408,7 @@ button:focus {
 
 ```html
 <!-- 必須であることを赤い文字色だけで示している -->
-<label for="name" class="required-color">お名前</label>
+<label for="name" class="requiredColor">お名前</label>
 <input id="name" type="text" required />
 ```
 
@@ -498,7 +498,7 @@ body {
 **良い例**
 
 ```css
-.icon-button {
+.iconButton {
   display: inline-grid;
   place-items: center;
   min-inline-size: 44px;
@@ -509,7 +509,7 @@ body {
 **悪い例**
 
 ```css
-.icon-button {
+.iconButton {
   inline-size: 16px;
   block-size: 16px;
   padding: 0;
