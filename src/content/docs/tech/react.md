@@ -72,10 +72,10 @@ propsの型に名前を付けておくと、コンポーネントを包む別の
 ```tsx
 type PriceProps = {
   amount: number;
-  currency?: "JPY" | "USD";
+  currency?: 'JPY' | 'USD';
 };
 
-export function Price({ amount, currency = "JPY" }: PriceProps) {
+export function Price({ amount, currency = 'JPY' }: PriceProps) {
   return <span>{formatCurrency(amount, currency)}</span>;
 }
 ```
@@ -83,8 +83,8 @@ export function Price({ amount, currency = "JPY" }: PriceProps) {
 **悪い例**
 
 ```tsx
-export function Price(props: { amount: number; currency?: "JPY" | "USD" }) {
-  const currency = props.currency || "JPY";
+export function Price(props: { amount: number; currency?: 'JPY' | 'USD' }) {
+  const currency = props.currency || 'JPY';
   return <span>{formatCurrency(props.amount, currency)}</span>;
 }
 ```
@@ -217,7 +217,7 @@ export function CartSummary({ items }: CartSummaryProps) {
 function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
   submitOrder(cart);
-  showToast("注文を受け付けました");
+  showToast('注文を受け付けました');
 }
 ```
 
@@ -229,7 +229,7 @@ const [isSubmitted, setIsSubmitted] = useState(false);
 useEffect(() => {
   if (isSubmitted) {
     submitOrder(cart);
-    showToast("注文を受け付けました");
+    showToast('注文を受け付けました');
   }
 }, [isSubmitted, cart]);
 ```
@@ -251,8 +251,8 @@ useEffect(() => {
   function handleResize() {
     setWidth(window.innerWidth);
   }
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
 }, []);
 ```
 
@@ -260,7 +260,7 @@ useEffect(() => {
 
 ```tsx
 useEffect(() => {
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     setWidth(window.innerWidth);
   });
 }, []);
@@ -289,8 +289,8 @@ export function useMediaQuery(query: string): boolean {
     function handleChange(event: MediaQueryListEvent) {
       setMatches(event.matches);
     }
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, [query]);
 
   return matches;
@@ -302,7 +302,7 @@ export function useMediaQuery(query: string): boolean {
 ```ts
 // Hooksを使っていないのに use で始めている
 export function useFormatPrice(price: number): string {
-  return `${price.toLocaleString("ja-JP")}円`;
+  return `${price.toLocaleString('ja-JP')}円`;
 }
 ```
 
@@ -380,12 +380,12 @@ setCart(cart);
 
 ```tsx
 type SubmitState =
-  | { status: "idle" }
-  | { status: "submitting" }
-  | { status: "success"; orderId: string }
-  | { status: "error"; message: string };
+  | { status: 'idle' }
+  | { status: 'submitting' }
+  | { status: 'success'; orderId: string }
+  | { status: 'error'; message: string };
 
-const [submitState, setSubmitState] = useState<SubmitState>({ status: "idle" });
+const [submitState, setSubmitState] = useState<SubmitState>({ status: 'idle' });
 ```
 
 **悪い例**
@@ -393,8 +393,8 @@ const [submitState, setSubmitState] = useState<SubmitState>({ status: "idle" });
 ```tsx
 const [isSubmitting, setIsSubmitting] = useState(false);
 const [isSuccess, setIsSuccess] = useState(false);
-const [errorMessage, setErrorMessage] = useState("");
-const [orderId, setOrderId] = useState("");
+const [errorMessage, setErrorMessage] = useState('');
+const [orderId, setOrderId] = useState('');
 ```
 
 ### URLで表せる状態はURLに持つ
@@ -412,14 +412,14 @@ stateに持った状態は、ページを再読み込みしたり、URLを共有
 ```tsx
 // /orders/?status=shipped&page=2（React Routerの場合）
 const [searchParams] = useSearchParams();
-const status = searchParams.get("status") ?? "all";
-const page = Number(searchParams.get("page") ?? "1");
+const status = searchParams.get('status') ?? 'all';
+const page = Number(searchParams.get('page') ?? '1');
 ```
 
 **悪い例**
 
 ```tsx
-const [status, setStatus] = useState("all");
+const [status, setStatus] = useState('all');
 const [page, setPage] = useState(1);
 ```
 
@@ -474,7 +474,7 @@ export function OrderTitle({ order }: OrderTitleProps) {
 
 ```tsx
 const SalesChart = lazy(() =>
-  import("@/features/sales/SalesChart").then((module) => ({ default: module.SalesChart })),
+  import('@/features/sales/SalesChart').then((module) => ({ default: module.SalesChart })),
 );
 
 export function SalesPage() {
@@ -490,7 +490,7 @@ export function SalesPage() {
 
 ```tsx
 // 画面の下のほうにしか出ないグラフを、最初から読み込んでいる
-import { SalesChart } from "@/features/sales/SalesChart";
+import { SalesChart } from '@/features/sales/SalesChart';
 
 export function SalesPage() {
   return <SalesChart />;

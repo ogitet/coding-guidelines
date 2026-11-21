@@ -568,7 +568,7 @@ body {
 <p role="status" id="cart-status"></p>
 
 <script>
-  document.querySelector("#cart-status").textContent = "カートに追加しました";
+  document.querySelector('#cart-status').textContent = 'カートに追加しました';
 </script>
 ```
 
@@ -576,9 +576,9 @@ body {
 
 ```html
 <script>
-  const toast = document.createElement("div");
-  toast.className = "toast";
-  toast.textContent = "カートに追加しました";
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = 'カートに追加しました';
   document.body.append(toast);
 </script>
 ```

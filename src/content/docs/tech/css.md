@@ -228,11 +228,11 @@ ul.orderCard__links {
 **良い例**
 
 ```css
-.menuButton[aria-expanded="true"] {
+.menuButton[aria-expanded='true'] {
   background-color: var(--color-selected);
 }
 
-.tab[aria-selected="true"] {
+.tab[aria-selected='true'] {
   border-block-end-color: var(--color-primary);
 }
 

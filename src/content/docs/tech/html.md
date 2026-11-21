@@ -225,7 +225,7 @@ OGPがないと、共有したときに、タイトルや画像がSNSの側で�
 </form>
 
 <script type="module">
-  document.querySelector("#search-form").addEventListener("submit", (event) => {
+  document.querySelector('#search-form').addEventListener('submit', (event) => {
     event.preventDefault();
     search(new FormData(event.currentTarget));
   });
@@ -242,8 +242,8 @@ OGPがないと、共有したときに、タイトルや画像がSNSの側で�
 </div>
 
 <script type="module">
-  document.querySelector("#search-button").addEventListener("click", () => {
-    search(document.querySelector("#keyword").value);
+  document.querySelector('#search-button').addEventListener('click', () => {
+    search(document.querySelector('#keyword').value);
   });
 </script>
 ```
