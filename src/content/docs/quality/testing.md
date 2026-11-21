@@ -27,15 +27,15 @@ E2Eテストは、本物のブラウザで動くため安心感があります�
 **良い例**
 
 ```ts title="calculate-shipping-fee.test.ts"
-import { describe, expect, test } from "vitest";
-import { calculateShippingFee } from "./calculate-shipping-fee";
+import { describe, expect, test } from 'vitest';
+import { calculateShippingFee } from './calculate-shipping-fee';
 
-describe("calculateShippingFee", () => {
-  test("小計が5,000円未満なら送料は500円", () => {
+describe('calculateShippingFee', () => {
+  test('小計が5,000円未満なら送料は500円', () => {
     expect(calculateShippingFee(4999)).toBe(500);
   });
 
-  test("小計が5,000円以上なら送料は無料", () => {
+  test('小計が5,000円以上なら送料は無料', () => {
     expect(calculateShippingFee(5000)).toBe(0);
   });
 });
@@ -45,11 +45,11 @@ describe("calculateShippingFee", () => {
 
 ```ts title="e2e/shipping-fee.spec.ts"
 // 送料の境界値の確認のためだけに、毎回ブラウザで商品をカートに入れている
-test("小計が4,999円なら送料は500円", async ({ page }) => {
-  await page.goto("/products/4999-yen-item");
-  await page.getByRole("button", { name: "カートに入れる" }).click();
-  await page.goto("/cart");
-  await expect(page.getByText("送料 500円")).toBeVisible();
+test('小計が4,999円なら送料は500円', async ({ page }) => {
+  await page.goto('/products/4999-yen-item');
+  await page.getByRole('button', { name: 'カートに入れる' }).click();
+  await page.goto('/cart');
+  await expect(page.getByText('送料 500円')).toBeVisible();
 });
 ```
 
@@ -69,7 +69,7 @@ test("小計が4,999円なら送料は500円", async ({ page }) => {
 
 ```ts
 // 不具合：小計がちょうど5,000円のときに送料がかかっていた
-test("小計がちょうど5,000円なら送料は無料", () => {
+test('小計がちょうど5,000円なら送料は無料', () => {
   expect(calculateShippingFee(5000)).toBe(0);
 });
 ```
@@ -95,22 +95,22 @@ test("小計がちょうど5,000円なら送料は無料", () => {
 **良い例**
 
 ```ts
-test("数量を増やすと小計が更新される", async ({ page }) => {
-  await page.goto("/cart");
-  await page.getByRole("button", { name: "数量を1増やす" }).click();
-  await expect(page.getByText("小計 2,400円")).toBeVisible();
+test('数量を増やすと小計が更新される', async ({ page }) => {
+  await page.goto('/cart');
+  await page.getByRole('button', { name: '数量を1増やす' }).click();
+  await expect(page.getByText('小計 2,400円')).toBeVisible();
 });
 ```
 
 **悪い例**
 
 ```ts
-test("数量を増やすと保存した数量が2になる", async ({ page }) => {
-  await page.goto("/cart");
-  await page.getByRole("button", { name: "数量を1増やす" }).click();
+test('数量を増やすと保存した数量が2になる', async ({ page }) => {
+  await page.goto('/cart');
+  await page.getByRole('button', { name: '数量を1増やす' }).click();
   // 画面ではなく、内部に保存した値を確かめている
-  const cart = await page.evaluate(() => localStorage.getItem("cart"));
-  expect(JSON.parse(cart ?? "{}").quantity).toBe(2);
+  const cart = await page.evaluate(() => localStorage.getItem('cart'));
+  expect(JSON.parse(cart ?? '{}').quantity).toBe(2);
 });
 ```
 
@@ -127,16 +127,16 @@ test("数量を増やすと保存した数量が2になる", async ({ page }) =>
 **良い例**
 
 ```ts
-await page.getByRole("link", { name: "注文履歴" }).click();
-await expect(page.getByRole("heading", { level: 1, name: "注文履歴" })).toBeVisible();
-await page.getByLabel("メールアドレス").fill("user@example.com");
+await page.getByRole('link', { name: '注文履歴' }).click();
+await expect(page.getByRole('heading', { level: 1, name: '注文履歴' })).toBeVisible();
+await page.getByLabel('メールアドレス').fill('user@example.com');
 ```
 
 **悪い例**
 
 ```ts
-await page.locator("#header .nav li:nth-child(3) a").click();
-await page.getByTestId("submit-button").click();
+await page.locator('#header .nav li:nth-child(3) a').click();
+await page.getByTestId('submit-button').click();
 ```
 
 ## テスト名には条件と期待する結果を書く
@@ -152,18 +152,18 @@ await page.getByTestId("submit-button").click();
 **良い例**
 
 ```ts
-describe("LoginForm", () => {
-  test("メールアドレスが空のとき、送信するとエラーを表示する", async () => {});
-  test("ログインに成功したとき、マイページに移動する", async () => {});
+describe('LoginForm', () => {
+  test('メールアドレスが空のとき、送信するとエラーを表示する', async () => {});
+  test('ログインに成功したとき、マイページに移動する', async () => {});
 });
 ```
 
 **悪い例**
 
 ```ts
-describe("LoginForm", () => {
-  test("test1", async () => {});
-  test("submit", async () => {});
+describe('LoginForm', () => {
+  test('test1', async () => {});
+  test('submit', async () => {});
 });
 ```
 
@@ -180,7 +180,7 @@ describe("LoginForm", () => {
 **良い例**
 
 ```ts
-test("商品を追加すると、カートの件数が1になる", () => {
+test('商品を追加すると、カートの件数が1になる', () => {
   const cart = addItem(createCart(), item);
   expect(cart.items).toHaveLength(1);
 });
@@ -191,12 +191,12 @@ test("商品を追加すると、カートの件数が1になる", () => {
 ```ts
 const cart = createCart();
 
-test("商品を追加する", () => {
+test('商品を追加する', () => {
   cart.items.push(item);
 });
 
 // 前のテストが実行されていないと失敗する
-test("カートの件数が1になる", () => {
+test('カートの件数が1になる', () => {
   expect(cart.items).toHaveLength(1);
 });
 ```
@@ -214,16 +214,16 @@ test("カートの件数が1になる", () => {
 **良い例**
 
 ```ts
-test("注文が0件のとき、空の配列を返す", async () => {
-  vi.spyOn(globalThis, "fetch").mockResolvedValue(Response.json([]));
+test('注文が0件のとき、空の配列を返す', async () => {
+  vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json([]));
   expect(await fetchOrders()).toEqual([]);
 });
 ```
 
 ```ts
-test("決済に失敗したとき、エラーを表示する", async ({ page }) => {
-  await page.route("**/api/payments", (route) =>
-    route.fulfill({ status: 402, json: { message: "カードが利用できません" } }),
+test('決済に失敗したとき、エラーを表示する', async ({ page }) => {
+  await page.route('**/api/payments', (route) =>
+    route.fulfill({ status: 402, json: { message: 'カードが利用できません' } }),
   );
   // …
 });
@@ -232,10 +232,10 @@ test("決済に失敗したとき、エラーを表示する", async ({ page }) 
 **悪い例**
 
 ```ts
-test("注文履歴を取得する", async () => {
+test('注文履歴を取得する', async () => {
   // 本番のAPIを呼んでいる。データが変わるとテストが失敗する
-  const orders = await fetchOrders("https://api.example.com");
-  expect(orders[0]?.id).toBe("1024");
+  const orders = await fetchOrders('https://api.example.com');
+  expect(orders[0]?.id).toBe('1024');
 });
 ```
 
@@ -252,11 +252,11 @@ test("注文履歴を取得する", async () => {
 **良い例**
 
 ```ts
-test("注文日が今日なら『今日』と表示する", () => {
+test('注文日が今日なら『今日』と表示する', () => {
   vi.useFakeTimers();
-  vi.setSystemTime(new Date("2026-04-01T10:00:00+09:00"));
+  vi.setSystemTime(new Date('2026-04-01T10:00:00+09:00'));
 
-  expect(formatOrderDate(new Date("2026-04-01T08:00:00+09:00"))).toBe("今日");
+  expect(formatOrderDate(new Date('2026-04-01T08:00:00+09:00'))).toBe('今日');
 
   vi.useRealTimers();
 });
@@ -265,9 +265,9 @@ test("注文日が今日なら『今日』と表示する", () => {
 **悪い例**
 
 ```ts
-test("注文日が今日なら『今日』と表示する", () => {
+test('注文日が今日なら『今日』と表示する', () => {
   // 0時をまたいで実行すると失敗する
-  expect(formatOrderDate(new Date())).toBe("今日");
+  expect(formatOrderDate(new Date())).toBe('今日');
 });
 ```
 
@@ -284,14 +284,14 @@ test("注文日が今日なら『今日』と表示する", () => {
 **良い例**
 
 ```ts
-await expect(page.getByRole("status")).toHaveText("保存しました");
+await expect(page.getByRole('status')).toHaveText('保存しました');
 ```
 
 **悪い例**
 
 ```ts
 await page.waitForTimeout(3000);
-expect(await page.locator(".toast").textContent()).toBe("保存しました");
+expect(await page.locator('.toast').textContent()).toBe('保存しました');
 ```
 
 ## 失敗するテストを無効にしてマージしない
@@ -309,7 +309,7 @@ expect(await page.locator(".toast").textContent()).toBe("保存しました");
 **良い例**
 
 ```ts title="playwright.config.ts"
-import { defineConfig } from "@playwright/test";
+import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
@@ -329,7 +329,7 @@ export default defineConfig({
 
 ```ts
 // CIで失敗するので、いったん無効にする
-test.skip("在庫が0のとき、カートに入れるボタンを無効にする", () => {});
+test.skip('在庫が0のとき、カートに入れるボタンを無効にする', () => {});
 
-test.only("ログインに成功したとき、マイページに移動する", async () => {});
+test.only('ログインに成功したとき、マイページに移動する', async () => {});
 ```

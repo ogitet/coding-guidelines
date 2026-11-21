@@ -121,8 +121,8 @@ product-main.jpg    6000×4500  8.4MB
 ```
 
 ```html
-<img class="pc-only" src="/images/campaign-wide.avif" alt="…" width="1600" height="600" />
-<img class="sp-only" src="/images/campaign-square.avif" alt="…" width="800" height="800" />
+<img class="pcOnly" src="/images/campaign-wide.avif" alt="…" width="1600" height="600" />
+<img class="spOnly" src="/images/campaign-square.avif" alt="…" width="800" height="800" />
 ```
 
 ## img要素にはwidthとheightを書く
@@ -199,7 +199,7 @@ img {
 **良い例**
 
 ```html
-<button type="button" class="icon-button" aria-label="お気に入りに追加">
+<button type="button" class="iconButton" aria-label="お気に入りに追加">
   <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24">
     <path fill="currentColor" d="M12 21 …" />
   </svg>
@@ -210,7 +210,7 @@ img {
 
 ```html
 <!-- 状態ごとに色違いの画像を用意して差し替えている -->
-<button type="button" class="icon-button" aria-label="お気に入りに追加">
+<button type="button" class="iconButton" aria-label="お気に入りに追加">
   <img src="/images/icon-heart-gray.svg" alt="" width="24" height="24" />
 </button>
 ```

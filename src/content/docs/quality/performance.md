@@ -53,8 +53,8 @@ body {
 }
 
 @font-face {
-  font-family: "Brand";
-  src: url("/fonts/brand-bold-subset.woff2") format("woff2");
+  font-family: 'Brand';
+  src: url('/fonts/brand-bold-subset.woff2') format('woff2');
   font-weight: 700;
   font-display: swap;
 }
@@ -64,10 +64,10 @@ body {
 
 ```css
 /* 本文全体に、日本語のWebフォントを外部から読み込んで使っている */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
 
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 ```
 
@@ -122,7 +122,7 @@ if (isPending) {
 **良い例**
 
 ```ts
-import { debounce } from "es-toolkit";
+import { debounce } from 'es-toolkit';
 
 // 入力が300ミリ秒止まってから絞り込む
 const handleInput = debounce((keyword: string) => {

@@ -25,8 +25,8 @@ TypeScriptの書き方を決めます。JavaScriptで書く場面でも、この
 
 ```ts
 function parseOrderId(value: unknown): string {
-  if (typeof value !== "string" || value === "") {
-    throw new Error("注文番号が文字列ではありません");
+  if (typeof value !== 'string' || value === '') {
+    throw new Error('注文番号が文字列ではありません');
   }
   return value;
 }
@@ -53,22 +53,22 @@ function parseOrderId(value: any): string {
 **良い例**
 
 ```ts
-const dialog = document.querySelector("#confirm");
+const dialog = document.querySelector('#confirm');
 if (!(dialog instanceof HTMLDialogElement)) {
-  throw new Error("確認ダイアログが見つかりません");
+  throw new Error('確認ダイアログが見つかりません');
 }
 dialog.showModal();
 
 const routes = {
-  home: "/",
-  orders: "/orders/",
+  home: '/',
+  orders: '/orders/',
 } as const satisfies Record<string, string>;
 ```
 
 **悪い例**
 
 ```ts
-const dialog = document.querySelector("#confirm") as HTMLDialogElement;
+const dialog = document.querySelector('#confirm') as HTMLDialogElement;
 dialog.showModal();
 
 const firstOrder = orders[0]!;
@@ -88,7 +88,7 @@ const firstOrder = orders[0]!;
 
 ```ts
 const taxRate = 0.1;
-const items = ["apple", "orange"];
+const items = ['apple', 'orange'];
 
 export function calculateTax(price: number): number {
   return Math.floor(price * taxRate);
@@ -99,7 +99,7 @@ export function calculateTax(price: number): number {
 
 ```ts
 const taxRate: number = 0.1;
-const items: string[] = ["apple", "orange"];
+const items: string[] = ['apple', 'orange'];
 
 export function calculateTax(price) {
   return Math.floor(price * taxRate);
@@ -119,11 +119,11 @@ export function calculateTax(price) {
 **良い例**
 
 ```ts
-export const orderStatuses = ["pending", "paid", "shipped"] as const;
+export const orderStatuses = ['pending', 'paid', 'shipped'] as const;
 export type OrderStatus = (typeof orderStatuses)[number];
 
 function isShipped(status: OrderStatus) {
-  return status === "shipped";
+  return status === 'shipped';
 }
 ```
 
@@ -131,9 +131,9 @@ function isShipped(status: OrderStatus) {
 
 ```ts
 export enum OrderStatus {
-  Pending = "pending",
-  Paid = "paid",
-  Shipped = "shipped",
+  Pending = 'pending',
+  Paid = 'paid',
+  Shipped = 'shipped',
 }
 ```
 
@@ -152,12 +152,12 @@ export enum OrderStatus {
 ```ts
 function getStatusLabel(status: OrderStatus): string {
   switch (status) {
-    case "pending":
-      return "支払い待ち";
-    case "paid":
-      return "支払い済み";
-    case "shipped":
-      return "発送済み";
+    case 'pending':
+      return '支払い待ち';
+    case 'paid':
+      return '支払い済み';
+    case 'shipped':
+      return '発送済み';
     default: {
       const unexpected: never = status;
       throw new Error(`未対応の状態です：${unexpected}`);
@@ -171,12 +171,12 @@ function getStatusLabel(status: OrderStatus): string {
 ```ts
 function getStatusLabel(status: OrderStatus): string {
   switch (status) {
-    case "pending":
-      return "支払い待ち";
-    case "paid":
-      return "支払い済み";
+    case 'pending':
+      return '支払い待ち';
+    case 'paid':
+      return '支払い済み';
     default:
-      return "";
+      return '';
   }
 }
 ```
@@ -231,7 +231,7 @@ function sortByDate(orders: Order[]): Order[] {
 
 ```ts
 const quantity = item.quantity ?? 1;
-const note = order.note ?? "（なし）";
+const note = order.note ?? '（なし）';
 const city = user.address?.city;
 ```
 
@@ -239,7 +239,7 @@ const city = user.address?.city;
 
 ```ts
 const quantity = item.quantity || 1;
-const note = order.note || "（なし）";
+const note = order.note || '（なし）';
 const city = user.address && user.address.city;
 ```
 
@@ -257,22 +257,22 @@ default exportは、import する側で自由に名前を付けられるため�
 
 ```ts
 export function formatPrice(price: number): string {
-  return `${price.toLocaleString("ja-JP")}円`;
+  return `${price.toLocaleString('ja-JP')}円`;
 }
 ```
 
 ```ts
-import { formatPrice } from "@/utils/format-price";
+import { formatPrice } from '@/utils/format-price';
 ```
 
 **悪い例**
 
 ```ts
 export default function (price: number): string {
-  return `${price.toLocaleString("ja-JP")}円`;
+  return `${price.toLocaleString('ja-JP')}円`;
 }
 ```
 
 ```ts
-import toYen from "@/utils/format-price";
+import toYen from '@/utils/format-price';
 ```

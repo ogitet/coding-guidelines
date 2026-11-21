@@ -45,7 +45,7 @@ const config = {
 
 ## 対象ごとに決めたLintツールで検査する
 
-JavaScriptとTypeScriptはOxlint、HTMLとJSXのマークアップはMarkuplint、CSSはStylelintで検査します。どのツールも、推奨の設定を土台にします。
+JavaScriptとTypeScriptはOxlint、HTMLとJSXのマークアップはMarkuplint、CSSはStylelintで検査します。どのツールも推奨の設定を土台にし、設定の全体はプロジェクトのテンプレートに合わせます。
 
 準拠レベル：**必須**
 
@@ -53,47 +53,26 @@ JavaScriptとTypeScriptはOxlint、HTMLとJSXのマークアップはMarkuplint�
 
 型の誤用、Hooksの使い方の誤り、アクセシビリティの問題、HTMLの仕様違反などは、人が読んで見つけるより、ツールのほうが確実に見つけられます。対象ごとに得意なツールを使い分けることで、検出できる範囲を広げます。
 
-Oxlintは、Reactとアクセシビリティのルールをプラグインで有効にします。`react/react-in-jsx-scope` は、Reactのimportが必要だった古いJSXの変換向けのルールなので無効にします。
+Oxlintは、Reactとアクセシビリティのルールをプラグインで有効にします。
 
 **良い例**
 
-```json title=".oxlintrc.json"
+```ts title="vite.config.ts（一部）"
+lint: {
+  plugins: ['typescript', 'unicorn', 'oxc', 'import', 'react', 'jsx-a11y'],
+  categories: { correctness: 'error', suspicious: 'warn' },
+},
+```
+
+```json title=".markuplintrc.json（一部）"
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "unicorn", "oxc", "import", "react", "jsx-a11y"],
-  "categories": {
-    "correctness": "error",
-    "suspicious": "warn"
-  },
-  "rules": {
-    "react/react-in-jsx-scope": "off",
-    "react/rules-of-hooks": "error",
-    "react/exhaustive-deps": "error",
-    "oxc/no-barrel-file": ["error", { "threshold": 0 }],
-    "unicorn/filename-case": ["error", { "case": "kebabCase" }]
-  },
-  "overrides": [
-    {
-      "files": ["**/*.tsx"],
-      "rules": {
-        "unicorn/filename-case": ["error", { "cases": { "kebabCase": true, "pascalCase": true } }]
-      }
-    }
-  ]
+  "extends": ["markuplint:recommended-react"]
 }
 ```
 
-```json title=".markuplintrc"
+```json title=".stylelintrc.json（一部）"
 {
-  "extends": ["markuplint:recommended"],
-  "parser": { "\\.tsx$": "@markuplint/jsx-parser" },
-  "specs": { "\\.tsx$": "@markuplint/react-spec" }
-}
-```
-
-```json title=".stylelintrc.json"
-{
-  "extends": ["stylelint-config-standard"]
+  "extends": ["stylelint-config-standard", "stylelint-config-recess-order"]
 }
 ```
 
@@ -143,8 +122,6 @@ Lintのルールをコードの中で無効にするときは、無効にする�
 **理由**
 
 範囲やルールを指定せずに無効にすると、本来検出すべき別の問題まで見逃します。理由が書いていないと、後から読む人は、その無効化がまだ必要なのかを判断できません。
-
-不要になった無効化のコメントは、Oxlintの `--report-unused-disable-directives` で検出します。
 
 **良い例**
 
