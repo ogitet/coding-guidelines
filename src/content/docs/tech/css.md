@@ -368,3 +368,45 @@ ul.orderCard__links {
   }
 }
 ```
+
+## hoverのスタイルはany-hoverのメディアクエリの中に書く
+
+`:hover` のスタイルは、`@media (any-hover: hover)` の中に書きます。同じ見た目を `:focus-visible` にも当てます。
+
+準拠レベル：**推奨**
+
+**理由**
+
+タッチ操作の端末では、タップした後もhoverの見た目が残ることがあり、操作の結果なのかどうかが分かりにくくなります。`(hover: hover)` は主に使う入力装置しか見ないため、タブレットにトラックパッドをつないだ場合などにhoverが効きません。`any-hover` は、hoverできる入力装置が1つでもあれば当てはまります。画面の幅では、hoverできるかどうかは分かりません。
+
+`:focus-visible` にも同じ見た目を当てると、キーボードで操作する人にも、マウスと同じ反応を返せます。フォーカスの印の表示は、[アクセシビリティ](/coding-guidelines/quality/accessibility/)のルールに従います。
+
+**良い例**
+
+```css
+.button:focus-visible {
+  background-color: var(--color-primary-hover);
+}
+
+@media (any-hover: hover) {
+  .button:hover {
+    background-color: var(--color-primary-hover);
+  }
+}
+```
+
+**悪い例**
+
+```css
+/* メディアクエリの外に書いている */
+.button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* 画面の幅で分けている */
+@media (width >= 48rem) {
+  .button:hover {
+    background-color: var(--color-primary-hover);
+  }
+}
+```
