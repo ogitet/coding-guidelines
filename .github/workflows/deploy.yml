@@ -29,6 +29,8 @@ jobs:
         with:
           path: .
           package-manager: npm@latest
+          # 古いキャッシュの描画結果が残ると、コードブロックのスタイルのファイル名が食い違うため使わない
+          cache: false
 
   deploy:
     needs: build
