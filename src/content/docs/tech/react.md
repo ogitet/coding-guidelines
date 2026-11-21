@@ -1,60 +1,15 @@
 ---
 title: React
-description: Reactの書き方。コンポーネント設計、Hooks、状態管理とデータ取得、パフォーマンスについて決めます。
+description: Reactの書き方。コンポーネント設計、Hooks、状態管理、パフォーマンスについて決めます。
 ---
 
-Reactの書き方を、コンポーネント設計、Hooks、状態管理とデータ取得、パフォーマンスに分けて決めます。
+Reactの書き方を、コンポーネント設計、Hooks、状態管理、パフォーマンスに分けて決めます。
 
 JSXで書くマークアップは[HTML](/coding-guidelines/tech/html/)、スタイルは[CSS](/coding-guidelines/tech/css/)、型の書き方は[TypeScript](/coding-guidelines/tech/typescript/)のページに従います。アクセシビリティに関わるルールは[アクセシビリティ](/coding-guidelines/quality/accessibility/)のページで扱います。コンポーネントのファイル名は、[命名規則](/coding-guidelines/common/naming/)を参照してください。
 
-このページのルールのうち、Oxlintで検出できるものは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)で決めた設定に次の内容を加えて有効にします。Hooksのルール（`react/rules-of-hooks` と `react/exhaustive-deps`）は、フォーマットとLintのページの設定で有効にしています。
-
-```json title=".oxlintrc.json（追加分）"
-{
-  "rules": {
-    "react/prefer-function-component": "error",
-    "react/no-unstable-nested-components": "error",
-    "react/jsx-key": "error",
-    "react/no-array-index-key": "error",
-    "react/no-danger": "error",
-    "react/jsx-no-constructed-context-values": "error"
-  }
-}
-```
+多くのルールは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)で決めたOxlintの設定で検出します。
 
 ## コンポーネント設計
-
-### 関数コンポーネントで書く
-
-コンポーネントは関数で書きます。クラスコンポーネントは使いません。
-
-準拠レベル：**必須**
-
-**理由**
-
-Hooksは関数コンポーネントでしか使えず、Reactの新しい機能も関数コンポーネントを前提に作られています。クラスコンポーネントは、`this` の扱いやライフサイクルのメソッドに処理が分散し、ロジックを再利用しにくくなります。
-
-クラスでしか書けないエラー境界（Error Boundary）は、[react-error-boundary](https://github.com/bvaughn/react-error-boundary)などのライブラリを使い、自分ではクラスを書きません。
-
-このルールは、Oxlintの `react/prefer-function-component` で検出します。
-
-**良い例**
-
-```tsx
-export function OrderSummary({ order }: OrderSummaryProps) {
-  return <p>合計 {formatPrice(order.total)}</p>;
-}
-```
-
-**悪い例**
-
-```tsx
-export class OrderSummary extends React.Component<OrderSummaryProps> {
-  render() {
-    return <p>合計 {formatPrice(this.props.order.total)}</p>;
-  }
-}
-```
 
 ### コンポーネントの中でコンポーネントを定義しない
 
@@ -65,8 +20,6 @@ export class OrderSummary extends React.Component<OrderSummaryProps> {
 **理由**
 
 コンポーネントの中で定義したコンポーネントは、描画のたびに別のコンポーネントとして作り直されます。Reactは別物と判断して中身をすべて作り直すため、入力中の文字やフォーカスなどの状態が消え、表示も遅くなります。
-
-このルールは、Oxlintの `react/no-unstable-nested-components` で検出します。
 
 **良い例**
 
@@ -193,8 +146,6 @@ type CardProps = {
 
 Reactは `key` で要素を見分け、追加・削除・並べ替えのときに、どの要素を残すかを決めます。添字を `key` にすると、並び順が変わったときに別の要素の状態（入力中の文字やチェックの状態など）が引き継がれます。`Math.random()` などを使うと、描画のたびにすべての要素が作り直されます。
 
-このルールは、Oxlintの `react/jsx-key` と `react/no-array-index-key` で検出します。
-
 **良い例**
 
 ```tsx
@@ -215,151 +166,7 @@ Reactは `key` で要素を見分け、追加・削除・並べ替えのとき�
 </ul>
 ```
 
-### dangerouslySetInnerHTMLを使わない
-
-`dangerouslySetInnerHTML` は使いません。HTMLを表示する必要がある場合は、信頼できる方法で無害化したHTMLだけを渡し、理由をコメントに書きます。
-
-準拠レベル：**必須**
-
-**理由**
-
-Reactは、JSXに埋め込んだ文字列を自動的にエスケープし、クロスサイトスクリプティング（XSS）を防いでいます。`dangerouslySetInnerHTML` はこの仕組みを外すため、利用者が入力した文字列などが混ざると、悪意のあるスクリプトが実行されます。
-
-このルールは、Oxlintの `react/no-danger` で検出します。
-
-**良い例**
-
-```tsx
-<p className={styles.message}>{review.comment}</p>
-```
-
-**悪い例**
-
-```tsx
-<p className={styles.message} dangerouslySetInnerHTML={{ __html: review.comment }} />
-```
-
-### 画面の一部で起きたエラーはError Boundaryで受け止める
-
-描画中に起きたエラーは、Error Boundaryで受け止め、代わりの表示を出します。Error Boundaryは、アプリ全体を囲むものに加え、独立して失敗してよい単位（ページ、サイドバー、ウィジェットなど）にも置きます。
-
-Error Boundaryは自分でクラスコンポーネントとして書かず、[react-error-boundary](https://github.com/bvaughn/react-error-boundary)を使います。
-
-準拠レベル：**推奨**
-
-**理由**
-
-Reactでは、描画中にエラーが起きて、どこでも受け止められないと、アプリ全体の表示が消えて真っ白になります。Error Boundaryを置けば、エラーが起きた部分だけを代わりの表示に置き換え、ほかの部分は使い続けられます。
-
-イベントハンドラーや非同期の処理の中で起きたエラーは、Error Boundaryでは受け止められません。それらは、その処理の中で扱います。
-
-**良い例**
-
-```tsx
-import { ErrorBoundary } from "react-error-boundary";
-
-export function DashboardPage() {
-  return (
-    <>
-      <ErrorBoundary fallback={<WidgetError title="売上" />} onError={reportError}>
-        <SalesWidget />
-      </ErrorBoundary>
-      <ErrorBoundary fallback={<WidgetError title="在庫" />} onError={reportError}>
-        <StockWidget />
-      </ErrorBoundary>
-    </>
-  );
-}
-```
-
-**悪い例**
-
-```tsx
-// どちらかのウィジェットでエラーが起きると、ページ全体が表示されなくなる
-export function DashboardPage() {
-  return (
-    <>
-      <SalesWidget />
-      <StockWidget />
-    </>
-  );
-}
-```
-
 ## Hooks
-
-### Hooksはコンポーネントとカスタムフックの最上位で呼ぶ
-
-Hooksは、コンポーネントかカスタムフックの最上位で呼びます。条件分岐、ループ、`return` の後、イベントハンドラーの中では呼びません。
-
-準拠レベル：**必須**
-
-**理由**
-
-Reactは、Hooksが呼ばれた順番で、それぞれの状態を覚えています。条件によって呼ばれたり呼ばれなかったりすると、順番がずれ、別のHookの状態が渡されます。
-
-このルールは、Oxlintの `react/rules-of-hooks` で検出します。
-
-**良い例**
-
-```tsx
-export function OrderDetail({ orderId }: OrderDetailProps) {
-  const { data: order } = useOrder(orderId);
-  const [isEditing, setIsEditing] = useState(false);
-
-  if (!order) {
-    return <Spinner />;
-  }
-  return <OrderView order={order} isEditing={isEditing} onEdit={() => setIsEditing(true)} />;
-}
-```
-
-**悪い例**
-
-```tsx
-export function OrderDetail({ orderId }: OrderDetailProps) {
-  const { data: order } = useOrder(orderId);
-
-  if (!order) {
-    return <Spinner />;
-  }
-  const [isEditing, setIsEditing] = useState(false);
-  return <OrderView order={order} isEditing={isEditing} onEdit={() => setIsEditing(true)} />;
-}
-```
-
-### 依存配列には、中で使う値をすべて書く
-
-`useEffect`、`useMemo`、`useCallback` の依存配列には、関数の中で使っているpropsやstateなどの値をすべて書きます。Lintの警告を消すために値を省きません。
-
-準拠レベル：**必須**
-
-**理由**
-
-依存配列から値を省くと、その値が変わっても処理がやり直されず、古い値を使い続ける不具合になります。依存配列に入れると処理が多く走りすぎる場合は、値を省くのではなく、処理の作りを見直します。
-
-このルールは、Oxlintの `react/exhaustive-deps` で検出します。
-
-**良い例**
-
-```tsx
-useEffect(() => {
-  const connection = createConnection(roomId);
-  connection.connect();
-  return () => connection.disconnect();
-}, [roomId]);
-```
-
-**悪い例**
-
-```tsx
-useEffect(() => {
-  const connection = createConnection(roomId);
-  connection.connect();
-  return () => connection.disconnect();
-  // oxlint-disable-next-line react/exhaustive-deps
-}, []);
-```
 
 ### propsやstateから計算できる値はstateにしない
 
@@ -370,8 +177,6 @@ propsや別のstateから計算できる値は、stateに持たず、描画の�
 **理由**
 
 計算できる値をstateに持つと、元の値が変わるたびに、`useEffect` などで同期させる必要があります。同期を忘れると表示が食い違い、同期させても、一度古い値で描画されてから描き直すため、無駄な描画が増えます。描画の中で計算すれば、常に元の値と一致します。計算が重い場合だけ、`useMemo` を使います。
-
-`useEffect` の中でstateを更新していることは、Oxlintの `react/set-state-in-effect` で検出します。このルールは、[フォーマットとLint](/coding-guidelines/common/format-and-lint/)の設定で有効にしている `correctness` の分類に含まれています。
 
 **良い例**
 
@@ -475,7 +280,7 @@ Hooksを使わない関数は、カスタムフックにせず、普通の関数
 
 **良い例**
 
-```ts title="use-media-query.ts"
+```ts title="useMediaQuery.ts"
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
 
@@ -501,7 +306,7 @@ export function useFormatPrice(price: number): string {
 }
 ```
 
-## 状態管理とデータ取得
+## 状態管理
 
 ### stateは使うコンポーネントの近くに置く
 
@@ -532,15 +337,17 @@ export function App() {
 }
 ```
 
-### stateは直接書き換えず、新しい値で置き換える
+### stateは新しい値で置き換え、前の値をもとにするときは更新関数を渡す
 
-オブジェクトや配列のstateは、直接書き換えません。新しいオブジェクトや配列を作り、更新関数に渡します。
+オブジェクトや配列のstateは、直接書き換えません。新しいオブジェクトや配列を作って渡します。前のstateをもとに次のstateを決めるときは、`setCount((current) => current + 1)` のように、更新関数に関数を渡します。
 
 準拠レベル：**必須**
 
 **理由**
 
 Reactは、stateが新しい値に置き換わったかどうかで、描き直すかを判断します。オブジェクトや配列を直接書き換えても、同じものを指したままなので変化が検知されず、画面が更新されません。
+
+また、stateの更新はすぐには反映されません。変数に残っている古い値をもとに計算すると、続けて更新したときに更新が失われます。関数を渡せば、Reactがその時点の最新の値を渡します。
 
 **良い例**
 
@@ -557,35 +364,6 @@ setCart((current) => ({
 const index = cart.items.findIndex((item) => item.id === removedId);
 cart.items.splice(index, 1);
 setCart(cart);
-```
-
-### 前の値をもとにする更新には更新関数を渡す
-
-前のstateをもとに次のstateを決めるときは、`setCount((current) => current + 1)` のように、更新関数に関数を渡します。
-
-準拠レベル：**推奨**
-
-**理由**
-
-stateの更新は、すぐには反映されません。同じイベントの中で続けて更新したり、非同期の処理の後で更新したりすると、変数に残っている古い値をもとに計算してしまいます。関数を渡せば、Reactがその時点の最新の値を渡すため、更新が失われません。
-
-**良い例**
-
-```tsx
-function handleAddTwo() {
-  setQuantity((current) => current + 1);
-  setQuantity((current) => current + 1);
-}
-```
-
-**悪い例**
-
-```tsx
-function handleAddTwo() {
-  // 2回呼んでも1しか増えない
-  setQuantity(quantity + 1);
-  setQuantity(quantity + 1);
-}
 ```
 
 ### 同時に成り立たない状態を、別々のstateにしない
@@ -645,41 +423,6 @@ const [status, setStatus] = useState("all");
 const [page, setPage] = useState(1);
 ```
 
-### サーバーのデータはuseEffectで取得しない
-
-サーバーから取得するデータは、[TanStack Query](https://tanstack.com/query/latest)などのデータ取得ライブラリで扱います。`useEffect` の中で `fetch` してstateに入れる書き方はしません。
-
-準拠レベル：**推奨**
-
-**理由**
-
-`useEffect` でデータを取得すると、読み込み中とエラーの状態、古い応答が新しい応答を上書きする競合、キャッシュ、再取得などを、すべて自分で実装する必要があります。実装が漏れやすく、コンポーネントごとに書き方もばらつきます。専用の機能やライブラリを使えば、これらがそろった状態で使えます。
-
-**良い例**
-
-```tsx
-export function useOrder(orderId: string) {
-  return useQuery({
-    queryKey: ["orders", orderId],
-    queryFn: () => fetchOrder(orderId),
-  });
-}
-```
-
-**悪い例**
-
-```tsx
-export function useOrder(orderId: string) {
-  const [order, setOrder] = useState<Order>();
-
-  useEffect(() => {
-    fetchOrder(orderId).then(setOrder);
-  }, [orderId]);
-
-  return order;
-}
-```
-
 ## パフォーマンス
 
 ### メモ化は必要だと確かめてから使う
@@ -714,39 +457,6 @@ export function OrderTitle({ order }: OrderTitleProps) {
     console.log(order.id);
   }, [order.id]);
   // …
-}
-```
-
-### Contextに渡す値を描画のたびに作り直さない
-
-Contextの `value` に、描画のたびに新しく作られるオブジェクトや関数を直接渡しません。頻繁に変わる値と、ほとんど変わらない値は、別のContextに分けます。
-
-準拠レベル：**推奨**
-
-**理由**
-
-Contextの値が変わると、そのContextを使うすべてのコンポーネントが描き直されます。`value={{ user, logout }}` のように書くと、中身が同じでも描画のたびに別のオブジェクトになり、使う側がすべて描き直されます。React Compilerを使わない場合は、`useMemo` で値を保ちます。
-
-このルールは、Oxlintの `react/jsx-no-constructed-context-values` で検出します。
-
-**良い例**
-
-```tsx
-export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const value = useMemo(() => ({ user, logout: () => setUser(null) }), [user]);
-
-  return <AuthContext value={value}>{children}</AuthContext>;
-}
-```
-
-**悪い例**
-
-```tsx
-export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-
-  return <AuthContext value={{ user, logout: () => setUser(null) }}>{children}</AuthContext>;
 }
 ```
 
@@ -785,49 +495,4 @@ import { SalesChart } from "@/features/sales/SalesChart";
 export function SalesPage() {
   return <SalesChart />;
 }
-```
-
-### 数百件を超えるリストは仮想化する
-
-一度に数百件を超える要素を並べるリストは、[TanStack Virtual](https://tanstack.com/virtual/latest)などで仮想化し、画面に見えている範囲の要素だけを描画します。件数を減らせる場合は、ページ分けを先に検討します。
-
-準拠レベル：**推奨**
-
-**理由**
-
-要素の数が多いと、最初の描画と、更新のたびの描き直しに時間がかかり、スクロールや入力が引っかかるようになります。仮想化すれば、件数がいくら増えても、描画する要素の数は画面に入る分だけで済みます。
-
-**良い例**
-
-```tsx
-const virtualizer = useVirtualizer({
-  count: orders.length,
-  getScrollElement: () => scrollRef.current,
-  estimateSize: () => 48,
-});
-
-// 全体の高さと各行の位置を指定するスタイルは省略
-return (
-  <div ref={scrollRef} className={styles.scroll}>
-    <ul className={styles.list}>
-      {virtualizer.getVirtualItems().map((row) => {
-        const order = orders[row.index];
-        return order ? <OrderRow key={order.id} order={order} start={row.start} /> : null;
-      })}
-    </ul>
-  </div>
-);
-```
-
-**悪い例**
-
-```tsx
-// 1万件の注文をすべて描画している
-return (
-  <ul>
-    {orders.map((order) => (
-      <OrderRow key={order.id} order={order} />
-    ))}
-  </ul>
-);
 ```

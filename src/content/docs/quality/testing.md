@@ -1,28 +1,26 @@
 ---
 title: テスト
-description: 自動テスト（単体、コンポーネント、E2E、ビジュアルリグレッション）の範囲と書き方。Vitest、Testing Library、Playwrightを使います。
+description: 自動テスト（単体テストとE2Eテスト）の範囲と書き方。VitestとPlaywrightを使います。
 ---
 
 自動テストで何を確かめ、どう書くかを決めます。使うツールは次のとおりです。
 
 | 種類 | ツール | 対象 |
 | :-- | :-- | :-- |
-| 単体テスト | [Vitest](https://vitest.dev/) | 関数、カスタムフック |
-| コンポーネントテスト | Vitest、[Testing Library](https://testing-library.com/) | Reactコンポーネント |
-| E2Eテスト | [Playwright](https://playwright.dev/) | ログインや購入など、主要な利用の流れ |
-| ビジュアルリグレッションテスト | Playwright | 見た目の崩れ |
+| 単体テスト | [Vitest](https://vitest.dev/) | 計算や変換などのロジック |
+| E2Eテスト | [Playwright](https://playwright.dev/) | 画面の表示と操作 |
 
-ブラウザやデバイスでの表示の確認、HTMLバリデータやaxeによる検査など、人が確かめる作業は[検証](/coding-guidelines/quality/verification/)のページで扱います。
+ブラウザやデバイスでの表示の確認、axeによる検査など、人が確かめる作業は[検証](/coding-guidelines/quality/verification/)のページで扱います。
 
 ## テストの種類は確かめたいことで選ぶ
 
-計算や変換などのロジックは単体テスト、画面の表示と操作はコンポーネントテスト、ページをまたぐ主要な流れはE2Eテストで確かめます。同じことを複数の種類のテストで重ねて確かめません。
+計算や変換などのロジックは単体テスト、画面の表示と操作はE2Eテストで確かめます。同じことを複数の種類のテストで重ねて確かめません。
 
 準拠レベル：**推奨**
 
 **理由**
 
-E2Eテストは、本物のブラウザで動くため安心感がありますが、実行に時間がかかり、通信やタイミングの影響で不安定にもなりがちです。ロジックの細かい条件の違いは、速くて安定した単体テストで網羅し、E2Eテストは「つながったときに動くか」を確かめる少数の流れに絞ります。
+E2Eテストは、本物のブラウザで動くため安心感がありますが、実行に時間がかかり、通信やタイミングの影響で不安定にもなりがちです。ロジックの細かい条件の違いは、速くて安定した単体テストで網羅し、E2Eテストは画面の操作の流れを確かめることに絞ります。
 
 ロジックをコンポーネントの外の関数に切り出しておくと、単体テストで確かめやすくなります。
 
@@ -55,42 +53,17 @@ test("小計が4,999円なら送料は500円", async ({ page }) => {
 });
 ```
 
-## ロジックを追加・変更したら、同じプルリクエストでテストを書く
+## 変更にはテストを付け、不具合の修正は再現するテストから始める
 
-関数やカスタムフック、コンポーネントの振る舞いを追加・変更したら、それを確かめるテストを同じプルリクエストに含めます。
+ロジックや画面の振る舞いを追加・変更したら、それを確かめるテストを同じプルリクエストに含めます。不具合を直すときは、まずその不具合で失敗するテストを書き、失敗することを確かめてから修正します。
 
 準拠レベル：**推奨**
 
 **理由**
 
-テストを後回しにすると、書かれないまま残ることがほとんどです。変更と同じプルリクエストにテストがあれば、レビューする人は、どの条件で動くことを確かめたのかをテストから読み取れます。
+テストを後回しにすると、書かれないまま残ることがほとんどです。変更と同じプルリクエストにテストがあれば、レビューする人は、どの条件で動くことを確かめたのかをテストから読み取れます。不具合の修正では、先にテストが失敗することを確かめておけば、そのテストが本当に不具合を捉えていることと、修正で直ったことの両方を示せます。
 
 見た目だけの変更や、設定ファイルの変更など、自動テストで確かめる意味が薄いものは対象外です。
-
-**良い例**
-
-```text
-src/features/cart/
-├── calculate-shipping-fee.ts
-└── calculate-shipping-fee.test.ts   ← 実装と同じプルリクエストで追加
-```
-
-**悪い例**
-
-```md
-<!-- プルリクエストの説明 -->
-送料の計算を変更しました。テストは別のプルリクエストで追加します。
-```
-
-## 不具合を直すときは、再現するテストを先に書く
-
-不具合を直すときは、まずその不具合で失敗するテストを書き、失敗することを確かめてから修正します。
-
-準拠レベル：**推奨**
-
-**理由**
-
-先にテストが失敗することを確かめておけば、そのテストが本当に不具合を捉えていることと、修正で直ったことの両方を示せます。テストが残るので、同じ不具合が再発したときにも気づけます。
 
 **良い例**
 
@@ -111,7 +84,7 @@ test("小計がちょうど5,000円なら送料は無料", () => {
 
 ## 実装の詳細ではなく、振る舞いをテストする
 
-テストでは、使う人から見える結果（画面に表示されるもの、関数の戻り値）を確かめます。コンポーネントの内部の状態や、どの関数が何回呼ばれたかといった、実装の詳細は確かめません。
+テストでは、使う人から見える結果（画面に表示されるもの、関数の戻り値）を確かめます。内部の状態や、どの関数が何回呼ばれたかといった、実装の詳細は確かめません。
 
 準拠レベル：**推奨**
 
@@ -119,33 +92,25 @@ test("小計がちょうど5,000円なら送料は無料", () => {
 
 実装の詳細を確かめるテストは、振る舞いを変えないリファクタリングでも失敗します。そのたびにテストを直すことになり、テストが変更の邪魔になります。逆に、振る舞いを確かめるテストなら、実装を書き換えても、テストが通れば振る舞いが保たれていると判断できます。
 
-コンポーネントの出力をまるごと保存するスナップショットテストも、意図しない差分が出やすく、何を確かめたいのかが読み取れないため使いません。
-
 **良い例**
 
-```tsx
-test("数量を増やすと小計が更新される", async () => {
-  const user = userEvent.setup();
-  render(<CartItem price={1200} />);
-
-  await user.click(screen.getByRole("button", { name: "数量を1増やす" }));
-
-  expect(screen.getByText("小計 2,400円")).toBeInTheDocument();
+```ts
+test("数量を増やすと小計が更新される", async ({ page }) => {
+  await page.goto("/cart");
+  await page.getByRole("button", { name: "数量を1増やす" }).click();
+  await expect(page.getByText("小計 2,400円")).toBeVisible();
 });
 ```
 
 **悪い例**
 
-```tsx
-test("数量を増やすとsetQuantityが呼ばれる", async () => {
-  const setQuantity = vi.fn();
-  vi.spyOn(React, "useState").mockReturnValue([1, setQuantity]);
-  const { container } = render(<CartItem price={1200} />);
-
-  await userEvent.click(container.querySelector(".increment-button")!);
-
-  expect(setQuantity).toHaveBeenCalledWith(2);
-  expect(container).toMatchSnapshot();
+```ts
+test("数量を増やすと保存した数量が2になる", async ({ page }) => {
+  await page.goto("/cart");
+  await page.getByRole("button", { name: "数量を1増やす" }).click();
+  // 画面ではなく、内部に保存した値を確かめている
+  const cart = await page.evaluate(() => localStorage.getItem("cart"));
+  expect(JSON.parse(cart ?? "{}").quantity).toBe(2);
 });
 ```
 
@@ -157,60 +122,21 @@ test("数量を増やすとsetQuantityが呼ばれる", async () => {
 
 **理由**
 
-使う人も支援技術も、要素をクラス名ではなく、役割と名前で見分けています。テストも同じ方法で要素を探せば、見た目のための変更でテストが壊れず、要素に正しい役割と名前が付いていることも同時に確かめられます。
-
-Playwrightでも、`page.getByRole` で同じように取得します。
+使う人も支援技術も、要素をクラス名ではなく、役割と名前で見分けています。テストも同じ方法で要素を探せば、見た目のための変更でテストが壊れず、要素に正しい役割と名前が付いていることも同時に確かめられます。CSS Modulesのクラス名は実行時に変わるため、そもそもテストで使えません。
 
 **良い例**
-
-```tsx
-screen.getByRole("button", { name: "カートに入れる" });
-screen.getByRole("heading", { level: 1, name: "注文履歴" });
-screen.getByLabelText("メールアドレス");
-```
 
 ```ts
 await page.getByRole("link", { name: "注文履歴" }).click();
+await expect(page.getByRole("heading", { level: 1, name: "注文履歴" })).toBeVisible();
+await page.getByLabel("メールアドレス").fill("user@example.com");
 ```
 
 **悪い例**
-
-```tsx
-container.querySelector(".product-card > div:nth-child(2) button");
-screen.getByTestId("submit-button");
-```
 
 ```ts
 await page.locator("#header .nav li:nth-child(3) a").click();
-```
-
-## 操作はuser-eventで再現する
-
-コンポーネントテストでのクリックや入力は、`@testing-library/user-event` で再現します。`fireEvent` は使いません。
-
-準拠レベル：**推奨**
-
-**理由**
-
-実際のクリックでは、フォーカスの移動、`pointerdown`、`mouseup`、`click` など、複数のイベントが順に起きます。`fireEvent` は指定した1つのイベントしか発生させないため、実際には操作できない状態（無効なボタンなど）でも操作できてしまうことがあります。user-eventは、実際の操作に近い一連のイベントを発生させます。
-
-**良い例**
-
-```tsx
-const user = userEvent.setup();
-render(<SearchForm />);
-
-await user.type(screen.getByRole("searchbox", { name: "キーワード" }), "コーヒー");
-await user.click(screen.getByRole("button", { name: "検索" }));
-```
-
-**悪い例**
-
-```tsx
-render(<SearchForm />);
-
-fireEvent.change(screen.getByRole("searchbox"), { target: { value: "コーヒー" } });
-fireEvent.click(screen.getByText("検索"));
+await page.getByTestId("submit-button").click();
 ```
 
 ## テスト名には条件と期待する結果を書く
@@ -241,47 +167,6 @@ describe("LoginForm", () => {
 });
 ```
 
-## 1つのテストでは1つの振る舞いを確かめる
-
-1つのテストでは、1つの条件での1つの振る舞いだけを確かめます。準備、操作、確認の順に書き、操作と確認を何度も繰り返しません。
-
-準拠レベル：**推奨**
-
-**理由**
-
-複数の振る舞いを1つのテストにまとめると、途中で失敗したときに、それより後の振る舞いが確かめられなくなります。どの振る舞いが壊れたのかも、テスト名から分かりません。
-
-**良い例**
-
-```tsx
-test("在庫が0のとき、カートに入れるボタンを無効にする", () => {
-  render(<ProductCard stock={0} />);
-
-  expect(screen.getByRole("button", { name: "カートに入れる" })).toBeDisabled();
-});
-
-test("在庫が0のとき、在庫切れと表示する", () => {
-  render(<ProductCard stock={0} />);
-
-  expect(screen.getByText("在庫切れ")).toBeInTheDocument();
-});
-```
-
-**悪い例**
-
-```tsx
-test("ProductCardの動作", async () => {
-  const user = userEvent.setup();
-  const { rerender } = render(<ProductCard stock={3} />);
-  await user.click(screen.getByRole("button", { name: "カートに入れる" }));
-  expect(screen.getByText("カートに追加しました")).toBeInTheDocument();
-
-  rerender(<ProductCard stock={0} />);
-  expect(screen.getByRole("button", { name: "カートに入れる" })).toBeDisabled();
-  expect(screen.getByText("在庫切れ")).toBeInTheDocument();
-});
-```
-
 ## テスト同士を独立させる
 
 各テストは、ほかのテストの結果や実行順に依存しないようにします。テストの中で変えた状態（モック、タイマー、グローバルな値、保存したデータなど）は、テストごとに元に戻します。
@@ -292,46 +177,33 @@ test("ProductCardの動作", async () => {
 
 前のテストが残した状態に依存すると、単独で実行したときや、並列で実行したとき、順番が変わったときだけ失敗する、原因の分かりにくいテストになります。
 
-Vitestでは、設定の `restoreMocks` を有効にして、モックをテストごとに自動で元に戻します。
-
 **良い例**
 
-```ts title="vitest.config.ts"
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-  test: {
-    restoreMocks: true,
-  },
-});
-```
-
 ```ts
-test("ログイン済みのとき、ユーザー名を表示する", () => {
-  render(<Header user={createUser({ name: "山田" })} />);
-  expect(screen.getByText("山田さん")).toBeInTheDocument();
+test("商品を追加すると、カートの件数が1になる", () => {
+  const cart = addItem(createCart(), item);
+  expect(cart.items).toHaveLength(1);
 });
 ```
 
 **悪い例**
 
 ```ts
-let currentUser: User;
+const cart = createCart();
 
-test("ログインする", async () => {
-  currentUser = await login("yamada@example.com", "password");
+test("商品を追加する", () => {
+  cart.items.push(item);
 });
 
-// 前のテストが成功していないと動かない
-test("ログイン済みのとき、ユーザー名を表示する", () => {
-  render(<Header user={currentUser} />);
-  expect(screen.getByText("山田さん")).toBeInTheDocument();
+// 前のテストが実行されていないと失敗する
+test("カートの件数が1になる", () => {
+  expect(cart.items).toHaveLength(1);
 });
 ```
 
 ## テストから本物の外部APIを呼ばない
 
-単体テストとコンポーネントテストでは、APIとの通信をモックし、決まった応答を返すようにします。E2Eテストでも、決済や外部サービスなど、テスト用の環境がないAPIは呼びません。
+単体テストでは、APIとの通信をモックし、決まった応答を返すようにします。E2Eテストでも、決済や外部サービスなど、テスト用の環境がないAPIは呼びません。
 
 準拠レベル：**必須**
 
@@ -341,13 +213,10 @@ test("ログイン済みのとき、ユーザー名を表示する", () => {
 
 **良い例**
 
-```tsx
-test("注文が0件のとき、注文がないことを表示する", async () => {
+```ts
+test("注文が0件のとき、空の配列を返す", async () => {
   vi.spyOn(globalThis, "fetch").mockResolvedValue(Response.json([]));
-
-  render(<OrderHistory />);
-
-  expect(await screen.findByText("注文はまだありません")).toBeInTheDocument();
+  expect(await fetchOrders()).toEqual([]);
 });
 ```
 
@@ -362,12 +231,11 @@ test("決済に失敗したとき、エラーを表示する", async ({ page }) 
 
 **悪い例**
 
-```tsx
-test("注文履歴を表示する", async () => {
+```ts
+test("注文履歴を取得する", async () => {
   // 本番のAPIを呼んでいる。データが変わるとテストが失敗する
-  render(<OrderHistory apiBaseUrl="https://api.example.com" />);
-
-  expect(await screen.findByText("注文番号 1024")).toBeInTheDocument();
+  const orders = await fetchOrders("https://api.example.com");
+  expect(orders[0]?.id).toBe("1024");
 });
 ```
 
@@ -411,26 +279,15 @@ test("注文日が今日なら『今日』と表示する", () => {
 
 **理由**
 
-時間で待つと、実行する環境が遅いときには足りずに失敗し、速いときには無駄に待つことになります。条件で待てば、条件を満たした時点ですぐ次に進み、遅い環境でもタイムアウトまで待ち続けます。
-
-Testing Libraryでは `findBy` や `waitFor`、Playwrightでは自動で待つ `expect` を使います。
+時間で待つと、実行する環境が遅いときには足りずに失敗し、速いときには無駄に待つことになります。条件で待てば、条件を満たした時点ですぐ次に進み、遅い環境でもタイムアウトまで待ち続けます。Playwrightでは、条件を満たすまで自動で待つ `expect` を使います。
 
 **良い例**
-
-```tsx
-expect(await screen.findByText("保存しました")).toBeInTheDocument();
-```
 
 ```ts
 await expect(page.getByRole("status")).toHaveText("保存しました");
 ```
 
 **悪い例**
-
-```tsx
-await new Promise((resolve) => setTimeout(resolve, 1000));
-expect(screen.getByText("保存しました")).toBeInTheDocument();
-```
 
 ```ts
 await page.waitForTimeout(3000);
@@ -475,94 +332,4 @@ export default defineConfig({
 test.skip("在庫が0のとき、カートに入れるボタンを無効にする", () => {});
 
 test.only("ログインに成功したとき、マイページに移動する", async () => {});
-```
-
-## カバレッジの数値を目標にしない
-
-テストのカバレッジ（実行された行の割合）は、テストされていない箇所を見つけるために使います。カバレッジの数値そのものを目標にはしません。
-
-準拠レベル：**推奨**
-
-**理由**
-
-カバレッジは、その行が実行されたことしか示さず、結果が正しいことを確かめたかどうかは分かりません。数値を目標にすると、確認のないテストや、重要でない箇所のテストで数値を上げることが目的になります。数値よりも、重要なロジックと、不具合が起きやすい条件（境界値、空、エラー）がテストされているかを見ます。
-
-**良い例**
-
-```md
-<!-- プルリクエストの説明 -->
-カバレッジを見て、割引の計算でクーポンが期限切れの場合がテストされていなかったため追加しました。
-```
-
-**悪い例**
-
-```ts
-// カバレッジを上げるためだけのテスト。結果を何も確かめていない
-test("formatPriceを呼ぶ", () => {
-  formatPrice(1000);
-});
-```
-
-## ビジュアルリグレッションテストは崩れやすい箇所に絞る
-
-見た目の崩れを検出するビジュアルリグレッションテストは、採用するかをプロジェクトごとに決めます。採用する場合は、主要なページと、多くの画面で使う共通のコンポーネントに絞って使います。
-
-準拠レベル：**任意**
-
-**理由**
-
-ビジュアルリグレッションテストは、CSSの変更が思わぬ画面に影響したことを検出できます。一方で、文言や画像の差し替えなど、意図した変更でも失敗するため、対象を広げすぎると基準画像の更新に追われます。
-
-Playwrightの `toHaveScreenshot` を使います。日時や広告など、実行ごとに変わる部分は `mask` で隠します。
-
-**良い例**
-
-```ts
-test("トップページの見た目", async ({ page }) => {
-  await page.goto("/");
-  await expect(page).toHaveScreenshot("top.png", {
-    fullPage: true,
-    mask: [page.getByRole("region", { name: "新着情報" })],
-  });
-});
-```
-
-**悪い例**
-
-```ts
-// すべての商品ページを撮影し、商品の情報が変わるたびに失敗する
-for (const product of allProducts) {
-  test(`${product.name}の見た目`, async ({ page }) => {
-    await page.goto(`/products/${product.id}/`);
-    await expect(page).toHaveScreenshot();
-  });
-}
-```
-
-## 基準画像はCIと同じ環境で作り、差分を見てから更新する
-
-ビジュアルリグレッションテストの基準画像は、CIと同じOSとブラウザの環境で作ります。基準画像を更新するときは、差分の画像を見て、意図した変更であることを確かめてから更新します。
-
-準拠レベル：**必須**
-
-**理由**
-
-フォントの描画などはOSによって異なるため、手元のmacOSで作った基準画像は、LinuxのCIでは一致しません。Playwrightの公式のDockerイメージを使えば、手元でもCIと同じ環境で撮影できます。
-
-差分を見ずに更新すると、意図しない崩れまで正しい状態として登録してしまい、テストの意味がなくなります。
-
-**良い例**
-
-```sh
-# イメージのバージョンは、package.json の @playwright/test と同じにする
-docker run --rm --ipc=host -v "$(pwd)":/work -w /work \
-  mcr.microsoft.com/playwright:v1.56.0-noble \
-  npx playwright test --update-snapshots
-```
-
-**悪い例**
-
-```sh
-# 手元のmacOSで、差分を確かめずにすべて更新する
-npx playwright test --update-snapshots
 ```

@@ -9,7 +9,7 @@ HTML、CSS、Reactのページでアクセシビリティに関わるルール�
 
 ## 意味に合ったHTML要素を使う
 
-要素は、見た目ではなく意味で選びます。ボタンには `button`、リンクには `a`、ナビゲーションには `nav` のように、役割に合った要素を使います。
+要素は、見た目ではなく意味で選びます。ボタンには `button`、リンクには `a`、ナビゲーションには `nav` のように、役割に合った要素を使います。`role` や `aria-*` 属性は、開閉の状態（`aria-expanded`）のように、HTMLでは表せない役割や状態を伝えるときだけ使います。
 
 準拠レベル：**必須**
 
@@ -19,7 +19,7 @@ HTML、CSS、Reactのページでアクセシビリティに関わるルール�
 
 ボタンとリンクは、ページを移動するなら `a`、ページ内で何かを実行するなら `button` と使い分けます。
 
-このルールの一部は、Oxlintの `jsx-a11y/no-static-element-interactions` などで検出します。
+ARIAは、支援技術への伝え方を上書きするものです。HTMLが標準で伝えている役割を重ねて書いても意味がなく、誤った値を書けば、正しく伝わっていた情報を壊します。
 
 **良い例**
 
@@ -30,6 +30,7 @@ HTML、CSS、Reactのページでアクセシビリティに関わるルール�
   </ul>
 </nav>
 <button type="button" onclick="addToCart()">カートに入れる</button>
+<button type="button" aria-expanded="false" aria-controls="filter-panel">絞り込み</button>
 ```
 
 **悪い例**
@@ -39,62 +40,7 @@ HTML、CSS、Reactのページでアクセシビリティに関わるルール�
   <div class="nav-item" onclick="location.href = '/products/'">商品一覧</div>
 </div>
 <div class="button" onclick="addToCart()">カートに入れる</div>
-```
-
-## ARIAはHTMLで表せないときだけ使う
-
-`role` や `aria-*` 属性は、HTMLの要素や属性では表せない役割や状態を伝えるときだけ使います。
-
-準拠レベル：**必須**
-
-**理由**
-
-ARIAは、支援技術への伝え方を上書きするものです。HTMLが標準で伝えている役割を重ねて書いても意味がなく、誤った値を書けば、正しく伝わっていた情報を壊します。トグルボタンの押下状態（`aria-pressed`）や、開閉の状態（`aria-expanded`）のように、HTMLだけでは表せないものに絞って使います。
-
-このルールの一部は、Oxlintの `jsx-a11y/prefer-tag-over-role` で検出します。
-
-**良い例**
-
-```html
-<button type="button" aria-expanded="false" aria-controls="filter-panel">絞り込み</button>
-<div id="filter-panel" hidden>…</div>
-```
-
-**悪い例**
-
-```html
 <nav role="navigation">…</nav>
-<button role="button">絞り込み</button>
-<span role="button" tabindex="0">閉じる</span>
-```
-
-## ページの言語を指定する
-
-`html` 要素の `lang` 属性で、ページの言語を指定します。ページの一部が別の言語なら、その部分にも `lang` 属性を付けます。
-
-準拠レベル：**必須**
-
-**理由**
-
-スクリーンリーダーは `lang` 属性を見て、読み上げに使う言語を切り替えます。指定がないと、日本語を英語の発音で読み上げるなど、内容が伝わらなくなります。ブラウザの自動翻訳や、日本語向けのフォントの選択にも使われます。
-
-このルールは、Markuplintの `required-attr` とOxlintの `jsx-a11y/html-has-lang` で検出します。
-
-**良い例**
-
-```html
-<html lang="ja">
-  …
-  <p>このサービスの名前は <span lang="en">Order Manager</span> です。</p>
-</html>
-```
-
-**悪い例**
-
-```html
-<html>
-  …
-</html>
 ```
 
 ## ページごとに内容を表すタイトルを付ける
@@ -185,7 +131,7 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 
 代替テキストには「〜の画像」と書かず、画像が伝えている内容そのものを書きます。リンクになっている画像には、リンク先を表すテキストを書きます。
 
-`alt` 属性がないことは、Oxlintの `jsx-a11y/alt-text` とMarkuplintの `require-accessible-name` で検出します。代替テキストの内容が適切かは、人が確かめます。画像のそのほかの扱いは[画像](/coding-guidelines/common/images/)のページを参照してください。
+代替テキストの内容が適切かは、人が確かめます。画像のそのほかの扱いは[画像](/coding-guidelines/common/images/)のページを参照してください。
 
 **良い例**
 
@@ -212,8 +158,6 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 **理由**
 
 アイコンの意味は見た目でしか伝わらないため、名前がないボタンは「ボタン」としか読み上げられず、何をするのか分かりません。アイコンの画像にまで名前があると、同じ内容が二重に読み上げられるため、`aria-hidden="true"` で隠します。
-
-このルールは、Markuplintの `require-accessible-name` とOxlintの `jsx-a11y/control-has-associated-label` で検出します。
 
 **良い例**
 
@@ -261,8 +205,6 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 **理由**
 
 ラベルを関連付けると、入力欄にフォーカスしたときにラベルが読み上げられます。ラベルをクリックすれば入力欄にフォーカスできるため、チェックボックスのような小さな部品も操作しやすくなります。`placeholder` は入力を始めると消えるため、何を入力していたのかが分からなくなり、文字色も薄く読みにくくなります。
-
-このルールは、Oxlintの `jsx-a11y/label-has-associated-control` とMarkuplintの `require-accessible-name` で検出します。
 
 **良い例**
 
@@ -357,8 +299,6 @@ ARIAは、支援技術への伝え方を上書きするものです。HTMLが標
 
 手の障害などでマウスを使えない人や、スクリーンリーダーの利用者は、キーボードやそれに代わる機器で操作します。キーボードで操作できない部品があると、その先の機能を一切使えなくなります。
 
-このルールの一部は、Oxlintの `jsx-a11y/click-events-have-key-events` と `jsx-a11y/mouse-events-have-key-events` で検出します。
-
 **良い例**
 
 ```html
@@ -406,33 +346,6 @@ button:focus {
 }
 ```
 
-## tabindexに正の値を使わない
-
-`tabindex` 属性には `0` か `-1` だけを使います。`1` 以上の値は使いません。
-
-準拠レベル：**必須**
-
-**理由**
-
-`tabindex` に正の値を付けた要素は、ページの並び順に関係なく先にフォーカスされます。画面上の並びとフォーカスの順番が食い違い、キーボードで操作する人を迷わせます。フォーカスの順番は、HTMLの並び順で整えます。
-
-このルールは、Oxlintの `jsx-a11y/tabindex-no-positive` で検出します。
-
-**良い例**
-
-```html
-<input id="keyword" type="search" />
-<button type="submit">検索</button>
-<div id="results" tabindex="-1">…</div>
-```
-
-**悪い例**
-
-```html
-<input id="keyword" type="search" tabindex="2" />
-<button type="submit" tabindex="1">検索</button>
-```
-
 ## モーダルダイアログにはdialog要素を使う
 
 モーダルダイアログは `dialog` 要素で作り、`showModal()` で開きます。
@@ -451,8 +364,8 @@ button:focus {
 <dialog id="confirm" aria-labelledby="confirm-title">
   <h2 id="confirm-title">注文を削除しますか？</h2>
   <form method="dialog">
-    <button value="cancel">キャンセル</button>
-    <button value="delete">削除する</button>
+    <button type="submit" value="cancel">キャンセル</button>
+    <button type="submit" value="delete">削除する</button>
   </form>
 </dialog>
 ```

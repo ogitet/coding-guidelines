@@ -3,31 +3,7 @@ title: 命名規則
 description: 変数、関数、型、ファイル、ディレクトリの名前の付け方。記法と、名前に使う語の選び方を決めます。
 ---
 
-変数、関数、型、ファイル、ディレクトリの名前の付け方を決めます。CSSのクラス名の付け方は[CSS](/coding-guidelines/tech/css/)、画像のファイル名は[画像](/coding-guidelines/common/images/)のページで扱います。
-
-## 名前は英語で付ける
-
-名前には英単語を使います。ローマ字や日本語は使いません。
-
-準拠レベル：**必須**
-
-**理由**
-
-ローマ字は読み方が人によって揺れ（`shohin` / `syouhin`）、検索しても見つかりません。英語にそろえれば、ライブラリやWeb標準のAPIの名前と並べても違和感なく読めます。英語に訳しにくい業務用語は、プロジェクトで訳語を決めて用語集に残します。
-
-**良い例**
-
-```ts
-const productPrice = 1200;
-const shippingAddress = getShippingAddress(order);
-```
-
-**悪い例**
-
-```ts
-const shohinKakaku = 1200;
-const 配送先 = getHaisosaki(order);
-```
+変数、関数、型、ファイル、ディレクトリの名前の付け方を決めます。CSSのクラス名の付け方は[CSS](/coding-guidelines/tech/css/)のページで扱います。
 
 ## 識別子の種類ごとに決まった記法を使う
 
@@ -51,38 +27,22 @@ const 配送先 = getHaisosaki(order);
 **良い例**
 
 ```ts
-const MAX_RETRY_COUNT = 3;
+type UserProfile = { userId: string };
 
-type UserProfile = {
-  userId: string;
-  displayName: string;
-};
-
-function formatDisplayName(profile: UserProfile) {
-  const trimmedName = profile.displayName.trim();
-  return trimmedName;
-}
+function fetchUserProfile(userId: string) {}
 ```
 
 **悪い例**
 
 ```ts
-const maxRetryCount = 3;
+type userProfile = { userID: string };
 
-type userProfile = {
-  user_id: string;
-  DisplayName: string;
-};
-
-function FormatDisplayName(profile: userProfile) {
-  const TRIMMED_NAME = profile.DisplayName.trim();
-  return TRIMMED_NAME;
-}
+function FetchUserProfile(user_id: string) {}
 ```
 
 ## ファイル名とディレクトリ名はケバブケースにする
 
-ファイル名とディレクトリ名は、英小文字とハイフンだけのケバブケースにします。Reactコンポーネントを定義するファイルだけは、コンポーネント名と同じパスカルケースにします。
+ファイル名とディレクトリ名は、英小文字とハイフンだけのケバブケースにします。Reactコンポーネントを定義するファイルはコンポーネント名と同じパスカルケースに、カスタムフックを定義するファイルはフック名と同じキャメルケースにします。
 
 準拠レベル：**必須**
 
@@ -90,9 +50,7 @@ function FormatDisplayName(profile: userProfile) {
 
 macOSやWindowsは、標準ではファイル名の大文字と小文字を区別しません。大文字と小文字を混ぜると、ある環境では動き、別の環境では動かないimportが生まれます。記法をケバブケースにそろえておけば、この事故が起きません。
 
-Reactコンポーネントのファイルは、ファイル名とコンポーネント名が一致しているほうが探しやすいため、例外としてパスカルケースにします。
-
-このルールはOxlintの `unicorn/filename-case` で検出します。設定は[フォーマットとLint](/coding-guidelines/common/format-and-lint/)を参照してください。
+Reactコンポーネントとカスタムフックのファイルは、ファイル名と中身の名前が一致しているほうが探しやすいため、例外とします。
 
 **良い例**
 
@@ -101,7 +59,7 @@ src/
 ├── features/
 │   └── order-history/
 │       ├── OrderHistoryList.tsx
-│       ├── use-order-history.ts
+│       ├── useOrderHistory.ts
 │       └── format-order-date.ts
 └── utils/
     └── parse-query-string.ts
@@ -114,64 +72,10 @@ src/
 ├── features/
 │   └── OrderHistory/
 │       ├── orderHistoryList.tsx
-│       ├── useOrderHistory.ts
+│       ├── use_order_history.ts
 │       └── format_order_date.ts
 └── Utils/
     └── parseQueryString.ts
-```
-
-## 略語は広く通じるものだけ使う
-
-名前は単語を省略せずに書きます。略語は、`id`、`url`、`html`、`api` のように、略さない形より広く通じるものだけ使います。
-
-準拠レベル：**推奨**
-
-**理由**
-
-`usr` や `cnt` のような略語は、書いた本人には分かっても、読む人には意味を推測させます。エディタの補完があるため、長い名前でも書く手間はほとんど増えません。
-
-**良い例**
-
-```ts
-const userCount = users.length;
-const requestUrl = new URL("/api/orders", baseUrl);
-```
-
-**悪い例**
-
-```ts
-const usrCnt = usrs.length;
-const reqU = new URL("/api/orders", bUrl);
-```
-
-## 1文字の名前は短い範囲だけで使う
-
-`i` や `x` のような1文字の名前は、数行で終わるループやコールバックの中だけで使います。
-
-準拠レベル：**推奨**
-
-**理由**
-
-名前が短いほど、読む人は宣言を見に戻らないと意味が分かりません。宣言と使う場所が数行以内に収まる範囲なら、1文字でも迷いません。範囲が広くなるほど、名前は具体的にします。
-
-**良い例**
-
-```ts
-const total = items.reduce((sum, item) => sum + item.price, 0);
-
-for (let i = 0; i < rows.length; i++) {
-  rows[i].index = i;
-}
-```
-
-**悪い例**
-
-```ts
-function render(d: Order[]) {
-  const t = d.filter((o) => o.s === "paid");
-  // …数十行後
-  return t.map((o) => o.id);
-}
 ```
 
 ## 真偽値の名前は is / has / can / should で始める
@@ -182,7 +86,7 @@ function render(d: Order[]) {
 
 **理由**
 
-名前を読むだけで、値が真偽値であることと、真のときの意味が分かるようにするためです。`open` や `error` のような名前は、真偽値なのか、関数やオブジェクトなのかが分かりません。
+名前を読むだけで、値が真偽値であることと、真のときの意味が分かるようにするためです。`open` や `error` のような名前は、真偽値なのか、関数やオブジェクトなのかが分かりません。また、`isNotVisible` のような否定の形にはしません。`!isNotVisible` のような二重否定になり、読み間違えやすくなるためです。
 
 **良い例**
 
@@ -205,36 +109,6 @@ const submit = isValid && !isSubmitting;
 
 function banner(user: User) {
   return !user.dismissed;
-}
-```
-
-## 否定の意味を含む名前を避ける
-
-真偽値の名前には、`not` や `no` を含めません。
-
-準拠レベル：**推奨**
-
-**理由**
-
-否定を含む名前を否定すると、`!isNotVisible` のような二重否定になり、読み間違えやすくなります。`isHidden` や `isVisible` のように肯定の形で名前を付けます。
-
-**良い例**
-
-```ts
-const isVisible = !isHidden;
-
-if (!isVisible) {
-  return null;
-}
-```
-
-**悪い例**
-
-```ts
-const isNotVisible = isHidden;
-
-if (!isNotVisible) {
-  showPanel();
 }
 ```
 
@@ -264,30 +138,6 @@ function totalPrice(items: CartItem[]) {}
 function priceProcess(price: number) {}
 ```
 
-## 配列などの集まりは複数形にする
-
-配列、`Set`、`Map` など、複数の値を持つものの名前は複数形にします。
-
-準拠レベル：**推奨**
-
-**理由**
-
-単数形と複数形で、1件なのか複数件なのかを区別できます。`users.map((user) => …)` のように、集まりと要素の名前が自然に対応します。`userList` や `userArray` のように型を表す語を付けるのではなく、`users` のように複数形にします。
-
-**良い例**
-
-```ts
-const users = await fetchUsers();
-const activeUserIds = new Set(users.filter((user) => user.isActive).map((user) => user.id));
-```
-
-**悪い例**
-
-```ts
-const user = await fetchUsers();
-const activeUserId = new Set(user.filter((u) => u.isActive).map((u) => u.id));
-```
-
 ## 単位のある数値は名前に単位を含める
 
 時間、長さ、データ量など単位のある数値は、名前の末尾に単位を付けます。
@@ -312,32 +162,4 @@ const cacheTtlSeconds = 60;
 const timeout = 3000;
 const maxFileSize = 5 * 1024 * 1024;
 const cacheTtl = 60;
-```
-
-## 同じものには同じ語を使う
-
-同じ概念には、プロジェクト全体で同じ語を使います。別の語を使うのは、別の概念を指すときだけにします。
-
-準拠レベル：**推奨**
-
-**理由**
-
-`user`、`member`、`account` が混ざっていると、読む人は「違うものなのか」と考えて、定義を確かめに行くことになります。語をそろえておけば検索でもまとめて見つかります。迷う語は、プロジェクトの用語集に決めておきます。
-
-**良い例**
-
-```ts
-type Customer = { customerId: string };
-
-function fetchCustomer(customerId: string) {}
-function updateCustomer(customer: Customer) {}
-```
-
-**悪い例**
-
-```ts
-type Customer = { userId: string };
-
-function fetchMember(accountId: string) {}
-function updateClient(customer: Customer) {}
 ```
