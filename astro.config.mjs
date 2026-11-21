@@ -11,7 +11,7 @@ export default defineConfig({
 	base: '/coding-guidelines',
 	integrations: [
 		starlight({
-			title: 'コーディング規約',
+			title: 'Coding Guidelines',
 			locales: {
 				root: { label: '日本語', lang: 'ja' },
 			},
