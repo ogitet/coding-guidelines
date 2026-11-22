@@ -10,7 +10,6 @@
 ## 決定事項
 
 - サイト構築：Astro Starlight
-- プラグイン：starlight-llms-txt（`llms.txt` / `llms-full.txt` / `llms-small.txt` を出力。ページ別Markdownは見送り）
 - 公開先：GitHub Pages（`https://ogitet.github.io/coding-guidelines/`）
 - 規約本文は `src/content/docs/` 以下のMarkdownを唯一の正とする
 - 1ページに複数ルールを並べる（1ルール1ファイルは採らない）
@@ -74,7 +73,7 @@ Reactのページは、H2を分類（コンポーネント設計 / Hooks / 状�
 ## コマンド
 
 - `npm run dev`：開発サーバー起動（`http://localhost:4321/coding-guidelines/`）
-- `npm run build`：`dist/` にビルド。`llms.txt` 類もここで生成される
+- `npm run build`：`dist/` にビルド
 - `npm run preview`：ビルド結果の確認
 
 Astro自体の作業上の注意は `AGENTS.md` を参照する。
