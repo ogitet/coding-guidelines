@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightThemeRapide from 'starlight-theme-rapide';
 
 // https://astro.build/config
@@ -22,7 +21,7 @@ export default defineConfig({
 					href: 'https://github.com/ogitet/coding-guidelines',
 				},
 			],
-			plugins: [starlightLlmsTxt(), starlightThemeRapide()],
+			plugins: [starlightThemeRapide()],
 			sidebar: [
 				{
 					label: '1. はじめに',
@@ -58,7 +57,7 @@ export default defineConfig({
 				},
 				{
 					label: '5. 開発フロー',
-					items: ['workflow/git', 'workflow/review', 'workflow/ai-instructions'],
+					items: ['workflow/git', 'workflow/review'],
 				},
 			],
 		}),

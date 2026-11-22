@@ -9,9 +9,6 @@ hero:
     - text: はじめに
       link: /coding-guidelines/about/purpose-and-scope/
       icon: right-arrow
-    - text: AIに読ませる
-      link: '#aiに読ませる場合'
-      variant: minimal
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
@@ -43,29 +40,8 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 	/>
 	<LinkCard
 		title="5. 開発フロー"
-		description="Git、レビュー、AIへの指示"
+		description="Git、レビュー"
 		href="/coding-guidelines/workflow/git/"
 	/>
 </CardGrid>
 
-## AIに読ませる場合
-
-規約の全文を、AIが読みやすいテキスト形式でも公開しています。AIにコードを書かせるときは、プロジェクトの `AGENTS.md` などでこれらのURLを参照させます。指示の書き方は[AIへの指示](/coding-guidelines/workflow/ai-instructions/)を参照してください。
-
-<CardGrid>
-	<LinkCard
-		title="llms.txt"
-		description="規約の案内と、各ファイルへのリンク"
-		href="/coding-guidelines/llms.txt"
-	/>
-	<LinkCard
-		title="llms-full.txt"
-		description="規約の全文"
-		href="/coding-guidelines/llms-full.txt"
-	/>
-	<LinkCard
-		title="llms-small.txt"
-		description="規約の全文から補足を省いた短縮版"
-		href="/coding-guidelines/llms-small.txt"
-	/>
-</CardGrid>
